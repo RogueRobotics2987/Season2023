@@ -12,6 +12,10 @@
 #include <frc/Joystick.h>
 #include "subsystems/DriveTrain.h"
 #include "commands/TankDrive.h"
+#include "subsystems/ShooterSubsystem.h"
+#include "commands/Shooter.h"
+#include <frc2/command/button/JoystickButton.h>
+
 // #include <frc2/command/button/JoystickButton.h>
 
 /**
@@ -32,7 +36,9 @@ class RobotContainer {
   ExampleSubsystem m_subsystem;
   ExampleCommand m_autonomousCommand;
   frc::Joystick joy1{3};
+  frc::Joystick joy2{4};
   DriveTrain m_drivetrain;
+  ShooterSubsystem m_shooter;
 
   void ConfigureButtonBindings();
 };

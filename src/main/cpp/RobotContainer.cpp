@@ -6,7 +6,8 @@
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   // Initialize all of your commands and subsystems here
-  m_drivetrain.SetDefaultCommand(TankDrive(&m_drivetrain, &joy1));
+  m_drivetrain.SetDefaultCommand(TankDrive(&m_drivetrain, &joy1, &joy2));
+
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -14,6 +15,7 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+  frc2::JoystickButton(&joy1, 2).WhenPressed(Shooter());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

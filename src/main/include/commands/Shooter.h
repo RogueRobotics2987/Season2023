@@ -6,7 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/DriveTrain.h"
+#include "subsystems/ShooterSubsystem.h"
 
 /**
  * An example command.
@@ -15,11 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class TankDrive
-    : public frc2::CommandHelper<frc2::CommandBase, TankDrive> {
+class Shooter
+    : public frc2::CommandHelper<frc2::CommandBase, Shooter> {
  public:
-  TankDrive(DriveTrain* drivetrain, frc::Joystick* stick1, frc::Joystick* stick2);
-
+  Shooter();
 
   void Initialize() override;
 
@@ -31,8 +30,6 @@ class TankDrive
 
   private:
 
-  frc::Joystick* m_stick1 = nullptr;
-  frc::Joystick* m_stick2 = nullptr;
-  DriveTrain* m_drivetrain = nullptr;
-};
- 
+  ShooterSubsystem* m_shooter;
+
+  };

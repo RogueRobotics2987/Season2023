@@ -2,32 +2,28 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/TankDrive.h"
+#include "commands/Shooter.h"
 
-TankDrive::TankDrive(DriveTrain* drivetrain, frc::Joystick* stick1, frc::Joystick* stick2) {
-
-  m_drivetrain = drivetrain;
-  m_stick1 = stick1;
-  m_stick2 = stick2;
-  SetName("TankDrive");
-  AddRequirements({m_drivetrain});
+Shooter::Shooter() {
   // Use addRequirements() here to declare subsystem dependencies.
+  SetName("Shooter");
+  AddRequirements({m_shooter});
 }
 
 // Called when the command is initially scheduled.
-void TankDrive::Initialize() {}
+void Shooter::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void TankDrive::Execute() {
-  m_drivetrain->Drive(m_stick1->GetX(), m_stick2->GetY());
+void Shooter::Execute() {
+  m_shooter->Shoot(0.5);
 }
 
 // Called once the command ends or is interrupted.
-void TankDrive::End(bool interrupted) {
-  m_drivetrain->Drive(0, 0);
+void Shooter::End(bool interrupted) {
+  m_shooter->Shoot(0.0);
 }
 
 // Returns true when the command should end.
-bool TankDrive::IsFinished() {
+bool Shooter::IsFinished() {
   return false;
 }
