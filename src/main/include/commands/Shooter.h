@@ -18,7 +18,7 @@
 class Shooter
     : public frc2::CommandHelper<frc2::CommandBase, Shooter> {
  public:
-  Shooter();
+  Shooter(ShooterSubsystem* shooter);
 
   void Initialize() override;
 

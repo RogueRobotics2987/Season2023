@@ -38,7 +38,7 @@ class RobotContainer {
   frc::Joystick joy1{3};
   frc::Joystick joy2{4};
   DriveTrain m_drivetrain;
-  ShooterSubsystem m_shooter;
+  ShooterSubsystem m_shootersubsystem;
 
   void ConfigureButtonBindings();
 };

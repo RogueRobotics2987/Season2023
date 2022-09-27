@@ -4,8 +4,9 @@
 
 #include "commands/Shooter.h"
 
-Shooter::Shooter() {
+Shooter::Shooter(ShooterSubsystem* shooter) {
   // Use addRequirements() here to declare subsystem dependencies.
+  m_shooter = shooter;
   SetName("Shooter");
   AddRequirements({m_shooter});
 }
