@@ -14,14 +14,27 @@
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/motorcontrol/Spark.h>
 #include <frc/trajectory/TrapezoidProfile.h>
+#include "rev/CANSparkMax.h"
+#include "rev/CANEncoder.h"
+#include <frc/smartdashboard/SmartDashboard.h>
+#include "ctre/Phoenix.h"
 
 #include "Constants.h"
 
 class SwerveModule {
  public:
-  SwerveModule(int driveMotorChannel, int turningMotorChannel,
-               const int driveEncoderPorts[2], const int turningEncoderPorts[2],
-               bool driveEncoderReversed, bool turningEncoderReversed);
+//   SwerveModule(int driveMotorChannel, int turningMotorChannel,
+//                const int driveEncoderPorts[2], const int turningEncoderPorts[2],
+//                bool driveEncoderReversed, bool turningEncoderReversed);
+
+
+SwerveModule(int m_MotorController, rev::SparkMaxRelativeEncoder::Type m_EncoderType, int m_counts_per_rev, 
+      int m_MotorControllerTurning, 
+      bool driveEncoderReversed,
+      int TurningEncoderNumber,
+      bool turningEncoderReversed
+ );
+ ~SwerveModule();
 
   frc::SwerveModuleState GetState();
 
@@ -37,15 +50,18 @@ class SwerveModule {
   // meters per second squared.
 
   static constexpr auto kModuleMaxAngularVelocity =
-      units::radians_per_second_t{std::numbers::pi};
+      units::radians_per_second_t{std::numbers::pi * 8.0};
   static constexpr auto kModuleMaxAngularAcceleration =
-      units::radians_per_second_squared_t{std::numbers::pi * 2.0};
+      units::radians_per_second_squared_t{std::numbers::pi * 16.0};
 
-  frc::Spark m_driveMotor;
-  frc::Spark m_turningMotor;
+  rev::CANSparkMax* m_driveMotor;
+  rev::CANSparkMax* m_turningMotor;
 
-  frc::Encoder m_driveEncoder;
-  frc::Encoder m_turningEncoder;
+  rev::SparkMaxRelativeEncoder* m_driveEncoder;
+  rev::SparkMaxRelativeEncoder::Type m_EncoderType;
+  int m_counts_per_rev;
+
+  ctre::phoenix::sensors::CANCoder* m_turningEncoder;
 
   bool m_reverseDriveEncoder;
   bool m_reverseTurningEncoder;

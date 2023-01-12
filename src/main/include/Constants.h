@@ -142,21 +142,39 @@ constexpr double kPRearRightVel = 0.5;
 }  // namespace DriveConstants
 
 
+// namespace ModuleConstants {
+// constexpr int kEncoderCPR = 1024;
+// constexpr double kWheelDiameterMeters = 0.15;
+// constexpr double kDriveEncoderDistancePerPulse =
+//     // Assumes the encoders are directly mounted on the wheel shafts
+//     (kWheelDiameterMeters * std::numbers::pi) /
+//     static_cast<double>(kEncoderCPR);
+
+// constexpr double kTurningEncoderDistancePerPulse =
+//     // Assumes the encoders are directly mounted on the wheel shafts
+//     (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
+
+// constexpr double kPModuleTurningController = 1;
+// constexpr double kPModuleDriveController = 1;
+// }  // namespace ModuleConstants
+
 namespace ModuleConstants {
+constexpr double wheelOffset = 89.65;
 constexpr int kEncoderCPR = 1024;
-constexpr double kWheelDiameterMeters = 0.15;
+constexpr double kWheelDiameterMeters = 0.0762;
 constexpr double kDriveEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
-    (kWheelDiameterMeters * std::numbers::pi) /
-    static_cast<double>(kEncoderCPR);
+    (kWheelDiameterMeters * std::numbers::pi) / static_cast<double>(kEncoderCPR);
 
 constexpr double kTurningEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
     (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
 
-constexpr double kPModuleTurningController = 1;
-constexpr double kPModuleDriveController = 1;
+constexpr double kPModuleTurningController = 0.5;
+constexpr double kPModuleDriveController = 8;
+// TODO Lower Value of P to 0.0001,  Change Value of p Till its the Highest Without Osilation, 
 }  // namespace ModuleConstants
+
 
 namespace AutoConstants {
 constexpr auto kMaxSpeed = 3_mps;
