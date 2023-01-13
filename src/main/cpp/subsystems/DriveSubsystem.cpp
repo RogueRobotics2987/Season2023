@@ -95,6 +95,31 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 
   auto [fl, fr, bl, br] = states;
 
+float currentAngle = fmod((double)(m_frontLeft.GetState().angle.Degrees()),360);
+frc::SmartDashboard::PutNumber("Desired angle",fmod((double)(m_frontLeft.GetState().angle.Degrees()),360));
+frc::SmartDashboard::PutNumber("Current angle", currentAngle);
+frc::SmartDashboard::PutNumber("Angle Diff",fabs((float)(fl.angle.Degrees()) - currentAngle -90));
+frc::SmartDashboard::PutNumber("fl angle",(float)fl.angle.Degrees());
+if (fabs((float)(fl.angle.Degrees()) - currentAngle -90) < 10){
+    // m_frontLeft.SetDesiredState(fl);
+    // m_frontRight.SetDesiredState(fr);
+    // m_rearLeft.SetDesiredState(bl);
+    // m_rearRight.SetDesiredState(br);
+
+   }
+  
+
+   else{
+    fl.speed = (units::velocity::meters_per_second_t)(0);
+    fr.speed = (units::velocity::meters_per_second_t)(0);
+    bl.speed = (units::velocity::meters_per_second_t)(0);
+    br.speed = (units::velocity::meters_per_second_t)(0);
+
+    // m_frontLeft.SetDesiredState(fl);
+    // m_frontRight.SetDesiredState(fr);
+    // m_rearLeft.SetDesiredState(bl);
+    // m_rearRight.SetDesiredState(br);
+  }
   m_frontLeft.SetDesiredState(fl);
   m_frontRight.SetDesiredState(fr);
   m_rearLeft.SetDesiredState(bl);
