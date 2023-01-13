@@ -13,6 +13,7 @@
 #include <frc2/command/PIDCommand.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
+#include<frc/Joystick.h>
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
@@ -32,7 +33,7 @@ class RobotContainer {
 
  private:
   // The driver's controller
-  frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
+  frc::Joystick m_driverController{OIConstants::kDriverControllerPort};
 
   // The robot's subsystems and commands are defined here...
 

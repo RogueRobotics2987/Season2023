@@ -35,9 +35,9 @@ RobotContainer::RobotContainer() {
   m_drive.SetDefaultCommand(frc2::RunCommand(
       [this] {
         m_drive.Drive(
-            units::meters_per_second_t{m_driverController.GetLeftY()},
-            units::meters_per_second_t{m_driverController.GetLeftX()},
-            units::radians_per_second_t{m_driverController.GetRightX()}, false);
+            units::meters_per_second_t{m_driverController.GetY()},
+            units::meters_per_second_t{m_driverController.GetX()},
+            units::radians_per_second_t{m_driverController.GetZ()}, false);
       },
       {&m_drive}));
 }
