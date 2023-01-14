@@ -74,10 +74,10 @@ DriveSubsystem::DriveSubsystem()
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
                  frc::Pose2d{}} {}
 
-// frc2::CommandPtr DriveSubsystem::SetDriveSlow(){
-//   return this->RunOnce(
-//     [this] {});
-// }
+frc2::CommandPtr DriveSubsystem::SetDriveSlow(bool m_bool){
+  return this->RunOnce(
+    [this, m_bool] {driveSlow = m_bool; });
+}
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
@@ -104,14 +104,14 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 float currentAngle = fabs(fmod((double)(m_frontLeft.GetState().angle.Degrees()),360));
 // TODO curentAngle = currentAngle + 89.65 Radients moduleConstants::Wheelconstants
 float angleDiff = fabs((float)(fl.angle.Degrees()) - currentAngle);
-frc::SmartDashboard::PutNumber("Current angle", currentAngle);
-frc::SmartDashboard::PutNumber("Angle Diff",angleDiff);
-frc::SmartDashboard::PutNumber("m_frontLeft State Angle", m_frontLeft.GetState().angle.Degrees().value());
+frc::SmartDashboard::PutNumber("Fl Current angle", currentAngle);
+frc::SmartDashboard::PutNumber("Fl Angle Diff",angleDiff);
+// frc::SmartDashboard::PutNumber("m_frontLeft State Angle", m_frontLeft.GetState().angle.Degrees().value());
 frc::SmartDashboard::PutNumber("Fl Desired angle",(float)fl.angle.Degrees());
 frc::SmartDashboard::PutNumber("Fr Desired angle",(float)fr.angle.Degrees());
 frc::SmartDashboard::PutNumber("Bl Desired angle",(float)bl.angle.Degrees());
 frc::SmartDashboard::PutNumber("Br Desired angle",(float)br.angle.Degrees());
-if (angleDiff < 10){
+if (angleDiff < 10 or fabs(angleDiff - 360) < 10){
     // m_frontLeft.SetDesiredState(fl);
     // m_frontRight.SetDesiredState(fr);
     // m_rearLeft.SetDesiredState(bl);

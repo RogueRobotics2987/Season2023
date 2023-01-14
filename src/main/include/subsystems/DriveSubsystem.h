@@ -15,7 +15,9 @@
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc/motorcontrol/PWMSparkMax.h>
 #include <frc2/command/SubsystemBase.h>
-#include <frc2/command/Command.h>
+#include <frc2/command/Commands.h>
+#include <frc2/command/CommandPtr.h>
+#include <frc2/command/FunctionalCommand.h>
 #include <AHRS.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -90,7 +92,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   void ResetOdometry(frc::Pose2d pose);
 
-//   frc2::CommandPtr SetDriveSlow();
+  frc2::CommandPtr SetDriveSlow(bool m_bool);
 
 
   units::meter_t kTrackWidth =
