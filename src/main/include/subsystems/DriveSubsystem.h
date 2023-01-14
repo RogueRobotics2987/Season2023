@@ -15,6 +15,7 @@
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc/motorcontrol/PWMSparkMax.h>
 #include <frc2/command/SubsystemBase.h>
+#include <frc2/command/Command.h>
 #include <AHRS.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -89,6 +90,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   void ResetOdometry(frc::Pose2d pose);
 
+//   frc2::CommandPtr SetDriveSlow();
+
+
   units::meter_t kTrackWidth =
       0.4826_m;  // Distance between centers of right and left wheels on robot
   units::meter_t kWheelBase =
@@ -116,4 +120,5 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
+  bool driveSlow = false;
 };

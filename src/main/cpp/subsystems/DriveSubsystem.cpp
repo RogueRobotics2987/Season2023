@@ -74,6 +74,11 @@ DriveSubsystem::DriveSubsystem()
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
                  frc::Pose2d{}} {}
 
+// frc2::CommandPtr DriveSubsystem::SetDriveSlow(){
+//   return this->RunOnce(
+//     [this] {});
+// }
+
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(m_gyro.GetRotation2d(),
@@ -85,6 +90,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            units::meters_per_second_t ySpeed,
                            units::radians_per_second_t rot,
                            bool fieldRelative) {
+                      
   frc::SmartDashboard::PutNumber("ROT value: ", rot.value());
   auto states = kDriveKinematics.ToSwerveModuleStates(
       fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
@@ -95,12 +101,17 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 
   auto [fl, fr, bl, br] = states;
 
-float currentAngle = fmod((double)(m_frontLeft.GetState().angle.Degrees()),360);
-frc::SmartDashboard::PutNumber("Desired angle",fmod((double)(m_frontLeft.GetState().angle.Degrees()),360));
+float currentAngle = fabs(fmod((double)(m_frontLeft.GetState().angle.Degrees()),360));
+// TODO curentAngle = currentAngle + 89.65 Radients moduleConstants::Wheelconstants
+float angleDiff = fabs((float)(fl.angle.Degrees()) - currentAngle);
 frc::SmartDashboard::PutNumber("Current angle", currentAngle);
-frc::SmartDashboard::PutNumber("Angle Diff",fabs((float)(fl.angle.Degrees()) - currentAngle -90));
-frc::SmartDashboard::PutNumber("fl angle",(float)fl.angle.Degrees());
-if (fabs((float)(fl.angle.Degrees()) - currentAngle -90) < 10){
+frc::SmartDashboard::PutNumber("Angle Diff",angleDiff);
+frc::SmartDashboard::PutNumber("m_frontLeft State Angle", m_frontLeft.GetState().angle.Degrees().value());
+frc::SmartDashboard::PutNumber("Fl Desired angle",(float)fl.angle.Degrees());
+frc::SmartDashboard::PutNumber("Fr Desired angle",(float)fr.angle.Degrees());
+frc::SmartDashboard::PutNumber("Bl Desired angle",(float)bl.angle.Degrees());
+frc::SmartDashboard::PutNumber("Br Desired angle",(float)br.angle.Degrees());
+if (angleDiff < 10){
     // m_frontLeft.SetDesiredState(fl);
     // m_frontRight.SetDesiredState(fr);
     // m_rearLeft.SetDesiredState(bl);
@@ -119,6 +130,12 @@ if (fabs((float)(fl.angle.Degrees()) - currentAngle -90) < 10){
     // m_frontRight.SetDesiredState(fr);
     // m_rearLeft.SetDesiredState(bl);
     // m_rearRight.SetDesiredState(br);
+  }
+  if(driveSlow == true){
+    fl.speed = (units::velocity::meters_per_second_t)(0.5 * fl.speed);
+    fr.speed = (units::velocity::meters_per_second_t)(0.5 * fr.speed);
+    bl.speed = (units::velocity::meters_per_second_t)(0.5 * bl.speed);
+    br.speed = (units::velocity::meters_per_second_t)(0.5 * br.speed);
   }
   m_frontLeft.SetDesiredState(fl);
   m_frontRight.SetDesiredState(fr);
