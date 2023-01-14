@@ -44,6 +44,8 @@ SwerveModule(int m_MotorController, rev::SparkMaxRelativeEncoder::Type m_Encoder
 
   void ResetEncoders();
 
+  void Periodic();
+
  private:
   // We have to use meters here instead of radians due to the fact that
   // ProfiledPIDController's constraints only take in meters per second and
@@ -74,3 +76,5 @@ SwerveModule(int m_MotorController, rev::SparkMaxRelativeEncoder::Type m_Encoder
       0.0,
       {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}};
 };
+
+

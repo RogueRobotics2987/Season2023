@@ -105,8 +105,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   SwerveModule m_frontLeft;
-  SwerveModule m_rearLeft;
   SwerveModule m_frontRight;
+  SwerveModule m_rearLeft;
   SwerveModule m_rearRight;
 
   // The gyro sensor
