@@ -51,7 +51,7 @@ int m_MotorControllerTurning,
          m_driveMotor = new rev::CANSparkMax(m_MotorController, rev::CANSparkMax::MotorType::kBrushless);
          m_turningMotor = new rev::CANSparkMax(m_MotorControllerTurning, rev::CANSparkMax::MotorType::kBrushless);
         //  samDriveEncoder = new rev::CANEncoder(*samDriveMotor, m_EncoderType, m_counts_per_rev);
-         m_driveEncoder = new rev::SparkMaxRelativeEncoder(m_turningMotor->GetEncoder(m_EncoderType, m_counts_per_rev));
+         m_driveEncoder = new rev::SparkMaxRelativeEncoder(m_driveMotor->GetEncoder(m_EncoderType, m_counts_per_rev));
         //  samTurningEncoder = new rev::CANEncoder(*samTurningMotor, m_EncoderTypeTurning, m_counts_per_revTurning);
          m_turningEncoder = new ctre::phoenix::sensors::CANCoder(TurningEncoderNumber);	
 
@@ -113,7 +113,7 @@ void SwerveModule::SetDesiredState(
                                 m_driveEncoder->GetVelocity() / 10);
   frc::SmartDashboard::PutNumber("Get Drive Positon" + std::to_string(m_driveMotor->GetDeviceId()), 
                                 m_driveEncoder->GetPosition());
-  frc::SmartDashboard::PutNumber("get rotation Position - " + std::to_string(m_turningMotor->GetDeviceId()), 
+  frc::SmartDashboard::PutNumber("get rotation Position" + std::to_string(m_turningMotor->GetDeviceId()), 
                                  m_turningEncoder->GetPosition() + m_wheelOffset /* * 78.73*/);
   frc::SmartDashboard::PutNumber("Motor Set Position - " + std::to_string(m_turningMotor->GetDeviceId()),
                                  double(referenceState.angle.Radians()) /* * 78.73*/);
