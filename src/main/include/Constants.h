@@ -15,6 +15,7 @@
 #include <units/time.h>
 #include <units/velocity.h>
 #include <units/voltage.h>
+#include <wpi/numbers>
 #include "rev/SparkMaxRelativeEncoder.h"
 
 #pragma once
@@ -177,14 +178,19 @@ constexpr double kPModuleDriveController = 8;
 
 
 namespace AutoConstants {
+    // was included in existing code but not in the updated 2023 code
+/*      using radians_per_second_squared_t =
+    units::compound_unit<units::radians,
+                         units::inverse<units::squared<units::second>>>;
+*/
 constexpr auto kMaxSpeed = 3_mps;
 constexpr auto kMaxAcceleration = 3_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;
 constexpr auto kMaxAngularAcceleration = 3.142_rad_per_s_sq;
 
-constexpr double kPXController = 0.5;
-constexpr double kPYController = 0.5;
-constexpr double kPThetaController = 0.5;
+constexpr double kPXController = 0.1; //0.5
+constexpr double kPYController = 0; // 0.5
+constexpr double kPThetaController = 0; //0.5
 
 //
 
