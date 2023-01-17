@@ -4,9 +4,10 @@
 
 #include "commands/Shooter.h"
 
-Shooter::Shooter(ShooterSubsystem* shooter) {
+Shooter::Shooter(ShooterSubsystem* shooter, frc::Joystick* stick) {
   // Use addRequirements() here to declare subsystem dependencies.
   m_shooter = shooter;
+  m_stick = stick;
   SetName("Shooter");
   AddRequirements({m_shooter});
 }
@@ -16,7 +17,12 @@ void Shooter::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void Shooter::Execute() {
-  m_shooter->Shoot(0.5);
+  if(m_stick->GetRawButton(1) == 1){
+  m_shooter->Shoot(0.3);
+  }
+  else{
+    m_shooter->Shoot(0.0);
+  }
 }
 
 // Called once the command ends or is interrupted.

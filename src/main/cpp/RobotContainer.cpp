@@ -9,13 +9,14 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   m_drivetrain.SetDefaultCommand(TankDrive(&m_drivetrain, &joy1, &joy2));
 
 
+
   // Configure the button bindings
   ConfigureButtonBindings();
 }
 
 void RobotContainer::ConfigureButtonBindings() {
+frc2::JoystickButton(&joy1, 1).WhenPressed(Shooter(&m_shootersubsystem, &joy1));
   // Configure your button bindings here
-  frc2::JoystickButton(&joy1, 2).WhenPressed(Shooter(&m_shootersubsystem));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

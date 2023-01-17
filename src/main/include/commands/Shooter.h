@@ -7,6 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ShooterSubsystem.h"
+#include <frc/Joystick.h>
 
 /**
  * An example command.
@@ -18,7 +19,7 @@
 class Shooter
     : public frc2::CommandHelper<frc2::CommandBase, Shooter> {
  public:
-  Shooter(ShooterSubsystem* shooter);
+  Shooter(ShooterSubsystem* shooter, frc::Joystick* stick);
 
   void Initialize() override;
 
@@ -31,5 +32,6 @@ class Shooter
   private:
 
   ShooterSubsystem* m_shooter;
+  frc::Joystick* m_stick;
 
   };
