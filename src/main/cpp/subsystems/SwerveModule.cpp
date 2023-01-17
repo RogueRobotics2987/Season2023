@@ -88,12 +88,16 @@ int m_MotorControllerTurning,
 
 frc::SwerveModuleState SwerveModule::GetState() {
   return {units::meters_per_second_t{m_driveEncoder->GetVelocity()},
-          units::radian_t{m_turningEncoder->GetPosition()}};
+          units::radian_t{m_turningEncoder->GetPosition() + ModuleConstants::wheelOffset}};
+          // units::radian_t{m_turningEncoder->GetPosition()}};
+          //Subtracts ModuleConstants::wheelOffset becuse we add it in setDesired state
 }
 
 frc::SwerveModulePosition SwerveModule::GetPosition() {
   return {units::meter_t{m_driveEncoder->GetPosition()},
-          units::radian_t{m_turningEncoder->GetPosition()}};
+          units::radian_t{m_turningEncoder->GetPosition() + ModuleConstants::wheelOffset}};
+          // units::radian_t{m_turningEncoder->GetPosition()}};
+          //Subtracts ModuleConstants::wheelOffset becuse we add it in setDesired state
 }
 
 void SwerveModule::SetDesiredState(
