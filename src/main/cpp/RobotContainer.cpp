@@ -54,9 +54,14 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example trajectory to follow.  All units in meters.
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
+
+      //x moves forward backward
+
+      //y moves left right
+
       frc::Pose2d{0_m, 0_m, 0_deg},
-      {frc::Translation2d{0.3_m, 0_m} , frc::Translation2d{0.6_m, 0_m}},
-      frc::Pose2d{1_m, 0_m, 0_deg},
+      {frc::Translation2d{0.3_m, 0.0_m} , frc::Translation2d{0.3_m, -0.3_m}, frc::Translation2d{0.0_m, -0.3_m}},
+      frc::Pose2d{0_m, 0_m, 0_deg},
       // Pass the config
       config);
 
@@ -68,7 +73,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
                                         units::radian_t{std::numbers::pi});
 
   frc2::SwerveControllerCommand<4> swerveControllerCommand(
-      exampleTrajectory, [this]() { return m_drive.GetPose(); },
+      exampleTrajectory, [this]() {return m_drive.GetPose(); },
 
       m_drive.kDriveKinematics,
 
