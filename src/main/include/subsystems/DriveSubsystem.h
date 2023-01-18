@@ -19,6 +19,7 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/FunctionalCommand.h>
 #include <AHRS.h>
+#include <frc/smartdashboard/Field2d.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include "Constants.h"
@@ -94,11 +95,13 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   frc2::CommandPtr SetDriveSlow(bool m_bool);
 
+  frc2::CommandPtr ButtonZeroHeading();
+
 
   units::meter_t kTrackWidth =
-      0.4826_m;  // Distance between centers of right and left wheels on robot
+      0.4699_m;  // Distance between centers of right and left wheels on robot
   units::meter_t kWheelBase =
-      0.4826_m;  // Distance between centers of front and back wheels on robot
+      0.4699_m;  // Distance between centers of front and back wheels on robot
 
   frc::SwerveDriveKinematics<4> kDriveKinematics{
       frc::Translation2d{kWheelBase / 2, kTrackWidth / 2},
@@ -123,4 +126,6 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
   bool driveSlow = false;
+
+  frc::Field2d m_field;
 };

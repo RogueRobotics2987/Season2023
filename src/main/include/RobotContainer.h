@@ -32,6 +32,8 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
 
+  void ZeroHeading();
+
  private:
   // The driver's controller
   frc::Joystick m_driverController{OIConstants::kDriverControllerPort};

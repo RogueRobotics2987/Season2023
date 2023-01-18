@@ -71,6 +71,8 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_driverController, 7).OnTrue(m_drive.SetDriveSlow(true));
     frc2::JoystickButton(&m_driverController, 7).OnFalse(m_drive.SetDriveSlow(false));
+    frc2::JoystickButton(&m_driverController, 1).OnTrue(m_drive.ButtonZeroHeading());
+
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
@@ -89,8 +91,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       //y moves left right
 
       frc::Pose2d{0_m, 0_m, 0_deg},
-      {frc::Translation2d{0.3_m, 0.0_m} , frc::Translation2d{0.3_m, -0.3_m}, frc::Translation2d{0.0_m, -0.3_m}},
-      frc::Pose2d{0_m, 0_m, 0_deg},
+      {frc::Translation2d{0.3_m, 0.0_m} , frc::Translation2d{0.6_m, 0_m}, frc::Translation2d{0.9_m, 0_m}},
+      frc::Pose2d{1_m, 0_m, 0_deg},
       // Pass the config
       config);
 
@@ -121,4 +123,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       std::move(swerveControllerCommand),
       frc2::InstantCommand(
           [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
+}
+
+  void RobotContainer::ZeroHeading(){
+    m_drive.ZeroHeading();
 }
