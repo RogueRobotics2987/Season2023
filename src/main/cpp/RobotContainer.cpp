@@ -39,17 +39,28 @@ RobotContainer::RobotContainer() {
           frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
           frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
         
-        
-        
+        bool noJoystick = false;
+        bool noJoystickX = false;
+        bool noJoystickY = false;
+        bool noJoystickRot = false;
         double safeX = m_driverController.GetX();
         if(fabs(safeX)<.245) {
-            safeX=0;}
+            safeX=0;
+            noJoystickX = true;
+            }
         double safeY =  m_driverController.GetY();
         if(fabs(safeY)<.245) { 
-            safeY=0;}
+            safeY=0;
+            noJoystickY = true;
+            }
         double safeRot = m_driverController.GetZ();
         if(fabs(safeRot)<.245) {
-            safeRot=0;}
+            safeRot=0;
+            noJoystickRot = true;
+            }
+            noJoystick = noJoystickX && noJoystickY && noJoystickRot;
+
+            frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
         
         // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
         
@@ -59,7 +70,8 @@ RobotContainer::RobotContainer() {
                          -safeX),
                       units::radians_per_second_t(
                          -safeRot),
-                      true);
+                      true,
+                      noJoystick);
         // m_drive.Drive(units::meters_per_second_t(0),
         // units::meters_per_second_t(1),
         // units::radians_per_second_t(0),
@@ -117,5 +129,5 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   return new frc2::SequentialCommandGroup(
       std::move(swerveControllerCommand),
       frc2::InstantCommand(
-          [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
+          [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); }, {}));
 }
