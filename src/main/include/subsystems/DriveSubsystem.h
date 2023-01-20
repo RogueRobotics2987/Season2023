@@ -69,7 +69,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   /**
    * Zeroes the heading of the robot.
    */
-  void ZeroHeading();
+  frc2::CommandPtr ZeroHeading();
 
   /**
    * Returns the turn rate of the robot.
@@ -123,4 +123,4 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
   bool driveSlow = false;
-};
+  };

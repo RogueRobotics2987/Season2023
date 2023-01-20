@@ -80,6 +80,7 @@ frc2::CommandPtr DriveSubsystem::SetDriveSlow(bool m_bool){
 }
 
 void DriveSubsystem::Periodic() {
+  frc::SmartDashboard::PutNumber("Gyro Angle: ", m_gyro.GetAngle());
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(m_gyro.GetRotation2d(),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
@@ -178,8 +179,9 @@ units::degree_t DriveSubsystem::GetHeading() const {
   return m_gyro.GetRotation2d().Degrees();
 }
 
-void DriveSubsystem::ZeroHeading() {
-  m_gyro.Reset();
+frc2::CommandPtr DriveSubsystem::ZeroHeading() {
+  return this->RunOnce(
+    [this] {m_gyro.Reset(); });
 }
 
 double DriveSubsystem::GetTurnRate() {
