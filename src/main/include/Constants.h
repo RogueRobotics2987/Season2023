@@ -190,8 +190,8 @@ constexpr auto kMaxAcceleration = 0.5_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;
 constexpr auto kMaxAngularAcceleration = 3.142_rad_per_s_sq;
 
-constexpr double kPXController = 0.5; 
-constexpr double kPYController = 0.5; 
+constexpr double kPXController = 0.1; 
+constexpr double kPYController = 0.1; 
 constexpr double kPThetaController = 0; 
 
 

@@ -192,3 +192,10 @@ frc2::CommandPtr DriveSubsystem::ButtonZeroHeading(){
   return this->RunOnce(
     [this] {ZeroHeading();});
 }
+
+void DriveSubsystem::ConfigMotorControllers(){
+  m_frontLeft.ConfigMotorControllers();
+  m_frontRight.ConfigMotorControllers();
+  m_rearLeft.ConfigMotorControllers();
+  m_rearRight.ConfigMotorControllers();
+}

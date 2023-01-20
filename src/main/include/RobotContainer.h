@@ -34,6 +34,8 @@ class RobotContainer {
 
   void ZeroHeading();
 
+  void ConfigMotorControllers();
+
  private:
   // The driver's controller
   frc::Joystick m_driverController{OIConstants::kDriverControllerPort};

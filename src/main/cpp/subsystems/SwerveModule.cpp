@@ -148,6 +148,11 @@ void SwerveModule::ResetEncoders() {
   // m_turningEncoder->Reset();
 }
 
+void SwerveModule::ConfigMotorControllers(){
+  m_driveMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  m_turningMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+}
+
 SwerveModule::~SwerveModule(){
   delete m_driveMotor;
   delete m_turningMotor;

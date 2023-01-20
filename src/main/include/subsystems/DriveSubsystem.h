@@ -97,6 +97,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   frc2::CommandPtr ButtonZeroHeading();
 
+  void ConfigMotorControllers();
+
 
   units::meter_t kTrackWidth =
       0.4699_m;  // Distance between centers of right and left wheels on robot
