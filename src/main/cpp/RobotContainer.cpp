@@ -24,6 +24,8 @@
 using namespace DriveConstants;
 
 RobotContainer::RobotContainer() {
+
+    ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
@@ -83,7 +85,7 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_driverController, 7).OnTrue(m_drive.SetDriveSlow(true));
     frc2::JoystickButton(&m_driverController, 7).OnFalse(m_drive.SetDriveSlow(false));
-    frc2::JoystickButton(&m_driverController, 2).OnTrue(m_drive.ZeroHeading());
+    frc2::JoystickButton(&m_driverController, 1).OnTrue(m_drive.ButtonZeroHeading());
 
 }
 
@@ -97,11 +99,14 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example trajectory to follow.  All units in meters.
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
+
+      //x moves forward backward
+
+      //y moves left right
+
       frc::Pose2d{0_m, 0_m, 0_deg},
-      // Pass through these two interior waypoints, making an 's' curve path
-      {frc::Translation2d{1_m, 1_m}, frc::Translation2d{2_m, -1_m}},
-      // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d{3_m, 0_m, 0_deg},
+      {frc::Translation2d{0.3_m, 0_m} , frc::Translation2d{0.3_m, 0.3_m}, frc::Translation2d{0_m, 0.3_m}},
+      frc::Pose2d{0_m, 0_m, 0_deg},
       // Pass the config
       config);
 
@@ -113,7 +118,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
                                         units::radian_t{std::numbers::pi});
 
   frc2::SwerveControllerCommand<4> swerveControllerCommand(
-      exampleTrajectory, [this]() { return m_drive.GetPose(); },
+      exampleTrajectory, [this]() {return m_drive.GetPose(); },
 
       m_drive.kDriveKinematics,
 
@@ -133,3 +138,11 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc2::InstantCommand(
           [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); }, {}));
 }
+
+  void RobotContainer::ZeroHeading(){
+    m_drive.ZeroHeading();
+}
+
+  void RobotContainer::ConfigMotorControllers(){
+    m_drive.ConfigMotorControllers();
+  }

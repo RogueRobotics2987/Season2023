@@ -72,7 +72,9 @@ DriveSubsystem::DriveSubsystem()
                  m_gyro.GetRotation2d(),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                 frc::Pose2d{}} {}
+                 frc::Pose2d{}} 
+                 
+{frc::SmartDashboard::PutData("Field", &m_field);}
 
 frc2::CommandPtr DriveSubsystem::SetDriveSlow(bool m_bool){
   return this->RunOnce(
@@ -85,6 +87,8 @@ void DriveSubsystem::Periodic() {
   m_odometry.Update(m_gyro.GetRotation2d(),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
+
+  m_field.SetRobotPose(m_odometry.GetPose());
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -198,4 +202,16 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
        m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
       pose);
+}
+
+frc2::CommandPtr DriveSubsystem::ButtonZeroHeading(){
+  return this->RunOnce(
+    [this] {ZeroHeading();});
+}
+
+void DriveSubsystem::ConfigMotorControllers(){
+  m_frontLeft.ConfigMotorControllers();
+  m_frontRight.ConfigMotorControllers();
+  m_rearLeft.ConfigMotorControllers();
+  m_rearRight.ConfigMotorControllers();
 }

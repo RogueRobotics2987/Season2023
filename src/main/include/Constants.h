@@ -15,6 +15,7 @@
 #include <units/time.h>
 #include <units/velocity.h>
 #include <units/voltage.h>
+#include <numbers>
 #include "rev/SparkMaxRelativeEncoder.h"
 
 #pragma once
@@ -160,11 +161,12 @@ constexpr double kPRearRightVel = 0.5;
 
 namespace ModuleConstants {
 constexpr double wheelOffset = 89.65;
-constexpr int kEncoderCPR = 1024;
-constexpr double kWheelDiameterMeters = 0.0762;
+constexpr double gearRatio = 8.16; //we measured 8.91
+constexpr int kEncoderCPR = 1;
+constexpr double kWheelDiameterMeters = 0.0977; // 0.0762
 constexpr double kDriveEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
-    (kWheelDiameterMeters * std::numbers::pi) / static_cast<double>(kEncoderCPR);
+    (kWheelDiameterMeters * std::numbers::pi) / static_cast<double>(kEncoderCPR) / gearRatio;
 
 constexpr double kTurningEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
@@ -177,16 +179,22 @@ constexpr double kPModuleDriveController = 8;
 
 
 namespace AutoConstants {
-constexpr auto kMaxSpeed = 3_mps;
-constexpr auto kMaxAcceleration = 3_mps_sq;
+    // was included in existing code but not in the updated 2023 code
+    
+/*      using radians_per_second_squared_t =
+    units::compound_unit<units::radians,
+                         units::inverse<units::squared<units::second>>>;
+*/
+constexpr auto kMaxSpeed = 0.5_mps;
+constexpr auto kMaxAcceleration = 0.5_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;
 constexpr auto kMaxAngularAcceleration = 3.142_rad_per_s_sq;
 
-constexpr double kPXController = 0.5;
-constexpr double kPYController = 0.5;
-constexpr double kPThetaController = 0.5;
+constexpr double kPXController = 0.1; 
+constexpr double kPYController = 0.1; 
+constexpr double kPThetaController = 0; 
 
-//
+
 
 extern const frc::TrapezoidProfile<units::radians>::Constraints
     kThetaControllerConstraints;
