@@ -1,0 +1,31 @@
+{
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Field": "Field2d"
+    },
+    "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    }
+  },
+  "NetworkTables Settings": {
+    "listenAddress": "10.29.87.2",
+    "mode": "Client (NT4)",
+    "serverTeam": "10.29.87.2"
+  },
+  "NetworkTables View": {
+    "visible": false
+  }
+}

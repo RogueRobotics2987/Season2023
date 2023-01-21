@@ -93,8 +93,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       //y moves left right
 
       frc::Pose2d{0_m, 0_m, 0_deg},
-      {frc::Translation2d{0.3_m, 0_m} , frc::Translation2d{0.3_m, 0.3_m}, frc::Translation2d{0_m, 0.3_m}},
-      frc::Pose2d{0_m, 0_m, 0_deg},
+      {frc::Translation2d{0.1_m, 0_m} /*, frc::Translation2d{0.4_m, 0_m}, frc::Translation2d{0.0_m, -0.2_m}*/},
+      frc::Pose2d{0.3_m, 0_m, 0_deg},
       // Pass the config
       config);
 
@@ -133,4 +133,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
   void RobotContainer::ConfigMotorControllers(){
     m_drive.ConfigMotorControllers();
+  }
+
+  void RobotContainer::ResetOdometry(){
+    m_drive.ResetOdometry(frc::Pose2d{5_m, 5_m, 0_deg});
   }

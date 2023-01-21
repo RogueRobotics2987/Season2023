@@ -160,7 +160,7 @@ constexpr double kPRearRightVel = 0.5;
 // }  // namespace ModuleConstants
 
 namespace ModuleConstants {
-constexpr double wheelOffset = 89.65;
+constexpr double wheelOffset = 0;
 constexpr double gearRatio = 8.16; //we measured 8.91
 constexpr int kEncoderCPR = 1;
 constexpr double kWheelDiameterMeters = 0.0977; // 0.0762
