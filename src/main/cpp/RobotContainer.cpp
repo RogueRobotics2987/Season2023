@@ -61,7 +61,7 @@ RobotContainer::RobotContainer() {
                          -safeX),
                       units::radians_per_second_t(
                          -safeRot),
-                      true);
+                      false);
         // m_drive.Drive(units::meters_per_second_t(0),
         // units::meters_per_second_t(1),
         // units::radians_per_second_t(0),
@@ -93,8 +93,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       //y moves left right
 
       frc::Pose2d{0_m, 0_m, 0_deg},
-      {frc::Translation2d{0.1_m, 0_m} /*, frc::Translation2d{0.4_m, 0_m}, frc::Translation2d{0.0_m, -0.2_m}*/},
-      frc::Pose2d{0.3_m, 0_m, 0_deg},
+      {frc::Translation2d{1_m, 0_m} /*, frc::Translation2d{0.4_m, 0_m}, frc::Translation2d{0.0_m, -0.2_m}*/},
+      frc::Pose2d{2_m, 0_m, 0_deg},
       // Pass the config
       config);
 

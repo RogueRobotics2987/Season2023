@@ -173,7 +173,7 @@ constexpr double kTurningEncoderDistancePerPulse =
     (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
 
 constexpr double kPModuleTurningController = 0.5;
-constexpr double kPModuleDriveController = 8;
+constexpr double kPModuleDriveController = 0.8;
 // TODO Lower Value of P to 0.0001,  Change Value of p Till its the Highest Without Osilation, 
 }  // namespace ModuleConstants
 
