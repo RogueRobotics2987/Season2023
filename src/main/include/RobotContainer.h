@@ -36,6 +36,8 @@ class RobotContainer {
 
   void ConfigMotorControllers();
 
+  void ResetOdometry();
+
  private:
   // The driver's controller
   frc::Joystick m_driverController{OIConstants::kDriverControllerPort};

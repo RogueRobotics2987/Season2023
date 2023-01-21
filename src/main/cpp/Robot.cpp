@@ -47,6 +47,7 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
   m_container.ZeroHeading();
+  m_container.ResetOdometry(); //TODO may need to be removed to avoid confusion in position from autonomous and teleop
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
