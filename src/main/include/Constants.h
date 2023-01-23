@@ -143,32 +143,37 @@ constexpr double kPRearRightVel = 0.5;
 
 
 // namespace ModuleConstants {
-// constexpr int kEncoderCPR = 1024;
-// constexpr double kDiameterMeters = 0.15;
+// constexpr int kTurnEncoderCPR = 1024;
+// constexpr double kWheelDiameterMeters = 0.15;
 // constexpr double kDriveEncoderDistancePerPulse =
 //     // Assumes the encoders are directly mounted on the wheel shafts
 //     (kWheelDiameterMeters * std::numbers::pi) /
-//     static_cast<double>(kEncoderCPR);
+//     static_cast<double>(kTurnEncoderCPR);
 
 // constexpr double kTurningEncoderDistancePerPulse =
 //     // Assumes the encoders are directly mounted on the wheel shafts
-//     (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
+//     (std::numbers::pi * 2) / static_cast<double>(kTurnEncoderCPR);
 
 // constexpr double kPModuleTurningController = 1;
 // constexpr double kPModuleDriveController = 1;
 // }  // namespace ModuleConstants
 
 namespace ModuleConstants {
-constexpr double wheelOffset = 89.65;
-constexpr int kEncoderCPR = 1024;
-constexpr double kWheelDiameterMeters = 0.0762;
+constexpr double wheelOffset = 0;
+constexpr double gearRatio = 8.16; //we measured 8.91
+constexpr int kTurnEncoderCPR = 1;
+constexpr int  kDriveEncoder = 42; //TODO -KBK Add Term?
+constexpr double kWheelDiameterMeters = 0.0977; // 0.0762
+
 constexpr double kDriveEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
-    (kWheelDiameterMeters * std::numbers::pi) / static_cast<double>(kEncoderCPR);
+    //(kWheelDiameterMeters * std::numbers::pi) / static_cast<double>(kTurnEncoderCPR) / gearRatio;
+    (kWheelDiameterMeters * std::numbers::pi) / static_cast<double>(kDriveEncoder) / gearRatio; //TODO -KBK Add Term?
+    //TODO - KBK - The Drive Encoders and Turn Encocers have different Counts Per Rev, We likely need to use another constant in this equation.
 
 constexpr double kTurningEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
-    (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
+    (std::numbers::pi * 2) / static_cast<double>(kTurnEncoderCPR);
 
 constexpr double kPModuleTurningController = 0.5;
 constexpr double kPModuleDriveController = 8;
