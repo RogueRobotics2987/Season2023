@@ -51,7 +51,7 @@ int m_MotorControllerTurning,
          m_driveMotor = new rev::CANSparkMax(m_MotorController, rev::CANSparkMax::MotorType::kBrushless);
          m_turningMotor = new rev::CANSparkMax(m_MotorControllerTurning, rev::CANSparkMax::MotorType::kBrushless);
         //  samDriveEncoder = new rev::CANEncoder(*samDriveMotor, m_EncoderType, m_counts_per_rev);
-         m_driveEncoder = new rev::SparkMaxRelativeEncoder(m_turningMotor->GetEncoder(m_EncoderType, m_counts_per_rev));
+         m_driveEncoder = new rev::SparkMaxRelativeEncoder(m_driveMotor->GetEncoder(m_EncoderType, m_counts_per_rev));
         //  samTurningEncoder = new rev::CANEncoder(*samTurningMotor, m_EncoderTypeTurning, m_counts_per_revTurning);
          m_turningEncoder = new ctre::phoenix::sensors::CANCoder(TurningEncoderNumber);	
 
@@ -65,6 +65,8 @@ int m_MotorControllerTurning,
   // resolution.
   m_driveEncoder->SetPositionConversionFactor(
       ModuleConstants::kDriveEncoderDistancePerPulse);
+  m_driveEncoder->SetVelocityConversionFactor(
+      ModuleConstants::kDriveEncoderDistancePerPulse / 60.0); //Converting RPM to Meters per second
 
   // Set the distance (in this case, angle, radians) per pulse for the turning encoder.
   // This is the the angle through an entire rotation (2 * wpi::numbers::pi)
@@ -78,37 +80,67 @@ int m_MotorControllerTurning,
   m_drivePIDController.SetP(
     frc::SmartDashboard::PutNumber("Enter P Value" + std::to_string(m_driveMotor->GetDeviceId()),
      ModuleConstants::kPModuleDriveController));
+
   m_turningPIDController.SetP(
     frc::SmartDashboard::PutNumber("Enter P Value for Turn" + std::to_string(m_turningMotor->GetDeviceId()), 
     ModuleConstants::kPModuleTurningController));
 
   frc::SmartDashboard::PutNumber("Wheel Offset " + std::to_string(m_turningMotor->GetDeviceId()), ModuleConstants::wheelOffset);
-
 }
 
 frc::SwerveModuleState SwerveModule::GetState() {
   return {units::meters_per_second_t{m_driveEncoder->GetVelocity()},
-          units::radian_t{m_turningEncoder->GetPosition()}};
+          units::radian_t{m_turningEncoder->GetPosition() + ModuleConstants::wheelOffset}};
+          // units::radian_t{m_turningEncoder->GetPosition()}};
+          //Subtracts ModuleConstants::wheelOffset becuse we add it in setDesired state
 }
-
 frc::SwerveModulePosition SwerveModule::GetPosition() {
   return {units::meter_t{m_driveEncoder->GetPosition()},
-          units::radian_t{m_turningEncoder->GetPosition()}};
+          units::radian_t{m_turningEncoder->GetPosition() + ModuleConstants::wheelOffset}};
+          // units::radian_t{m_turningEncoder->GetPosition()}};
+          //Subtracts ModuleConstants::wheelOffset becuse we add it in setDesired state
 }
 
-void SwerveModule::SetDesiredState(
-    const frc::SwerveModuleState& referenceState) {
+void SwerveModule::SetDesiredState(const frc::SwerveModuleState& referenceState) {
+    double m_wheelOffset = frc::SmartDashboard::GetNumber("Wheel Offset " 
+    + std::to_string(m_turningMotor->GetDeviceId()), ModuleConstants::wheelOffset);
   // Optimize the reference state to avoid spinning further than 90 degrees
-  const auto state = frc::SwerveModuleState::Optimize(
-      referenceState, units::radian_t{m_turningEncoder->GetPosition()});
 
-  // Calculate the drive output from the drive PID controller.
+  m_drivePIDController.SetP(
+    frc::SmartDashboard::GetNumber("Enter P Value" + std::to_string(m_driveMotor->GetDeviceId()), 1E-5));
   const auto driveOutput = m_drivePIDController.Calculate(
-      m_driveEncoder->GetVelocity(), state.speed.value());
+     m_driveEncoder->GetVelocity(), referenceState.speed.to<double>());
 
-  // Calculate the turning motor output from the turning PID controller.
+  m_turningPIDController.SetP(
+      frc::SmartDashboard::GetNumber("Enter P Value for Turn" + std::to_string(m_turningMotor->GetDeviceId()), 1E-5));
+  
   auto turnOutput = m_turningPIDController.Calculate(
-      units::radian_t{m_turningEncoder->GetPosition()}, state.angle.Radians());
+      units::radian_t( m_turningEncoder->GetPosition() /* * 78.73*/ + m_wheelOffset), referenceState.angle.Radians());
+  
+  frc::SmartDashboard::PutNumber("Get Velocity output" + std::to_string(m_driveMotor->GetDeviceId()), 
+                                driveOutput);
+  frc::SmartDashboard::PutNumber("Get Velocity output" + std::to_string(m_driveMotor->GetDeviceId()), 
+                                m_driveEncoder->GetVelocity());
+  frc::SmartDashboard::PutNumber("Velocity Command " + std::to_string(m_driveMotor->GetDeviceId()),
+                                referenceState.speed.to<double>());
+  frc::SmartDashboard::PutNumber("Get Drive Positon" + std::to_string(m_driveMotor->GetDeviceId()), 
+                                m_driveEncoder->GetPosition());
+  frc::SmartDashboard::PutNumber("get rotation Position" + std::to_string(m_turningMotor->GetDeviceId()), 
+                                 m_turningEncoder->GetPosition() + m_wheelOffset /* * 78.73*/);
+  frc::SmartDashboard::PutNumber("Motor Set Position - " + std::to_string(m_turningMotor->GetDeviceId()),
+                                 double(referenceState.angle.Radians()) /* * 78.73*/);
+  frc::SmartDashboard::PutNumber(std::to_string(m_turningMotor->GetDeviceId()), turnOutput);
+
+  // const auto state = frc::SwerveModuleState::Optimize(
+  //     referenceState, units::radian_t{m_turningEncoder.GetDistance()});
+
+  // // Calculate the drive output from the drive PID controller.
+  // const auto driveOutput = m_drivePIDController.Calculate(
+  //     m_driveEncoder.GetRate(), state.speed.value());
+
+  // // Calculate the turning motor output from the turning PID controller.
+  // auto turnOutput = m_turningPIDController.Calculate(
+  //     units::radian_t{m_turningEncoder.GetDistance()}, state.angle.Radians());
 
   // Set the motor outputs.
   m_driveMotor->Set(driveOutput);
@@ -118,4 +150,45 @@ void SwerveModule::SetDesiredState(
 void SwerveModule::ResetEncoders() {
   // m_driveEncoder->Reset();
   // m_turningEncoder->Reset();
+}
+
+void SwerveModule::ConfigMotorControllers(){
+  m_driveMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  m_turningMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+}
+
+SwerveModule::~SwerveModule(){
+  delete m_driveMotor;
+  delete m_turningMotor;
+  delete m_driveEncoder;
+  delete m_turningEncoder;
+}
+
+void SwerveModule::Periodic() {
+
+// {double m_wheelOffset = frc::SmartDashboard::GetNumber("Wheel Offset " 
+//     + std::to_string(m_turningMotor->GetDeviceId()), ModuleConstants::wheelOffset);
+//   // Optimize the reference state to avoid spinning further than 90 degrees
+
+//   m_drivePIDController.SetP(frc::SmartDashboard::GetNumber("Enter P Value" + std::to_string(m_driveMotor->GetDeviceId()), 1E-5));
+//   const auto driveOutput = m_drivePIDController.Calculate(
+//      (m_driveEncoder->GetVelocity(), referenceState.speed.to<double>()) / 10);
+
+//   m_turningPIDController.SetP(
+//       frc::SmartDashboard::GetNumber("Enter P Value for Turn" + std::to_string(m_turningMotor->GetDeviceId()), 1E-5));
+  
+//   auto turnOutput = m_turningPIDController.Calculate(
+//       units::radian_t( m_turningEncoder->GetPosition() /* * 78.73*/ + m_wheelOffset), referenceState.angle.Radians());
+  
+//   frc::SmartDashboard::PutNumber(std::to_string(m_driveMotor->GetDeviceId()), driveOutput);
+
+//   frc::SmartDashboard::PutNumber("Get Velocity output" + std::to_string(m_driveMotor->GetDeviceId()), 
+//                                 m_driveEncoder->GetVelocity() / 10);
+//   frc::SmartDashboard::PutNumber("Get Drive Positon" + std::to_string(m_driveMotor->GetDeviceId()), 
+//                                 m_driveEncoder->GetPosition());
+//   frc::SmartDashboard::PutNumber("get rotation Position" + std::to_string(m_turningMotor->GetDeviceId()), 
+//                                  m_turningEncoder->GetPosition() + m_wheelOffset /* * 78.73*/);
+//   frc::SmartDashboard::PutNumber("Motor Set Position - " + std::to_string(m_turningMotor->GetDeviceId()),
+//                                  double(referenceState.angle.Radians()) /* * 78.73*/);
+//   frc::SmartDashboard::PutNumber(std::to_string(m_turningMotor->GetDeviceId()), turnOutput);
 }
