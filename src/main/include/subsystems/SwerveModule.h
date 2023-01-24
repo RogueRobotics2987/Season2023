@@ -78,5 +78,3 @@ SwerveModule(int m_MotorController, rev::SparkMaxRelativeEncoder::Type m_Encoder
       0.0,
       {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}};
 };
-
-

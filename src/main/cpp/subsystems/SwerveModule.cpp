@@ -65,6 +65,8 @@ int m_MotorControllerTurning,
   // resolution.
   m_driveEncoder->SetPositionConversionFactor(
       ModuleConstants::kDriveEncoderDistancePerPulse);
+  m_driveEncoder->SetVelocityConversionFactor(
+    ModuleConstants::kDriveEncoderDistancePerPulse / 60.0); //Converting RPM to Meters per second
 
   // Set the distance (in this case, angle, radians) per pulse for the turning encoder.
   // This is the the angle through an entire rotation (2 * wpi::numbers::pi)
@@ -118,7 +120,9 @@ void SwerveModule::SetDesiredState(
   frc::SmartDashboard::PutNumber(std::to_string(m_driveMotor->GetDeviceId()), driveOutput);
 
   frc::SmartDashboard::PutNumber("Get Velocity output" + std::to_string(m_driveMotor->GetDeviceId()), 
-                                m_driveEncoder->GetVelocity() / 10);
+                                m_driveEncoder->GetVelocity());
+  frc::SmartDashboard::PutNumber("Velocity Command " + std::to_string(m_driveMotor->GetDeviceId()),
+                                referenceState.speed.to<double>());
   frc::SmartDashboard::PutNumber("Get Drive Positon" + std::to_string(m_driveMotor->GetDeviceId()), 
                                 m_driveEncoder->GetPosition());
   frc::SmartDashboard::PutNumber("get rotation Position" + std::to_string(m_turningMotor->GetDeviceId()), 
