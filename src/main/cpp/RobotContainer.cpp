@@ -44,13 +44,13 @@ RobotContainer::RobotContainer() {
         
         
         double safeX = m_driverController.GetX();
-        if(fabs(safeX)<.245) {
+        if(fabs(safeX)<.1) {
             safeX=0;}
         double safeY =  m_driverController.GetY();
-        if(fabs(safeY)<.245) { 
+        if(fabs(safeY)<.1) { 
             safeY=0;}
         double safeRot = m_driverController.GetZ();
-        if(fabs(safeRot)<.245) {
+        if(fabs(safeRot)<.1) {
             safeRot=0;}
         
         // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
@@ -62,6 +62,8 @@ RobotContainer::RobotContainer() {
                       units::radians_per_second_t(
                          -safeRot),
                       false);
+
+
         // m_drive.Drive(units::meters_per_second_t(0),
         // units::meters_per_second_t(1),
         // units::radians_per_second_t(0),
