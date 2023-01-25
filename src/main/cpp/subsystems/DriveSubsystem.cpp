@@ -103,6 +103,10 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                           xSpeed, ySpeed, rot, m_gyro.GetRotation2d())
                     : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
 
+  // for(int i = 0; i<4; i++){
+  //   states[i].speed * ModuleConstants::kFFModuleDriveController;
+  // }
+
   kDriveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
 
   auto [fl, fr, bl, br] = states;

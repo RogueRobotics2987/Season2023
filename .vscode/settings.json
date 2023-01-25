@@ -88,5 +88,6 @@
     "typeinfo": "cpp",
     "variant": "cpp",
     "*.inc": "cpp"
-  }
+  },
+  "git.ignoreLimitWarning": true
 }
