@@ -157,6 +157,11 @@ void SwerveModule::ConfigMotorControllers(){
   m_turningMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }
 
+  frc::ProfiledPIDController<units::radians> SwerveModule::GetTurnPID(){
+  return m_turningPIDController;
+}
+
+
 SwerveModule::~SwerveModule(){
   delete m_driveMotor;
   delete m_turningMotor;
@@ -191,4 +196,7 @@ void SwerveModule::Periodic() {
 //   frc::SmartDashboard::PutNumber("Motor Set Position - " + std::to_string(m_turningMotor->GetDeviceId()),
 //                                  double(referenceState.angle.Radians()) /* * 78.73*/);
 //   frc::SmartDashboard::PutNumber(std::to_string(m_turningMotor->GetDeviceId()), turnOutput);
+
+
+
 }

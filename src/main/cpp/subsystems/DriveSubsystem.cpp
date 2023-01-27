@@ -108,23 +108,26 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   kDriveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
 
   auto [fl, fr, bl, br] = states;
+  
 
-float currentAngle = fabs(fmod((double)(m_frontLeft.GetState().angle.Degrees()),360));
+float currentAngle = fmod((double)(m_frontLeft.GetState().angle.Degrees()),180);
+// float desiredAngle = (float)fl.angle.Degrees();
 // TODO curentAngle = currentAngle + 89.65 Radients moduleConstants::Wheelconstants
-float angleDiffFL = fabs((float)(fl.angle.Degrees()) - currentAngle);
-bool angleOff = true;
+//float angleDiffFL = fabs((float)(fl.angle.Degrees()) - currentAngle);
+//float angleOff = fabs(currentAngle - desiredAngle);
+float angleOff = (float)m_frontLeft.GetTurnPID().GetPositionError();
 frc::SmartDashboard::PutNumber("Fl Current angle", currentAngle);
-frc::SmartDashboard::PutNumber("Fl Angle Diff",angleDiffFL);
+frc::SmartDashboard::PutNumber("Fl Angle Diff",angleOff);
 // frc::SmartDashboard::PutNumber("m_frontLeft State Angle", m_frontLeft.GetState().angle.Degrees().value());
 frc::SmartDashboard::PutNumber("Fl Desired angle",(float)fl.angle.Degrees());
 frc::SmartDashboard::PutNumber("Fr Desired angle",(float)fr.angle.Degrees());
 frc::SmartDashboard::PutNumber("Bl Desired angle",(float)bl.angle.Degrees());
 frc::SmartDashboard::PutNumber("Br Desired angle",(float)br.angle.Degrees());
-angleOff = angleOff && fabs((angleDiffFL < 10) || fabs(angleDiffFL - 360) < 10) && (!noJoystick);
+float epsilon = 1.0/10.0;
 // angleOff = angleOff && fabs((angleDiffFR < 10)) && (!noJoystick);
 // angleOff = angleOff && fabs((angleDiffBR < 10)) && (!noJoystick);
 // angleOff = angleOff && fabs((angleDiffBL < 10)) && (!noJoystick);
-if(angleOff){
+if(fabs(angleOff) <= epsilon) {
     // m_frontLeft.SetDesiredState(fl);
     // m_frontRight.SetDesiredState(fr);
     // m_rearLeft.SetDesiredState(bl);
