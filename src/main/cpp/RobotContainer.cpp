@@ -95,8 +95,12 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       //y moves left right
 
       frc::Pose2d{0_m, 0_m, 0_deg},
-      {frc::Translation2d{1_m, 0_m} /*, frc::Translation2d{0.4_m, 0_m}, frc::Translation2d{0.0_m, -0.2_m}*/},
-      frc::Pose2d{2_m, 0_m, 0_deg},
+      {frc::Translation2d{2_m, 0_m} , frc::Translation2d{2_m, 2_m}, frc::Translation2d{0_m, 2_m}},
+      frc::Pose2d{0_m, 0_m, 0_deg},
+
+      // frc::Pose2d{0_m, 0_m, 0_deg}, snakeing line
+      // {frc::Translation2d{1_m, 1_m} , frc::Translation2d{2_m, 0_m}, frc::Translation2d{3_m, -1_m}},
+      // frc::Pose2d{4_m, 0_m, 0_deg},
       // Pass the config
       config);
 

@@ -76,20 +76,20 @@
 // }  // namespace DriveConstants
 
 namespace DriveConstants {
-constexpr int kFrontLeftDriveMotorPort = 13;
-constexpr int kRearLeftDriveMotorPort = 7;
-constexpr int kFrontRightDriveMotorPort = 3;
-constexpr int kRearRightDriveMotorPort = 5;
+constexpr int kFrontLeftDriveMotorPort = 2; //13 for tshirt cannon
+constexpr int kRearLeftDriveMotorPort = 8; //7 for tshirt
+constexpr int kFrontRightDriveMotorPort = 4; //3 for tshirt
+constexpr int kRearRightDriveMotorPort = 6; // 5 for tshirt
 
-constexpr int kFrontLeftTurningMotorPort = 2;
-constexpr int kRearLeftTurningMotorPort = 8;
-constexpr int kFrontRightTurningMotorPort = 4;
-constexpr int kRearRightTurningMotorPort = 6;
+constexpr int kFrontLeftTurningMotorPort = 1; //2 for tshirt
+constexpr int kRearLeftTurningMotorPort = 7; // 8 for tshirt
+constexpr int kFrontRightTurningMotorPort = 3;//4 for tshirt
+constexpr int kRearRightTurningMotorPort = 5; //6 for tshirt
 
-constexpr int kFrontLeftTurningEncoderNumber = 9;
-constexpr int kRearLeftTurningEncoderNumber = 12;
-constexpr int kFrontRightTurningEncoderNumber = 10;
-constexpr int kRearRightTurningEncoderNumber = 11;
+constexpr int kFrontLeftTurningEncoderNumber = 13; //9 for tshirt
+constexpr int kRearLeftTurningEncoderNumber = 14; //12 for tshirt
+constexpr int kFrontRightTurningEncoderNumber = 15;//10 for tshirt
+constexpr int kRearRightTurningEncoderNumber = 16;//11 for tshirt
 
 // constexpr int Actuator = 40;
 
@@ -161,7 +161,7 @@ constexpr double kPRearRightVel = 0.5;
 
 namespace ModuleConstants {
 constexpr double wheelOffset = 0;
-constexpr double gearRatio = 8.16; //we measured 8.91
+constexpr double gearRatio = 8.14; //tshirt cannon is 18:16:1
 constexpr int kEncoderCPR = 1;
 constexpr double kWheelDiameterMeters = 0.0977; // 0.0762
 constexpr double kDriveEncoderDistancePerPulse =
@@ -192,8 +192,8 @@ constexpr auto kMaxAcceleration = 0.5_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;
 constexpr auto kMaxAngularAcceleration = 3.142_rad_per_s_sq;
 
-constexpr double kPXController = 0.1; 
-constexpr double kPYController = 0.1; 
+constexpr double kPXController = 0.0000001; 
+constexpr double kPYController = 0.0000001; 
 constexpr double kPThetaController = 0; 
 
 
