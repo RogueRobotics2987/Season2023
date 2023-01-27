@@ -20,6 +20,8 @@ void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
   frc2::JoystickButton(&stick1,3).OnTrue(m_intake.MotorMoveCommand());
   frc2::JoystickButton(&stick1,3).OnFalse(m_intake.StopMoveCommand());
+  
+  //  frc2::JoystickButton(&stick1,2).OnTrue(m_limelight.startCamera());
 
   // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   frc2::Trigger([this] {
@@ -28,7 +30,7 @@ void RobotContainer::ConfigureBindings() {
 
   // Schedule `ExampleMethodCommand` when the Xbox controller's B button is
   // pressed, cancelling on release.
-  m_driverController.B().WhileTrue(m_subsystem.ExampleMethodCommand());
+  //m_driverController.B().WhileTrue(m_subsystem.ExampleMethodCommand());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
