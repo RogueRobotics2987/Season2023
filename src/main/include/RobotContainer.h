@@ -39,6 +39,8 @@ class RobotContainer {
 
   void ResetOdometry();
 
+  frc2::Command* GetPathCommand();
+
  private:
   // The driver's controller
   frc::Joystick m_driverController{OIConstants::kDriverControllerPort};
