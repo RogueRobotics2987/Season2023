@@ -88,7 +88,7 @@ void DriveSubsystem::Periodic() {
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 
-                     frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
+    frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
 
   m_field.SetRobotPose(m_odometry.GetPose());
 }
@@ -104,6 +104,10 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
       fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                           xSpeed, ySpeed, rot, m_gyro.GetRotation2d())
                     : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
+
+  // for(int i = 0; i<4; i++){
+  //   states[i].speed * ModuleConstants::kFFModuleDriveController;
+  // }
 
   kDriveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
 

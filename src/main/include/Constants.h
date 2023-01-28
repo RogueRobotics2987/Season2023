@@ -173,8 +173,10 @@ constexpr double kTurningEncoderDistancePerPulse =
     (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
 
 constexpr double kPModuleTurningController = 0.5;
-constexpr double kPModuleDriveController = 8;
+constexpr double kPModuleDriveController = 0.1;
 // TODO Lower Value of P to 0.0001,  Change Value of p Till its the Highest Without Osilation, 
+constexpr double kFFModuleDriveController = 0.264636;
+
 }  // namespace ModuleConstants
 
 
@@ -185,13 +187,13 @@ namespace AutoConstants {
     units::compound_unit<units::radians,
                          units::inverse<units::squared<units::second>>>;
 */
-constexpr auto kMaxSpeed = 0.5_mps;
+constexpr auto kMaxSpeed = 1.5_mps;
 constexpr auto kMaxAcceleration = 0.5_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;
 constexpr auto kMaxAngularAcceleration = 3.142_rad_per_s_sq;
 
-constexpr double kPXController = 0.1; 
-constexpr double kPYController = 0.1; 
+constexpr double kPXController = 0.000001; 
+constexpr double kPYController = 0.000001; 
 constexpr double kPThetaController = 0; 
 
 

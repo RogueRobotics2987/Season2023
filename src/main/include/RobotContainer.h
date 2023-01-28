@@ -15,6 +15,7 @@
 #include <frc2/command/RunCommand.h>
 #include <frc/Joystick.h>
 #include <iostream>
+#include <units/angle.h>
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
@@ -37,6 +38,8 @@ class RobotContainer {
   void ConfigMotorControllers();
 
   void ResetOdometry();
+
+  frc2::Command* GetPathCommand();
 
  private:
   // The driver's controller

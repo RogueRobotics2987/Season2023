@@ -15,13 +15,19 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/SwerveControllerCommand.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <pathplanner/lib/auto/SwerveAutoBuilder.h>
+#include <pathplanner/lib/PathPlanner.h>
 #include <units/angle.h>
 #include <units/velocity.h>
+
+
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 
 using namespace DriveConstants;
+using namespace pathplanner;
+
 
 RobotContainer::RobotContainer() {
 
@@ -105,8 +111,12 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       //y moves left right
 
       frc::Pose2d{0_m, 0_m, 0_deg},
-      {frc::Translation2d{0.1_m, 0_m} /*, frc::Translation2d{0.4_m, 0_m}, frc::Translation2d{0.0_m, -0.2_m}*/},
-      frc::Pose2d{0.3_m, 0_m, 0_deg},
+      {frc::Translation2d{1_m, 0_m} , frc::Translation2d{1_m, 1_m}, frc::Translation2d{0_m, 1_m}},
+      frc::Pose2d{0_m, 0_m, 0_deg},
+
+      // frc::Pose2d{0_m, 0_m, 0_deg},
+      // {frc::Translation2d{1_m, 1_m} , frc::Translation2d{2_m, 0_m}, frc::Translation2d{3_m, -1_m}},
+      // frc::Pose2d{4_m, 0_m, 0_deg},
       // Pass the config
       config);
 
@@ -122,7 +132,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
       m_drive.kDriveKinematics,
 
-      frc2::PIDController{AutoConstants::kPXController, 0, 0},
+       frc2::PIDController{AutoConstants::kPXController, 0, 0},
       frc2::PIDController{AutoConstants::kPYController, 0, 0}, thetaController,
 
       [this](auto moduleStates) { m_drive.SetModuleStates(moduleStates); },
@@ -150,3 +160,33 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   void RobotContainer::ResetOdometry(){
     m_drive.ResetOdometry(frc::Pose2d{5_m, 5_m, 0_deg});
   }
+
+  frc2::Command* RobotContainer::GetPathCommand(){
+    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+    PathPlannerTrajectory examplePath = PathPlanner::loadPath("New Path", PathConstraints(1.5_mps, 0.5_mps_sq));
+
+   // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+  // for every path in the group
+  std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("FullAuto", {PathConstraints(4_mps, 3_mps_sq)});
+
+  // This is just an example event map. It would be better to have a constant, global event map
+  // in your code that will be used by all path following commands/autobuilders.
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+  eventMap.emplace("marker1", std::make_shared<frc2::PrintCommand>("Passed Marker 1"));
+  eventMap.emplace("intakeDown", std::make_shared<IntakeDown>());
+
+  // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this could be in RobotContainer along with your subsystems
+
+  SwerveAutoBuilder autoBuilder(
+      [this]() { return swerveSubsystem.getPose(); }, // Function to supply current robot pose
+      [this](auto initPose) { swerveSubsystem.resetPose(initPose); }, // Function used to reset odometry at the beginning of auto
+      PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      [this](auto speeds) { swerveSubsystem.driveFieldRelative(speeds); }, // Output function that accepts field relative ChassisSpeeds
+      eventMap, // Our event map
+      { &swerveSubsystem }, // Drive requirements, usually just a single drive subsystem
+      true // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  );
+
+  CommandPtr fullAuto = autoBuilder.fullAuto(pathGroup);
+    }
