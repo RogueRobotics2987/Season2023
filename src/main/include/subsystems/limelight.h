@@ -12,8 +12,8 @@
 
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
-//#include "networktables/NetworkTableEntry.h"
-//#include "networktables/NetworkTableValue.h"
+#include "networktables/NetworkTableEntry.h"
+#include "networktables/NetworkTableValue.h"
 
 class limelight : public frc2::SubsystemBase {
  public:
