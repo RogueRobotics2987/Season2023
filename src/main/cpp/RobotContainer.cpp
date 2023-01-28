@@ -4,34 +4,10 @@
 
 #include "RobotContainer.h"
 
-#include <utility>
-
-#include <frc/controller/PIDController.h>
-#include <frc/geometry/Translation2d.h>
-#include <frc/shuffleboard/Shuffleboard.h>
-#include <frc/trajectory/Trajectory.h>
-#include <frc/trajectory/TrajectoryGenerator.h>
-#include <frc2/command/InstantCommand.h>
-#include <frc2/command/SequentialCommandGroup.h>
-#include <frc2/command/SwerveControllerCommand.h>
-#include <frc2/command/button/JoystickButton.h>
-#include <pathplanner/lib/auto/SwerveAutoBuilder.h>
-#include <pathplanner/lib/PathPlanner.h>
-#include <units/angle.h>
-#include <units/velocity.h>
-
-
-
-#include "Constants.h"
-#include "subsystems/DriveSubsystem.h"
-
-using namespace DriveConstants;
-using namespace pathplanner;
-
 
 RobotContainer::RobotContainer() {
 
-    ConfigMotorControllers();
+  ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
@@ -154,29 +130,32 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   frc2::Command* RobotContainer::GetPathCommand(){
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
     PathPlannerTrajectory examplePath = PathPlanner::loadPath("New Path", PathConstraints(1.5_mps, 0.5_mps_sq));
+    //TODO change Path constraints to Constants
 
    // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
   // for every path in the group
-  std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("FullAuto", {PathConstraints(4_mps, 3_mps_sq)});
+  // std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("fullAuto", {PathConstraints(4_mps, 3_mps_sq)});
 
   // This is just an example event map. It would be better to have a constant, global event map
   // in your code that will be used by all path following commands/autobuilders.
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
-  eventMap.emplace("marker1", std::make_shared<frc2::PrintCommand>("Passed Marker 1"));
-  eventMap.emplace("intakeDown", std::make_shared<IntakeDown>());
+  // eventMap.emplace("marker1", std::make_shared<frc2::PrintCommand>("Passed Marker 1"));
+  // eventMap.emplace("intakeDown", std::make_shared<IntakeDown>());
 
   // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this could be in RobotContainer along with your subsystems
 
   SwerveAutoBuilder autoBuilder(
-      [this]() { return swerveSubsystem.getPose(); }, // Function to supply current robot pose
-      [this](auto initPose) { swerveSubsystem.resetPose(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [this](auto speeds) { swerveSubsystem.driveFieldRelative(speeds); }, // Output function that accepts field relative ChassisSpeeds
+      [this]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+      [this](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      [this](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, true); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
-      { &swerveSubsystem }, // Drive requirements, usually just a single drive subsystem
-      true // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+      { &m_drive }, // Drive requirements, usually just a single drive subsystem
+      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
   );
-
-  CommandPtr fullAuto = autoBuilder.fullAuto(pathGroup);
-    }
+ 
+  CommandPtr examplePathCmdPtr = autoBuilder.fullAuto(examplePath);
+  Command* fullAutoRawPointer = examplePathCmdPtr.get();
+  return fullAutoRawPointer;
+}
