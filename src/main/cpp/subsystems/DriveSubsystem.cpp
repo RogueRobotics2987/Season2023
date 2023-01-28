@@ -127,7 +127,7 @@ float epsilon = 1.0/10.0;
 // angleOff = angleOff && fabs((angleDiffFR < 10)) && (!noJoystick);
 // angleOff = angleOff && fabs((angleDiffBR < 10)) && (!noJoystick);
 // angleOff = angleOff && fabs((angleDiffBL < 10)) && (!noJoystick);
-if(fabs(angleOff) <= epsilon) {
+if(fabs(angleOff) <= epsilon && noJoystick != true) {
     // m_frontLeft.SetDesiredState(fl);
     // m_frontRight.SetDesiredState(fr);
     // m_rearLeft.SetDesiredState(bl);
