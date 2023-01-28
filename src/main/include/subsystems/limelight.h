@@ -19,7 +19,7 @@ class limelight : public frc2::SubsystemBase {
  public:
   limelight();
 
-  frc2::CommandPtr startCamera();
+  frc2::CommandPtr configOdometry();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -31,5 +31,7 @@ class limelight : public frc2::SubsystemBase {
   //photonlib::PhotonCamera camera{"limelight"};
 
   int cur_pipeline = 7;
+  //arr position;
+
 
 };

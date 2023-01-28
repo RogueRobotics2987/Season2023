@@ -20,8 +20,6 @@
 #include <units/angle.h>
 #include <units/velocity.h>
 
-
-
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 
@@ -31,7 +29,7 @@ using namespace pathplanner;
 
 RobotContainer::RobotContainer() {
 
-    ConfigMotorControllers();
+  ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
@@ -40,18 +38,18 @@ RobotContainer::RobotContainer() {
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
- m_drive.SetDefaultCommand(frc2::RunCommand(
-      [this] {
+ m_drive.SetDefaultCommand(frc2::RunCommand([this] {
         //   std::cout << "sea out in robot container" << std::endl;
-          frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
-          frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
-          frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
+        frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
+        frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
+        frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
         
         bool noJoystick = false;
         bool noJoystickX = false;
         bool noJoystickY = false;
         bool noJoystickRot = false;
         double safeX = m_driverController.GetX();
+
         if(fabs(safeX)<.245) {
             safeX=0;
             noJoystickX = true;
@@ -92,6 +90,9 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_driverController, 7).OnTrue(m_drive.SetDriveSlow(true));
     frc2::JoystickButton(&m_driverController, 7).OnFalse(m_drive.SetDriveSlow(false));
     frc2::JoystickButton(&m_driverController, 1).OnTrue(m_drive.ButtonZeroHeading());
+
+    //frc2::JoystickButton(&m_driverController, 2).OnTrue(m_limelight.configOdometry());
+
 
 }
 

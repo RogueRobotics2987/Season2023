@@ -9,9 +9,9 @@ limelight::limelight() = default;
 // This method will be called once per scheduler run
 void limelight::Periodic() {}
     
-    frc2::CommandPtr limelight::startCamera(){
-        //photonlib::PhotonPipelineResult result = camera.GetLatestResult();
-        //nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber
+frc2::CommandPtr limelight::configOdometry(){
+    
+    //nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
 
-        //nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipline", cur_pipeline);
-    }
+
+}

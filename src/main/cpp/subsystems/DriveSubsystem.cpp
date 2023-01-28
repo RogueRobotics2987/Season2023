@@ -87,6 +87,7 @@ void DriveSubsystem::Periodic() {
   m_odometry.Update(m_gyro.GetRotation2d(),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
+  
 
     frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
 
