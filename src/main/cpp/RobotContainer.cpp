@@ -52,17 +52,17 @@ RobotContainer::RobotContainer() {
         bool noJoystickY = false;
         bool noJoystickRot = false;
         double safeX = m_driverController.GetX();
-        if(fabs(safeX)<.245) {
+        if(fabs(safeX)<0.1) {
             safeX=0;
             noJoystickX = true;
             }
         double safeY =  m_driverController.GetY();
-        if(fabs(safeY)<.245) { 
+        if(fabs(safeY)<0.1) { 
             safeY=0;
             noJoystickY = true;
             }
         double safeRot = m_driverController.GetZ();
-        if(fabs(safeRot)<.245) {
+        if(fabs(safeRot)<0.1) {
             safeRot=0;
             noJoystickRot = true;
             }
@@ -73,11 +73,11 @@ RobotContainer::RobotContainer() {
         // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
         
         m_drive.Drive(units::meters_per_second_t(
-                         -safeY),
+                         -safeY * AutoConstants::kMaxSpeed),
                       units::meters_per_second_t(
-                         -safeX),
+                         -safeX * AutoConstants::kMaxSpeed),
                       units::radians_per_second_t(
-                         -safeRot),
+                         -safeRot * PI),
                       false,
                       noJoystick);
         // m_drive.Drive(units::meters_per_second_t(0),
@@ -171,6 +171,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   //  // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
   // // for every path in the group
   // std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("FullAuto", {PathConstraints(4_mps, 3_mps_sq)});
+
 
   // // This is just an example event map. It would be better to have a constant, global event map
   // // in your code that will be used by all path following commands/autobuilders.

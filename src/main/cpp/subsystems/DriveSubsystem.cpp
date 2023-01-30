@@ -82,7 +82,13 @@ frc2::CommandPtr DriveSubsystem::SetDriveSlow(bool m_bool){
 }
 
 void DriveSubsystem::Periodic() {
-  frc::SmartDashboard::PutNumber("Gyro Angle: ", m_gyro.GetAngle());
+  frc::SmartDashboard::PutNumber("Gyro Yaw: ", m_gyro.GetYaw());
+  frc::SmartDashboard::PutNumber("Gyro Pitch: ", m_gyro.GetPitch());
+  frc::SmartDashboard::PutNumber("Gyro Roll: ", m_gyro.GetRoll());
+  frc::SmartDashboard::PutNumber("Gyro Angle X: ", m_gyro.GetRawGyroX());
+  frc::SmartDashboard::PutNumber("Gyro Angle Y: ", m_gyro.GetRawGyroY());
+  frc::SmartDashboard::PutNumber("Gyro Angle Z: ", m_gyro.GetRawGyroZ());
+
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(m_gyro.GetRotation2d(),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
@@ -131,7 +137,11 @@ float epsilon = 1.0/10.0;
 // angleOff = angleOff && fabs((angleDiffFR < 10)) && (!noJoystick);
 // angleOff = angleOff && fabs((angleDiffBR < 10)) && (!noJoystick);
 // angleOff = angleOff && fabs((angleDiffBL < 10)) && (!noJoystick);
-if(fabs(angleOff) <= epsilon && noJoystick != true) {
+if(fl.speed > (units::velocity::meters_per_second_t)(0.1)){
+
+}
+
+else if(fabs(angleOff) <= epsilon && noJoystick != true) {
     // m_frontLeft.SetDesiredState(fl);
     // m_frontRight.SetDesiredState(fr);
     // m_rearLeft.SetDesiredState(bl);
