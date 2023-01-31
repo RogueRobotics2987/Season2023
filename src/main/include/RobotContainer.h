@@ -9,9 +9,12 @@
 #include <frc/Joystick.h>
 #include "Constants.h"
 #include "subsystems/ExampleSubsystem.h"
-#include "subsystems/Intake.h"
+#include "subsystems/Elevator.h"
+#include "commands/ElevatorCmd.h"
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/button/Trigger.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -24,6 +27,7 @@ class RobotContainer {
   RobotContainer();
 
   frc2::CommandPtr GetAutonomousCommand();
+  frc2::CommandPtr GetElevatorCommand();
 
  private:
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -32,8 +36,10 @@ class RobotContainer {
 
   // The robot's subsystems are defined here...
   ExampleSubsystem m_subsystem;
-  Intake m_intake;
+  Elevator m_elevator;
 
+  frc::Joystick xbox{0};
   frc::Joystick stick1{1};
+  
   void ConfigureBindings();
 };

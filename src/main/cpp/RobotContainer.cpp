@@ -8,6 +8,7 @@
 
 #include "commands/Autos.h"
 #include "commands/ExampleCommand.h"
+#include "commands/ElevatorCmd.h"
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -18,8 +19,8 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
-  frc2::JoystickButton(&stick1,3).OnTrue(m_intake.MotorMoveCommand());
-  frc2::JoystickButton(&stick1,3).OnFalse(m_intake.StopMoveCommand());
+  frc2::JoystickButton(&stick1,3).OnTrue(m_elevator.MotorMoveCommand());
+  frc2::JoystickButton(&stick1,3).OnFalse(m_elevator.StopMoveCommand());
 
   // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   frc2::Trigger([this] {
@@ -34,4 +35,9 @@ void RobotContainer::ConfigureBindings() {
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
   return autos::ExampleAuto(&m_subsystem);
+}
+
+frc2::CommandPtr RobotContainer::GetElevatorCommand() {
+  // An example command will be run in autonomous
+  return autos::ExampleAuto(&m_elevator);
 }
