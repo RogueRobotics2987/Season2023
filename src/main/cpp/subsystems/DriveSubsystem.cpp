@@ -137,7 +137,7 @@ float epsilon = 1.0/10.0;
 // angleOff = angleOff && fabs((angleDiffFR < 10)) && (!noJoystick);
 // angleOff = angleOff && fabs((angleDiffBR < 10)) && (!noJoystick);
 // angleOff = angleOff && fabs((angleDiffBL < 10)) && (!noJoystick);
-if(fl.speed > (units::velocity::meters_per_second_t)(0.1)){
+if(fl.speed > (units::velocity::meters_per_second_t)(0.05)){
 
 }
 
