@@ -6,6 +6,10 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc2/command/button/CommandXboxController.h>
+#include <frc/Joystick.h>
+#include <frc/XboxController.h>
+#include "subsystems/Elevator.h"
 
 /**
  * An example command.
@@ -17,7 +21,7 @@
 class ElevatorCmd
     : public frc2::CommandHelper<frc2::CommandBase, ElevatorCmd> {
  public:
-  ElevatorCmd();
+  ElevatorCmd(Elevator& elevator, frc::Joystick& xbox, frc::Joystick& stick1);
 
   void Initialize() override;
 
@@ -26,4 +30,9 @@ class ElevatorCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+ private:
+  Elevator* m_elevator = nullptr;
+  frc::Joystick* m_xbox = nullptr;
+  frc::Joystick* m_stick1 = nullptr;
 };

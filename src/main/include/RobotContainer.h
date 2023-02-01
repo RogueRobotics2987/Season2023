@@ -7,6 +7,7 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/CommandXboxController.h>
 #include <frc/Joystick.h>
+#include <frc/XboxController.h>
 #include "Constants.h"
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/Elevator.h"
@@ -14,6 +15,8 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/button/Trigger.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+//#include <frc2/command/CommandBase.h>
+#include <frc2/command/CommandHelper.h>
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -27,7 +30,6 @@ class RobotContainer {
   RobotContainer();
 
   frc2::CommandPtr GetAutonomousCommand();
-  frc2::CommandPtr GetElevatorCommand();
 
  private:
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -38,8 +40,8 @@ class RobotContainer {
   ExampleSubsystem m_subsystem;
   Elevator m_elevator;
 
-  frc::Joystick xbox{0};
-  frc::Joystick stick1{1};
+  frc::Joystick m_xbox{0};
+  frc::Joystick m_stick1{1};
   
   void ConfigureBindings();
 };

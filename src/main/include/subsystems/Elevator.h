@@ -7,10 +7,12 @@
 #include <frc2/command/SubsystemBase.h>
 #include "rev/CANSparkMax.h"
 #include <frc2/command/CommandPtr.h>
-
+#include "commands/ElevatorCmd.h"
 #include <frc2/command/Commands.h>
 #include <frc2/command/FunctionalCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/Solenoid.h> 
+#include <frc/DoubleSolenoid.h> 
 
 
 class Elevator : public frc2::SubsystemBase {
@@ -22,7 +24,7 @@ class Elevator : public frc2::SubsystemBase {
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
-  void Elevator::ElevatorVert(double elevatorUp, double elevatorDown);
+  void ElevatorVert(double elevatorUp, double elevatorDown);
   void Periodic() override;
 
  private:
