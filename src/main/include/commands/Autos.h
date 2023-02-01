@@ -7,6 +7,8 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
+#include "subsystems/DriveSubsystem.h"
+
 /**
  * An example command.
  *
@@ -14,16 +16,17 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class Autos
-    : public frc2::CommandHelper<frc2::CommandBase, Autos> {
- public:
-  Autos();
+namespace autos {
 
-  void Initialize() override;
+/**
+ * A simple auto that drives forward, then stops.
+ */
+frc2::CommandPtr SimpleAuto(DriveSubsystem* m_drive);
 
-  void Execute() override;
+/**
+ * A complex auto command that drives forward, releases a hatch, and then drives
+ * backward.
+ */
+// frc2::CommandPtr ComplexAuto(DriveSubsystem* drive, HatchSubsystem* hatch);
 
-  void End(bool interrupted) override;
-
-  bool IsFinished() override;
-};
+}  // namespace autos

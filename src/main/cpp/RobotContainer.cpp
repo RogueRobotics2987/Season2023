@@ -7,6 +7,9 @@
 
 RobotContainer::RobotContainer() {
 
+  m_chooser.SetDefaultOption("Simple Auto", m_simpleAuto.get());
+
+
   ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
 
@@ -60,7 +63,7 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_driverController, 1).OnTrue(m_drive.ButtonZeroHeading());
 
 }
-
+/*
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // Set up config for trajectory
   frc::TrajectoryConfig config(AutoConstants::kMaxSpeed,
@@ -114,6 +117,12 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc2::InstantCommand(
           [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
 }
+*/
+
+frc2::Command* RobotContainer::GetAutonomousCommand() {
+  // Runs the chosen command in autonomous
+  return m_chooser.GetSelected();
+}
 
   void RobotContainer::ZeroHeading(){
     m_drive.ZeroHeading();
@@ -127,35 +136,3 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     m_drive.ResetOdometry(frc::Pose2d{5_m, 5_m, 0_deg});
   }
 
-  frc2::Command* RobotContainer::GetPathCommand(){
-    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-    PathPlannerTrajectory examplePath = PathPlanner::loadPath("New Path", PathConstraints(1.5_mps, 0.5_mps_sq));
-    //TODO change Path constraints to Constants
-
-   // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-  // for every path in the group
-  // std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("fullAuto", {PathConstraints(4_mps, 3_mps_sq)});
-
-  // This is just an example event map. It would be better to have a constant, global event map
-  // in your code that will be used by all path following commands/autobuilders.
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
-  // eventMap.emplace("marker1", std::make_shared<frc2::PrintCommand>("Passed Marker 1"));
-  // eventMap.emplace("intakeDown", std::make_shared<IntakeDown>());
-
-  // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this could be in RobotContainer along with your subsystems
-
-  SwerveAutoBuilder autoBuilder(
-      [this]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [this](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [this](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, true); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
- 
-  CommandPtr examplePathCmdPtr = autoBuilder.fullAuto(examplePath);
-  Command* fullAutoRawPointer = examplePathCmdPtr.get();
-  return fullAutoRawPointer;
-}

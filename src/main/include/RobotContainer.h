@@ -32,6 +32,7 @@
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
+#include "commands/Autos.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -57,7 +58,7 @@ class RobotContainer {
 
   void ResetOdometry();
 
-  frc2::Command* GetPathCommand();
+  frc2::CommandPtr GetPathCommand();
 
  private:
   // The driver's controller
@@ -70,6 +71,8 @@ class RobotContainer {
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
+
+  frc2::CommandPtr m_simpleAuto = autos::SimpleAuto();
 
   void ConfigureButtonBindings();
 };
