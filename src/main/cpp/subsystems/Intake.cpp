@@ -10,11 +10,9 @@ Intake::Intake() = default;
 void Intake::Periodic() {}
 
    frc2::CommandPtr Intake::MotorMoveCommand() {
-      return this->RunOnce(
-      [this] { m_intakeMotor.Set(0.5); });
+      return this->RunOnce( [this] { m_intakeMotor.Set(0.5); });
    }
 
    frc2::CommandPtr Intake::StopMoveCommand(){
-      return this->RunOnce(
-         [this] {m_intakeMotor.Set(0); });
+      return this->RunOnce( [this] {m_intakeMotor.Set(0); });
    }

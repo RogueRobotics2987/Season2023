@@ -19,7 +19,7 @@ class limelight : public frc2::SubsystemBase {
  public:
   limelight();
 
-  frc2::CommandPtr configOdometry();
+  frc2::CommandPtr ConfigOdometry();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -29,9 +29,9 @@ class limelight : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   //photonlib::PhotonCamera camera{"limelight"};
-
   int cur_pipeline = 7;
-  //arr position;
 
+  //float position[6];
+  int numAT = 0;
 
 };

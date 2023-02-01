@@ -38,7 +38,7 @@ RobotContainer::RobotContainer() {
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
- m_drive.SetDefaultCommand(frc2::RunCommand([this] {
+  m_drive.SetDefaultCommand(frc2::RunCommand([this] {
         //   std::cout << "sea out in robot container" << std::endl;
         frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
         frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
@@ -91,8 +91,7 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_driverController, 7).OnFalse(m_drive.SetDriveSlow(false));
     frc2::JoystickButton(&m_driverController, 1).OnTrue(m_drive.ButtonZeroHeading());
 
-    //frc2::JoystickButton(&m_driverController, 2).OnTrue(m_limelight.configOdometry());
-
+    frc2::JoystickButton(&m_driverController, 2).OnTrue(m_limelight.ConfigOdometry());
 
 }
 
