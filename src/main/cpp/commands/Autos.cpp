@@ -34,7 +34,7 @@ frc2::CommandPtr autos::SimpleAuto(DriveSubsystem &m_drive) {
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, true); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, true, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
