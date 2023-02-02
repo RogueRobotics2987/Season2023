@@ -39,41 +39,7 @@ frc2::CommandPtr autos::SimpleAuto(DriveSubsystem &m_drive) {
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
   );
-  
-
-  //  frc2::SequentialCommandGroup* SnakeSwerve = new frc2::SequentialCommandGroup(
-
-  //   // std::move((autoBuilder.fullAuto(examplePath)))
-
-  //  std::move(autoBuilder.fullAuto(examplePath)) //examplePathCmdPtr
-
-    
-  //  );
- 
-  // return SnakeSwerve;
 
   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  
-  // Command* fullAutoRawPointer = examplePathCmdPtr.get();
-  // return fullAutoRawPointer.get();
 
-
-//   return frc2::SequentialCommandGroup(
-//              // Reset encoders on command start
-//               frc2::InstantCommand([] {frc::SmartDashboard::PutNumber("Shooter Set RPM 2 F", 3050);  
-//                  frc::SmartDashboard::PutNumber("Shooter Set RPM 2 B", 3050);})
-//             //  // Drive forward while the command is executing
-//             // //  [drive] { drive->ArcadeDrive(AutoConstants::kAutoDriveSpeed, 0); },
-//             //  // Stop driving at the end of the command
-//             //  [drive](bool interrupted) { drive->ArcadeDrive(0, 0); },
-//             //  // End the command when the robot's driven distance exceeds the
-//             //  // desired value
-//             // //  [drive] {
-//             // //    return drive->GetAverageEncoderDistance() >=
-//             // //           // AutoConstants::kAutoDriveDistanceInches;
-//             // //  },
-//             //  // Requires the drive subsystem
-//             //  {drive}
-//             )
-//       .ToPtr(); //returns command pointers
 };
