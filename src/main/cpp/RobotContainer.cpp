@@ -26,29 +26,39 @@ RobotContainer::RobotContainer() {
           frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
           frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
         
-        
-        
+        bool noJoystick = false;
+        bool noJoystickX = false;
+        bool noJoystickY = false;
+        bool noJoystickRot = false;
         double safeX = m_driverController.GetX();
-        if(fabs(safeX)<.1) {
-            safeX=0;}
+        if(fabs(safeX)<0.1) {
+            safeX=0;
+            noJoystickX = true;
+            }
         double safeY =  m_driverController.GetY();
-        if(fabs(safeY)<.1) { 
-            safeY=0;}
+        if(fabs(safeY)<0.1) { 
+            safeY=0;
+            noJoystickY = true;
+            }
         double safeRot = m_driverController.GetZ();
-        if(fabs(safeRot)<.1) {
-            safeRot=0;}
+        if(fabs(safeRot)<0.1) {
+            safeRot=0;
+            noJoystickRot = true;
+            }
+            noJoystick = noJoystickX && noJoystickY && noJoystickRot;
+
+            frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
         
         // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
         
         m_drive.Drive(units::meters_per_second_t(
-                         -safeY),
+                         -safeY * AutoConstants::kMaxSpeed),
                       units::meters_per_second_t(
-                         -safeX),
+                         -safeX * AutoConstants::kMaxSpeed),
                       units::radians_per_second_t(
-                         -safeRot),
-                      false);
-
-
+                         -safeRot * PI),
+                      false,
+                      noJoystick);
         // m_drive.Drive(units::meters_per_second_t(0),
         // units::meters_per_second_t(1),
         // units::radians_per_second_t(0),
@@ -101,7 +111,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
       m_drive.kDriveKinematics,
 
-      frc2::PIDController{AutoConstants::kPXController, 0, 0},
+       frc2::PIDController{AutoConstants::kPXController, 0, 0},
       frc2::PIDController{AutoConstants::kPYController, 0, 0}, thetaController,
 
       [this](auto moduleStates) { m_drive.SetModuleStates(moduleStates); },
@@ -115,7 +125,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   return new frc2::SequentialCommandGroup(
       std::move(swerveControllerCommand),
       frc2::InstantCommand(
-          [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
+          [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); }, {}));
 }
 */
 
@@ -136,3 +146,36 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     m_drive.ResetOdometry(frc::Pose2d{5_m, 5_m, 0_deg});
   }
 
+
+    //Commented out for merge purposes 
+
+  // frc2::Command* RobotContainer::GetPathCommand(){
+  //   // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("New Path", PathConstraints(1.5_mps, 0.5_mps_sq));
+
+  //  // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+  // // for every path in the group
+  // std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("FullAuto", {PathConstraints(4_mps, 3_mps_sq)});
+
+
+  // // This is just an example event map. It would be better to have a constant, global event map
+  // // in your code that will be used by all path following commands/autobuilders.
+  // std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+  // eventMap.emplace("marker1", std::make_shared<frc2::PrintCommand>("Passed Marker 1"));
+  // // eventMap.emplace("intakeDown", std::make_shared<IntakeDown>());
+
+  // // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this could be in RobotContainer along with your subsystems
+
+  // SwerveAutoBuilder autoBuilder(
+  //     [this]() { return swerveSubsystem.getPose(); }, // Function to supply current robot pose
+  //     [this](auto initPose) { swerveSubsystem.resetPose(initPose); }, // Function used to reset odometry at the beginning of auto
+  //     PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+  //     PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+  //     [this](auto speeds) { swerveSubsystem.driveFieldRelative(speeds); }, // Output function that accepts field relative ChassisSpeeds
+  //     eventMap, // Our event map
+  //     { &swerveSubsystem }, // Drive requirements, usually just a single drive subsystem
+  //     true // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  // );
+
+  // CommandPtr fullAuto = autoBuilder.fullAuto(pathGroup);
+    // }

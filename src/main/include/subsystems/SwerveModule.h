@@ -48,6 +48,8 @@ SwerveModule(int m_MotorController, rev::SparkMaxRelativeEncoder::Type m_Encoder
 
   void ConfigMotorControllers();
 
+    frc::ProfiledPIDController<units::radians> GetTurnPID();
+  
  private:
   // We have to use meters here instead of radians due to the fact that
   // ProfiledPIDController's constraints only take in meters per second and
@@ -70,13 +72,13 @@ SwerveModule(int m_MotorController, rev::SparkMaxRelativeEncoder::Type m_Encoder
   bool m_reverseDriveEncoder;
   bool m_reverseTurningEncoder;
 
-  frc2::PIDController m_drivePIDController{
-      ModuleConstants::kPModuleDriveController, 0, 0};
+  
   frc::ProfiledPIDController<units::radians> m_turningPIDController{
       ModuleConstants::kPModuleTurningController,
       0.0,
       0.0,
       {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}};
+
+      frc2::PIDController m_drivePIDController{
+      ModuleConstants::kPModuleDriveController, 0, 0};
 };
-
-

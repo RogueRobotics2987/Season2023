@@ -49,6 +49,7 @@ int m_MotorControllerTurning,
          this->m_EncoderType = m_EncoderType;
          this->m_counts_per_rev = m_counts_per_rev;
          m_driveMotor = new rev::CANSparkMax(m_MotorController, rev::CANSparkMax::MotorType::kBrushless);
+         m_driveMotor->SetOpenLoopRampRate(1);
          m_turningMotor = new rev::CANSparkMax(m_MotorControllerTurning, rev::CANSparkMax::MotorType::kBrushless);
         //  samDriveEncoder = new rev::CANEncoder(*samDriveMotor, m_EncoderType, m_counts_per_rev);
          m_driveEncoder = new rev::SparkMaxRelativeEncoder(m_driveMotor->GetEncoder(m_EncoderType, m_counts_per_rev));
@@ -66,7 +67,7 @@ int m_MotorControllerTurning,
   m_driveEncoder->SetPositionConversionFactor(
       ModuleConstants::kDriveEncoderDistancePerPulse);
   m_driveEncoder->SetVelocityConversionFactor(
-      ModuleConstants::kDriveEncoderDistancePerPulse / 60.0); //Converting RPM to Meters per second
+    ModuleConstants::kDriveEncoderDistancePerPulse / 60.0); //Converting RPM to Meters per second
 
   // Set the distance (in this case, angle, radians) per pulse for the turning encoder.
   // This is the the angle through an entire rotation (2 * wpi::numbers::pi)
@@ -124,11 +125,11 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& referenceState)
   
   frc::SmartDashboard::PutNumber("Drive Output " + std::to_string(m_driveMotor->GetDeviceId()), driveOutput);
 
-  frc::SmartDashboard::PutNumber("Get Velocity output " + std::to_string(m_driveMotor->GetDeviceId()), 
+  frc::SmartDashboard::PutNumber("Get Velocity output" + std::to_string(m_driveMotor->GetDeviceId()), 
                                 m_driveEncoder->GetVelocity());
   frc::SmartDashboard::PutNumber("Velocity Command " + std::to_string(m_driveMotor->GetDeviceId()),
                                 referenceState.speed.to<double>());
-  frc::SmartDashboard::PutNumber("Get Drive Positon " + std::to_string(m_driveMotor->GetDeviceId()), 
+  frc::SmartDashboard::PutNumber("Get Drive Positon" + std::to_string(m_driveMotor->GetDeviceId()), 
                                 m_driveEncoder->GetPosition());
   frc::SmartDashboard::PutNumber("get rotation Position " + std::to_string(m_turningMotor->GetDeviceId()), 
                                  m_turningEncoder->GetPosition() + m_wheelOffset /* * 78.73*/);
@@ -161,6 +162,11 @@ void SwerveModule::ConfigMotorControllers(){
   m_driveMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   m_turningMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }
+
+  frc::ProfiledPIDController<units::radians> SwerveModule::GetTurnPID(){
+  return m_turningPIDController;
+}
+
 
 SwerveModule::~SwerveModule(){
   delete m_driveMotor;
@@ -196,4 +202,7 @@ void SwerveModule::Periodic() {
 //   frc::SmartDashboard::PutNumber("Motor Set Position - " + std::to_string(m_turningMotor->GetDeviceId()),
 //                                  double(referenceState.angle.Radians()) /* * 78.73*/);
 //   frc::SmartDashboard::PutNumber(std::to_string(m_turningMotor->GetDeviceId()), turnOutput);
+
+
+
 }

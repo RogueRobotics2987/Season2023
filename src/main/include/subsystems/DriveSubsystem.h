@@ -48,7 +48,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   void Drive(units::meters_per_second_t xSpeed,
              units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
-             bool fieldRelative);
+             bool fieldRelative, bool noJoystick);
 
   /**
    * Resets the drive encoders to currently read a position of 0.
@@ -70,7 +70,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   /**
    * Zeroes the heading of the robot.
    */
-  void ZeroHeading();
+  frc2::CommandPtr ZeroHeading();
 
   /**
    * Returns the turn rate of the robot.
