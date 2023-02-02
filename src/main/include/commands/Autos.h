@@ -21,7 +21,7 @@ namespace autos {
 /**
  * A simple auto that drives forward, then stops.
  */
-frc2::CommandPtr SimpleAuto(DriveSubsystem* m_drive);
+frc2::CommandPtr SimpleAuto(DriveSubsystem &m_drive);
 
 /**
  * A complex auto command that drives forward, releases a hatch, and then drives
