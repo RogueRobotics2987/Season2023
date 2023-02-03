@@ -70,6 +70,10 @@ class DriveSubsystem : public frc2::SubsystemBase {
   /**
    * Zeroes the heading of the robot.
    */
+
+  float GetPitch();
+
+
   frc2::CommandPtr ZeroHeading();
 
   /**

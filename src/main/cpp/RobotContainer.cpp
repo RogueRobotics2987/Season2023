@@ -111,7 +111,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       //y moves left right
 
       frc::Pose2d{0_m, 0_m, 0_deg},
-      {frc::Translation2d{1_m, 0_m} , frc::Translation2d{1_m, 1_m}, frc::Translation2d{0_m, 1_m}},
+      {frc::Translation2d{0.3_m, 0_m} , frc::Translation2d{0.6_m, 0_m}, frc::Translation2d{1_m, 0_m}},
       frc::Pose2d{0_m, 0_m, 0_deg},
 
       // frc::Pose2d{0_m, 0_m, 0_deg},
@@ -143,12 +143,19 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   m_drive.ResetOdometry(exampleTrajectory.InitialPose());
 
   // no auto
-  return new frc2::SequentialCommandGroup(
-      std::move(swerveControllerCommand),
-      frc2::InstantCommand(
-          [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); }, {}));
-}
+  // return new frc2::SequentialCommandGroup(
+  //     std::move(swerveControllerCommand),
+  //     frc2::InstantCommand([this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); }, {}));
 
+    // int m_state = 0;
+  
+  return AutoCmd;
+}
+/* m state = 0
+ while loop, while m state != 1
+ drive robot forward, if angle is greater than 15, m state = 1
+ while m state != 2, run while loop 2, if angle is less than 5, m state = 2
+ m drive 00 */
   void RobotContainer::ZeroHeading(){
     m_drive.ZeroHeading();
 }
