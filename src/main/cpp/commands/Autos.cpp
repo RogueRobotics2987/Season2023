@@ -15,8 +15,8 @@ using namespace pathplanner;
 
 frc2::CommandPtr autos::SimpleAuto(DriveSubsystem &m_drive) {
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-    PathPlannerTrajectory examplePath = PathPlanner::loadPath("New Path", PathConstraints(1.5_mps, 0.5_mps_sq));
-
+    PathPlannerTrajectory examplePath = PathPlanner::loadPath("Simple Path", PathConstraints(3_mps, 1_mps_sq));
+    //TODO make a chooser type function
    // This will load the file "FullAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
   // for every path in the group
   // std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("fullAuto", {PathConstraints(4_mps, 3_mps_sq)});
