@@ -26,13 +26,13 @@ void AutoBalance::Execute() {
   while(m_state == 0) {
     frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
       m_drive->Drive(0.4_mps, 0_mps, 0_rad_per_s, false, false);
-      if(m_drive->GetPitch() >= 15 || m_drive->GetPitch() <= -15) {
+      if(m_drive->GetPitch() >= 5 || m_drive->GetPitch() <= -5) {
         m_state = 1;
       }
     }
     while(m_state == 1) {
-      m_drive->Drive(0.2_mps, 0_mps, 0_rad_per_s, false, false);
-      if(m_drive->GetPitch() <= 1 || m_drive->GetPitch() >= -1) {
+      m_drive->Drive(-0.2_mps / m_drive->GetPitch(), 0_mps, 0_rad_per_s, false, false);
+      if(m_drive->GetPitch() <= 1.5 || m_drive->GetPitch() >= -1.5) {
         m_state = 2;
       }
     }
