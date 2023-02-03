@@ -202,6 +202,4 @@ void SwerveModule::Periodic() {
 //                                  double(referenceState.angle.Radians()) /* * 78.73*/);
 //   frc::SmartDashboard::PutNumber(std::to_string(m_turningMotor->GetDeviceId()), turnOutput);
 
-
-
 }

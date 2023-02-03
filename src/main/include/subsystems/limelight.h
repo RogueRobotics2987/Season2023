@@ -6,6 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc2/command/CommandPtr.h>
+#include "DriveSubsystem.h"
 
 //#include <photonlib/PhotonCamera.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -30,8 +31,9 @@ class limelight : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   //photonlib::PhotonCamera camera{"limelight"};
   int cur_pipeline = 7;
-
-  //float position[6];
   int numAT = 0;
+
+  DriveSubsystem m_DriveSub;
+  //frc::SwerveDriveOdometry<4> m_odometry;
 
 };

@@ -151,7 +151,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
   void RobotContainer::ZeroHeading(){
     m_drive.ZeroHeading();
-}
+  }
 
   void RobotContainer::ConfigMotorControllers(){
     m_drive.ConfigMotorControllers();

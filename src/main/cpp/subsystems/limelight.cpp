@@ -16,22 +16,26 @@ void limelight::Periodic() {
     
 frc2::CommandPtr limelight::ConfigOdometry(){
     return this ->RunOnce( [this] {
+        double default_array[6] = {};
         //numAT = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("apriltagsvisable", 0);
 
-        /*if(numAT > 1){
-            cout << numAT << endl;
-        } else {
-            cout << numAT << endl;
-        }*/
-        double default_array[6] = {};
-
-        std::vector<double> botpose = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumberArray("botpose", std::span{default_array, std::size(default_array)});
+        std::vector<double> botpose = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->
+                                        GetNumberArray("botpose", std::span{default_array, std::size(default_array)});
         // double position[1] = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetDoubleArrayTopic("botpose");
         // double position[] = {nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetDoubleArrayTopic()};
 
         for(int i=0; i<6; i++){
             cout << botpose[i] << ", ";
         }
+
+        /*if(numAT > 1){
+            cout << numAT << endl;
+        } else {
+            cout << numAT << endl;
+        }*/
+
+        
+        //m_DriveSub.ResetOdometry(botpose[0], botpose[1], botpose[5]);
 
         //nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
         //frc::SmartDashboard::PutNumber("testing", tx);
