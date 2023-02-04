@@ -34,4 +34,5 @@ class AutoBalance
   private:
     DriveSubsystem* m_drive;
     int m_state;
+    double m_angle;
 };
