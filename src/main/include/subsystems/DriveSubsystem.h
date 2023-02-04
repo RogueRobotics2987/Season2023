@@ -25,6 +25,12 @@
 #include "Constants.h"
 #include "SwerveModule.h"
 
+// for limelight, configOdometry
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableInstance.h"
+#include "networktables/NetworkTableEntry.h"
+#include "networktables/NetworkTableValue.h"
+
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
   DriveSubsystem();
@@ -99,6 +105,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   void ConfigMotorControllers();
 
+  // what this does with limelight
+  frc2::CommandPtr ConfigOdometry();
+
 
   units::meter_t kTrackWidth =
       0.4699_m;  // Distance between centers of right and left wheels on robot
@@ -130,4 +139,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
   bool driveSlow = false;
 
   frc::Field2d m_field;
+
+  // for limelight, configOdometry
+  int numAT = 0;
+  //int cur_pipeline = 7;
+
 };
