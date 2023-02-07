@@ -243,7 +243,7 @@ void DriveSubsystem::ConfigMotorControllers(){
 frc2::CommandPtr DriveSubsystem::ConfigOdometry(){
   return this ->RunOnce( [this] {
     double default_array[6] = {};
-    //numAT = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("numapriltagsvisable", 0);
+    //numAT = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0); // double check, value might only reconize if it sees something, not how many in total
 
     std::vector<double> botpose = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->
                                   GetNumberArray("botpose", std::span{default_array, std::size(default_array)});
