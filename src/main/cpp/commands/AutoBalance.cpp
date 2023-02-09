@@ -17,6 +17,7 @@ AutoBalance::AutoBalance(){
 // Called when the command is initially scheduled.
 void AutoBalance::Initialize() {
   m_state = 0;
+// Called repea  
   m_angle = 9;
   frc::SmartDashboard::PutNumber("m_angle value: ", m_angle);
 }
@@ -34,20 +35,30 @@ void AutoBalance::Execute() {
     }
     while(m_state == 1) {
     frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-      if(m_drive->GetPitch() >= -9) {
-        m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, false);
-      }
-      else {
-        
-        m_drive->Drive(0.4_mps, 0_mps, 0_rad_per_s, false, false);
+        m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
+
+      if(m_drive->GetPitch() <= -8) {
+        m_state = 2;
       }
     }
+      while(m_state == 2) {
+        m_drive->Drive(0.4_mps * 2, 0_mps, 0_rad_per_s, false, false);
+      if(m_drive->GetPitch() >= -8) {
+        m_state = 1;
+      }
+    }
+  float curAngle = m_drive->GetPitch();
+  units::meters_per_second_t speed = units::meters_per_second_t(0.125 * curAngle);
+
+if(curAngle >= 1 || curAngle <= -1) {
+  m_drive->Drive(-speed, 0_mps, 0_rad_per_s, false, false);
+} else {
+  m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, false);
+}
+}
     //while(m_state == 2) {
       // m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, false);
     //}
-}
-
-// Called once the command ends or is interrupted.
 void AutoBalance::End(bool interrupted) {}
 
 // Returns true when the command should end.
