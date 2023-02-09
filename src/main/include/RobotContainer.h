@@ -73,6 +73,7 @@ class RobotContainer {
   frc::SendableChooser<frc2::Command*> m_chooser;
 
   frc2::CommandPtr m_simpleAuto = autos::SimpleAuto(m_drive);
+  frc2::CommandPtr m_complexAuto = autos::ComplexAuto(m_drive);
 
   void ConfigureButtonBindings();
 };

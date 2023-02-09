@@ -8,6 +8,9 @@
 RobotContainer::RobotContainer() {
 
   m_chooser.SetDefaultOption("Simple Auto", m_simpleAuto.get());
+  m_chooser.AddOption("Complex Auto", m_complexAuto.get());
+
+  frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
 
 
   ConfigMotorControllers();

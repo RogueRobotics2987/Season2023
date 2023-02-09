@@ -19,6 +19,7 @@
 namespace autos {
 
 frc2::CommandPtr SimpleAuto(DriveSubsystem &m_drive);
+frc2::CommandPtr ComplexAuto(DriveSubsystem &m_drive);
 
 
 }  // namespace autos
