@@ -33,18 +33,24 @@ void AutoBalance::Execute() {
         m_state = 1;
       }
     }
-    while(m_state == 1) {
+    while(m_state == 1){
+      m_drive->Drive(0.4_mps, 0_mps, 0_rad_per_s, false, false);
+      if(m_drive->GetPitch() <= m_angle / 2 && m_drive->GetPitch() >= -m_angle / 2) {
+        m_state = 2;
+      }
+    }
+    while(m_state == 2) {
     frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
         m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
 
       if(m_drive->GetPitch() <= -8) {
-        m_state = 2;
+        m_state = 3;
       }
     }
-      while(m_state == 2) {
+      while(m_state == 3) {
         m_drive->Drive(0.4_mps * 2, 0_mps, 0_rad_per_s, false, false);
       if(m_drive->GetPitch() >= -8) {
-        m_state = 1;
+        m_state = 2;
       }
     }
   float curAngle = m_drive->GetPitch();
