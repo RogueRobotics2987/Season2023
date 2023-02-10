@@ -36,7 +36,6 @@ void Robot::DisabledPeriodic() {}
  */
 void Robot::AutonomousInit() {
   m_container.ZeroHeading();
-  // CommandBase* test = m_container.GetPathCommand().get();
   m_autonomousCommand = m_container.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
@@ -47,8 +46,8 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
-  m_container.ZeroHeading();
-  m_container.ResetOdometry(); //TODO may need to be removed to avoid confusion in position from autonomous and teleop
+  // m_container.ZeroHeading(); //wont work if init pose is not equal to 0
+  // m_container.ResetOdometry(); //TODO may need to be removed to avoid confusion in position from autonomous and teleop
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
