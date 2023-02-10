@@ -22,11 +22,15 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
-  //frc2::JoystickButton(&m_stick1,3).OnTrue(m_elevator.MotorMoveCommand());
-  //frc2::JoystickButton(&m_stick1,3).OnFalse(m_elevator.StopMoveCommand());
-  frc2::JoystickButton(&m_stick1, 3).OnTrue(m_elevator.ClawOpenCommand());
-  frc2::JoystickButton(&m_stick1, 4).OnFalse(m_elevator.ClawCloseCommand());
+  frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
+  frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
 
+  frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState());
+  frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
+  frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
+  frc2::JoystickButton(&m_stick1, 1).OnTrue(m_elevator.SetManualElevatorState());
+
+  
   // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   frc2::Trigger([this] {
     return m_subsystem.ExampleCondition();

@@ -22,6 +22,11 @@ class Elevator : public frc2::SubsystemBase {
 
   frc2::CommandPtr ClawOpenCommand();
   frc2::CommandPtr ClawCloseCommand();
+  frc2::CommandPtr SetPlaceHighState();
+  frc2::CommandPtr SetPlaceMidState();
+  frc2::CommandPtr SetPlaceLowState();
+  frc2::CommandPtr SetManualElevatorState();
+  
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -33,22 +38,23 @@ class Elevator : public frc2::SubsystemBase {
   void Open(int SolenoidNum);
   void Close(int SolenoidNum);
 
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::CANSparkMax m_vertElevatorMotorLeft = rev::CANSparkMax(59, rev::CANSparkMax::MotorType::kBrushless);
-  rev::CANSparkMax m_vertElevatorMotorRight = rev::CANSparkMax(60, rev::CANSparkMax::MotorType::kBrushless);
+  rev::CANSparkMax m_vertElevatorMotorLeft = rev::CANSparkMax(10, rev::CANSparkMax::MotorType::kBrushless);
+  rev::CANSparkMax m_vertElevatorMotorRight = rev::CANSparkMax(9, rev::CANSparkMax::MotorType::kBrushless);
   rev::SparkMaxLimitSwitch ls_vertElevator = m_vertElevatorMotorLeft.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyClosed);
   rev::SparkMaxRelativeEncoder re_vertElevator= m_vertElevatorMotorLeft.GetEncoder(); 
 
   enum ElevatorState_t {INIT, FIND_ZERO, MANUAL_MODE, PLACE_HIGH, PLACE_MID, PLACE_LOW}; 
   ElevatorState_t ElevatorState = FIND_ZERO;
 
-  rev::CANSparkMax m_tiltElevatorMotor = rev::CANSparkMax(61, rev::CANSparkMax::MotorType::kBrushless);
+  rev::CANSparkMax m_tiltElevatorMotor = rev::CANSparkMax(12, rev::CANSparkMax::MotorType::kBrushless);
   rev::SparkMaxLimitSwitch ls_tiltElevator = m_tiltElevatorMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyClosed);
   rev::SparkMaxRelativeEncoder re_tiltElevator = m_tiltElevatorMotor.GetEncoder(); 
 
-  rev::CANSparkMax m_armMotor = rev::CANSparkMax(62, rev::CANSparkMax::MotorType::kBrushless);
+  rev::CANSparkMax m_armMotor = rev::CANSparkMax(11, rev::CANSparkMax::MotorType::kBrushless);
   rev::SparkMaxLimitSwitch ls_arm = m_armMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyClosed);
   rev::SparkMaxRelativeEncoder re_arm = m_armMotor.GetEncoder(); 
 
@@ -56,9 +62,10 @@ class Elevator : public frc2::SubsystemBase {
   double tiltVar = 0.0;
   double armVar = 0.0;
   bool resetElevatorFinished = false;
-  bool enableElevatorVert = true;
+  bool enableElevator = true;
+
 
   //claw open and close on pneumatics
-  frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(frc::PneumaticsModuleType::REVPH, 0, 1); 
+  frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(frc::PneumaticsModuleType::REVPH, 0, 1); //unsure if these numbers are correct
 
 };
