@@ -19,3 +19,9 @@ namespace OperatorConstants {
 constexpr int kDriverControllerPort = 0;
 
 }  // namespace OperatorConstants
+
+namespace ElevatorConstants {
+    constexpr double upDeadzone = 0.08; //was 0.08 on the climber for Jaws
+    constexpr double downDeadzone = 0.08;
+
+}

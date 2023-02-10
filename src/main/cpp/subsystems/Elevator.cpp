@@ -3,23 +3,100 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/Elevator.h"
+//state machine to hit all the limit switches
+//one command SetManipulartorState
+//Inside command with three functions, 
+//subsystem should have a function that says to go to a specifc encoder value
 
 Elevator::Elevator() {
    m_vertElevatorMotorLeft.SetInverted(false);
    m_vertElevatorMotorRight.SetInverted(false);
+   m_vertElevatorMotorRight.Follow(m_vertElevatorMotorLeft); //now you only call the left motor
    m_tiltElevatorMotor.SetInverted(false);
-   m_clawMotor.SetInverted(false);
+
+   //m_compressor = new frc::Compressor;
 }
 
 // This method will be called once per scheduler run
 void Elevator::Periodic() {
-   frc::SmartDashboard::PutNumber("verticalVal", verticalVal);
+   //frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
+   //Elevator height
+   frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
+   frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
 
-   m_vertElevatorMotorLeft.Set(verticalVal);
-   m_vertElevatorMotorRight.Set(verticalVal);
+   //Elevator tilt
+   frc::SmartDashboard::PutBoolean("ELevator Tilt limit switch", ls_tiltElevator.Get());
+   frc::SmartDashboard::PutNumber("Elevator Tilt Encoder", re_tiltElevator.GetPosition());
+   
+   frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", resetElevatorFinished);
+
+
+   if (ElevatorState == FIND_ZERO){
+      m_vertElevatorMotorLeft.Set(-0.2);
+      m_tiltElevatorMotor.Set(-0.2);
+      m_armMotor.Set(-0.2);
+
+        if((ls_vertElevator.Get() == true) && (ls_tiltElevator.Get() == true) && (ls_arm.Get() == true)) { 
+            re_vertElevator.SetPosition(0);
+            re_tiltElevator.SetPosition(0);
+            re_arm.SetPosition(0);
+            m_vertElevatorMotorLeft.Set(0);
+            m_tiltElevatorMotor.Set(0);
+            m_armMotor.Set(0);
+            frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
+            ElevatorState = MANUAL_MODE; 
+        } 
+
+   } else if (ElevatorState == MANUAL_MODE){
+      m_vertElevatorMotorLeft.Set(verticalVal);
+      m_tiltElevatorMotor.Set(tiltVar);
+      m_armMotor.Set(armVar);
+   }
+   //m_vertElevatorMotorLeft.Set(verticalVal);
 }
 
-   frc2::CommandPtr Elevator::MotorMoveCommand() {
+void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) {
+      frc::SmartDashboard::PutNumber("elevatorUp Value", elevatorUp);
+      frc::SmartDashboard::PutNumber("elevatorDown Value", elevatorDown);
+
+      if((fabs(elevatorUp) > ElevatorConstants::upDeadzone) && (elevatorDown < ElevatorConstants::downDeadzone) && (enableElevatorVert == true)){
+        verticalVal = elevatorUp - ElevatorConstants::upDeadzone;
+      } else if((fabs(elevatorDown) > ElevatorConstants::downDeadzone) && (elevatorUp < ElevatorConstants::upDeadzone) && (enableElevatorVert == true)){
+        verticalVal = -(elevatorDown - ElevatorConstants::downDeadzone);
+      } else {
+        verticalVal = 0;
+      }
+   }
+
+void Elevator::ElevatorTilt(double lean){
+   tiltVar = lean;
+}
+
+void Elevator::ElevatorArm(double armXboxVal){
+   armVar = armXboxVal;
+}
+
+//void Elevator::startCompressor(){
+   //m_compressor->SetClosedLoopControl(true);
+//}
+
+/*void Elevator::Close(int SolenoidNum){ //logic copied from t-shirt cannon
+    
+
+    if(SolenoidNum==1){
+        std::cout << "Solenoid 1 is closing" << std::endl;
+        ShooterSolenoid1.Set(frc::DoubleSolenoid::kForward);
+    } 
+}
+void Elevator::Open(int SolenoidNum){ 
+
+    if(SolenoidNum==1){
+        ShooterSolenoid1.Set(frc::DoubleSolenoid::kReverse);
+    } P
+}*/
+
+//example for how to use an instant command but need to be moved and for pneumatics to be added
+ /* frc2::CommandPtr Elevator::MotorMoveCommand() {
       return this->RunOnce(
       [this] { m_clawMotor.Set(0.5); });
    }
@@ -27,18 +104,17 @@ void Elevator::Periodic() {
    frc2::CommandPtr Elevator::StopMoveCommand(){
       return this->RunOnce(
          [this] {m_clawMotor.Set(0); });
+   }*/
+
+   frc2::CommandPtr Elevator::ClawOpenCommand() {
+      return this->RunOnce(
+         [this] { clawSolenoid.Set(frc::DoubleSolenoid::kReverse); });
    }
 
-
-   void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) {
-      frc::SmartDashboard::PutNumber("elevatorUp Value", elevatorUp);
-      frc::SmartDashboard::PutNumber("elevatorDown Value", elevatorDown);
-
-      if((fabs(elevatorUp) > upDeadzone) && (elevatorDown < downDeadzone) && (enableElevatorVert == true)){
-        verticalVal = elevatorUp - upDeadzone;
-      } else if((fabs(elevatorDown) > downDeadzone) && (elevatorUp < upDeadzone) && (enableElevatorVert == true)){
-        verticalVal = -(elevatorDown - downDeadzone);
-      } else {
-        verticalVal = 0;
-      }
+frc2::CommandPtr Elevator::ClawCloseCommand() {
+      return this->RunOnce(
+         [this] { clawSolenoid.Set(frc::DoubleSolenoid::kForward); });
    }
+/*levator::~Elevator(){
+    delete ShooterSolenoid1;
+}*/

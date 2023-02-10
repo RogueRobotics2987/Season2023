@@ -6,10 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/button/CommandXboxController.h>
-#include <frc/Joystick.h>
-#include <frc/XboxController.h>
-#include "subsystems/Elevator.h"
+#include "subsystems/Compressor.h"
 
 /**
  * An example command.
@@ -18,14 +15,13 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ElevatorCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ElevatorCmd> {
+class BeginCompressor
+    : public frc2::CommandHelper<frc2::CommandBase, BeginCompressor> {
  public:
-  ElevatorCmd();
-  ElevatorCmd(Elevator &elevator, frc::Joystick &xbox, frc::Joystick &stick1);
-  
-  void Initialize() override;
+  BeginCompressor();
+  BeginCompressor(CompressorObject &compressor);
 
+  void Initialize() override;
 
   void Execute() override;
 
@@ -33,8 +29,7 @@ class ElevatorCmd
 
   bool IsFinished() override;
 
- private:
-  Elevator* m_elevator = nullptr;
-  frc::Joystick* m_xbox = nullptr;
-  frc::Joystick* m_stick1 = nullptr;
+  private:
+    CompressorObject* m_compressor = nullptr;
+
 };

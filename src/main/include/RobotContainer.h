@@ -10,13 +10,18 @@
 #include <frc/XboxController.h>
 #include "Constants.h"
 #include "subsystems/ExampleSubsystem.h"
-#include "subsystems/Elevator.h"
 #include "commands/ElevatorCmd.h"
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/button/Trigger.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-//#include <frc2/command/CommandBase.h>
+#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "commands/BeginCompressor.h"
+#include "subsystems/Compressor.h"
+#include <frc/DoubleSolenoid.h>
+#include <frc/Compressor.h>
+
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -30,6 +35,7 @@ class RobotContainer {
   RobotContainer();
 
   frc2::CommandPtr GetAutonomousCommand();
+  //frc2::Command* ElevatorCommand = new ElevatorCmd(m_elevator, m_xbox, m_stick1);
 
  private:
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -39,6 +45,8 @@ class RobotContainer {
   // The robot's subsystems are defined here...
   ExampleSubsystem m_subsystem;
   Elevator m_elevator;
+  CompressorObject m_compressor;
+
 
   frc::Joystick m_xbox{0};
   frc::Joystick m_stick1{1};
