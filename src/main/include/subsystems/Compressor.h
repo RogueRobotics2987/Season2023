@@ -23,7 +23,11 @@ class CompressorObject : public frc2::SubsystemBase {
   void StartCompressor();
   void DisableCompressor();
 
+  bool debugCompressorEnabled = true;
+
+
  private:
+
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   //frc::Compressor* m_compressor = nullptr;
@@ -31,7 +35,6 @@ class CompressorObject : public frc2::SubsystemBase {
   frc::Compressor phCompressor{1, frc::PneumaticsModuleType::REVPH};  //wpilub
   //phCompressor.EnableDigital();
   //phCompressor.Disable();
-  bool enabled = false;
-  bool disabled = false;
+  bool isEnabled = false;
 
 };

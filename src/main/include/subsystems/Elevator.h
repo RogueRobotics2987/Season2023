@@ -66,6 +66,7 @@ class Elevator : public frc2::SubsystemBase {
 
 
   //claw open and close on pneumatics
-  frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(frc::PneumaticsModuleType::REVPH, 0, 1); //unsure if these numbers are correct
+  frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(frc::PneumaticsModuleType::REVPH, 1, 2); //unsure if these numbers are correct
+frc::DoubleSolenoid exampleDoublePH{9, frc::PneumaticsModuleType::REVPH, 4, 5};
 
 };

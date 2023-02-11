@@ -114,18 +114,18 @@ frc2::CommandPtr Elevator::ClawCloseCommand() {
    }
 
 
-frc2::CommandPtr Elevator::SetPlaceMidState(){
-   ElevatorState == PLACE_HIGH;
+frc2::CommandPtr Elevator::SetPlaceHighState(){
+   ElevatorState = PLACE_HIGH;
 }
 
-frc2::CommandPtr Elevator::SetPlaceHighState(){
-   ElevatorState == PLACE_MID;
+frc2::CommandPtr Elevator::SetPlaceMidState(){
+   ElevatorState = PLACE_MID;
 }
 
 frc2::CommandPtr Elevator::SetPlaceLowState(){
-   ElevatorState == PLACE_LOW;
+   ElevatorState = PLACE_LOW;
 }
 
 frc2::CommandPtr Elevator::SetManualElevatorState(){
-   ElevatorState == MANUAL_MODE;
+   ElevatorState = MANUAL_MODE;
 }

@@ -9,7 +9,15 @@ CompressorObject::CompressorObject() {
 }
 
 // This method will be called once per scheduler run
-void CompressorObject::Periodic() {}
+void CompressorObject::Periodic() {
+    if (debugCompressorEnabled){
+        bool pressureSwitch = phCompressor.GetPressureSwitchValue();
+        double current = phCompressor.GetCompressorCurrent();
+        frc::SmartDashboard::PutBoolean("Compressor enabled", isEnabled);
+        frc::SmartDashboard::PutBoolean("pressureSwitch", pressureSwitch);
+        frc::SmartDashboard::PutNumber("Compressor current", current);
+    }
+}
 
 
 
@@ -18,12 +26,10 @@ void CompressorObject::StartCompressor() {
    // phCompressor.SetClosedLoopControl(true); //Don't think this is need because ClosedLoopControl is the default
 
     phCompressor.EnableDigital();
-    enabled = phCompressor.Enabled();
-    frc::SmartDashboard::PutBoolean("Compressor enabled", enabled);
+    isEnabled = phCompressor.Enabled(); //checks if the com[ressor is enabled
 }
 
 void CompressorObject::DisableCompressor(){
     phCompressor.Disable();
-
 }
 
