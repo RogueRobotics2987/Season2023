@@ -27,7 +27,7 @@ void CompressorObject::StartCompressor() {
     phCompressor.EnableDigital();
 }
 
-void CompressorObject::DisableCompressor(){
+void CompressorObject::DisableCompressor(){ //currently not called anywhere
     phCompressor.Disable();
 }
 
