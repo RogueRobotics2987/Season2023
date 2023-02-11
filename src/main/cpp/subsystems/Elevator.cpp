@@ -19,7 +19,9 @@ Elevator::Elevator() {
 
 // This method will be called once per scheduler run
 void Elevator::Periodic() {
-   //frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
+   frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
+   frc::SmartDashboard::PutNumber("Elevator tiltVal", tiltVal);
+   frc::SmartDashboard::PutNumber("Elevator armVal", armVal);
    //Elevator height
    frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
    frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
@@ -27,14 +29,23 @@ void Elevator::Periodic() {
    //Elevator tilt
    frc::SmartDashboard::PutBoolean("ELevator Tilt limit switch", ls_tiltElevator.Get());
    frc::SmartDashboard::PutNumber("Elevator Tilt Encoder", re_tiltElevator.GetPosition());
+
+   //Elevator arm
+   frc::SmartDashboard::PutBoolean("Elevator Arm limit switc", ls_arm.Get());
+   frc::SmartDashboard::PutNumber("Elevator Arm encoder", re_arm.GetPosition());
    
    frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", resetElevatorFinished);
 
 
    if (ElevatorState == FIND_ZERO){
-      m_vertElevatorMotorLeft.Set(-0.2);
-      m_tiltElevatorMotor.Set(-0.2);
-      m_armMotor.Set(-0.2);
+      //limit switch is were the elevator is closest to the ground 
+      m_vertElevatorMotorLeft.Set(0.1);//go to forward limit switch
+
+      //limit switch is where the elevator is all the way tilted towards the back of the robot
+      m_tiltElevatorMotor.Set(-0.1);//go to reverse limit switch
+
+      //limit switch is when the arm is all the way up
+      m_armMotor.Set(0.1);//go to forward limit switch
 
         if((ls_vertElevator.Get() == true) && (ls_tiltElevator.Get() == true) && (ls_arm.Get() == true)) { 
             re_vertElevator.SetPosition(0);
@@ -49,8 +60,8 @@ void Elevator::Periodic() {
 
    } else if (ElevatorState == MANUAL_MODE){
       m_vertElevatorMotorLeft.Set(verticalVal);
-      m_tiltElevatorMotor.Set(tiltVar);
-      m_armMotor.Set(armVar);
+      m_tiltElevatorMotor.Set(tiltVal);
+      m_armMotor.Set(armVal);
    } else if (ElevatorState == PLACE_HIGH){
 
    } else if (ElevatorState == PLACE_MID){
@@ -65,9 +76,9 @@ void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) {
       frc::SmartDashboard::PutNumber("elevatorDown Value", elevatorDown);
 
       if((fabs(elevatorUp) > ElevatorConstants::upDeadzone) && (elevatorDown < ElevatorConstants::downDeadzone) && (enableElevator == true)){
-        verticalVal = elevatorUp - ElevatorConstants::upDeadzone;
+        verticalVal = -(elevatorUp - ElevatorConstants::upDeadzone);
       } else if((fabs(elevatorDown) > ElevatorConstants::downDeadzone) && (elevatorUp < ElevatorConstants::upDeadzone) && (enableElevator == true)){
-        verticalVal = -(elevatorDown - ElevatorConstants::downDeadzone);
+        verticalVal = (elevatorDown - ElevatorConstants::downDeadzone);
       } else {
         verticalVal = 0;
       }
@@ -75,17 +86,17 @@ void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) {
 
 void Elevator::ElevatorTilt(double lean){
    if (enableElevator == true){
-      tiltVar = lean;
+      tiltVal = lean;
    } else {
-      tiltVar = 0;
+      tiltVal = 0;
    }
 }
 
 void Elevator::ElevatorArm(double armXboxVal){
    if (enableElevator == true) {
-      armVar = armXboxVal;
+      armVal = -armXboxVal;//negative?
    } else {
-      tiltVar = 0;
+      armVal = 0;
    }
 }
 

@@ -12,21 +12,19 @@ CompressorObject::CompressorObject() {
 void CompressorObject::Periodic() {
     if (debugCompressorEnabled){
         bool pressureSwitch = phCompressor.GetPressureSwitchValue();
-        double current = phCompressor.GetCompressorCurrent();
+        //double current = phCompressor.GetCompressorCurrent(); //was GetComressorCurrent but that doesn't exist in c++  
+        isEnabled = phCompressor.Enabled(); //checks if the compressor is enabled
+
         frc::SmartDashboard::PutBoolean("Compressor enabled", isEnabled);
-        frc::SmartDashboard::PutBoolean("pressureSwitch", pressureSwitch);
-        frc::SmartDashboard::PutNumber("Compressor current", current);
+        frc::SmartDashboard::PutBoolean("Compressor pressureSwitch", pressureSwitch);
+        //frc::SmartDashboard::PutNumber("Compressor current", current);
     }
 }
 
 
 
 void CompressorObject::StartCompressor() {
-    //m_compressor->Start();
-   // phCompressor.SetClosedLoopControl(true); //Don't think this is need because ClosedLoopControl is the default
-
     phCompressor.EnableDigital();
-    isEnabled = phCompressor.Enabled(); //checks if the com[ressor is enabled
 }
 
 void CompressorObject::DisableCompressor(){
