@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <frc/Timer.h>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
@@ -25,6 +26,8 @@ class AutoBalance
 
   void Initialize() override;
 
+  void Periodic();
+
   void Execute() override;
 
   void End(bool interrupted) override;
@@ -35,4 +38,6 @@ class AutoBalance
     DriveSubsystem* m_drive;
     int m_state;
     double m_angle;
+    frc::Timer m_timer;
+    bool backwardsCheck;
 };
