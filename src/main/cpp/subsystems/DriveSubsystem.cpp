@@ -154,10 +154,10 @@ else if(fabs(angleOff) <= epsilon && noJoystick != true) {
     fr.speed = (units::velocity::meters_per_second_t)(0);
     bl.speed = (units::velocity::meters_per_second_t)(0);
     br.speed = (units::velocity::meters_per_second_t)(0);
-    fl.angle = (units::angle::degree_t)(45);
+   fl.angle = (units::angle::degree_t)(45);
     fr.angle = (units::angle::degree_t)(135);
     bl.angle = (units::angle::degree_t)(-45);
-    br.angle = (units::angle::degree_t)(-135);
+    br.angle = (units::angle::degree_t)(-135); 
     // m_frontLeft.SetDesiredState(fl);
     // m_frontRight.SetDesiredState(fr);
     // m_rearLeft.SetDesiredState(bl);
@@ -174,6 +174,12 @@ else if(fabs(angleOff) <= epsilon && noJoystick != true) {
     fr.speed = (units::velocity::meters_per_second_t)(0.5 * fr.speed);
     bl.speed = (units::velocity::meters_per_second_t)(0.5 * bl.speed);
     br.speed = (units::velocity::meters_per_second_t)(0.5 * br.speed);
+  }
+  if(WheelsStraight == true){
+    fl.angle = (units::angle::degree_t)(0);
+    fr.angle = (units::angle::degree_t)(0);
+    bl.angle = (units::angle::degree_t)(0);
+    br.angle = (units::angle::degree_t)(0);
   }
   m_frontLeft.SetDesiredState(fl);
   m_frontRight.SetDesiredState(fr);
