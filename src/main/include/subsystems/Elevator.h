@@ -48,7 +48,7 @@ class Elevator : public frc2::SubsystemBase {
   rev::SparkMaxRelativeEncoder re_vertElevator= m_vertElevatorMotorLeft.GetEncoder(); 
 
   enum ElevatorState_t {INIT, FIND_ZERO, MANUAL_MODE, PLACE_HIGH, PLACE_MID, PLACE_LOW}; 
-  ElevatorState_t ElevatorState = FIND_ZERO;
+  ElevatorState_t ElevatorState = MANUAL_MODE;
 
   rev::CANSparkMax m_tiltElevatorMotor = rev::CANSparkMax(12, rev::CANSparkMax::MotorType::kBrushless);
   rev::SparkMaxLimitSwitch ls_tiltElevator = m_tiltElevatorMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyClosed); //reverse limit switch
@@ -62,7 +62,7 @@ class Elevator : public frc2::SubsystemBase {
   double tiltVal = 0.0;
   double armVal = 0.0;
   bool resetElevatorFinished = false;
-  bool enableElevator = true;
+  bool enableElevator = true; //turns off elevator for outreach events when kids have the robot
 
   //claw open and close on pneumatics
   frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(1, frc::PneumaticsModuleType::REVPH, 6, 7); 

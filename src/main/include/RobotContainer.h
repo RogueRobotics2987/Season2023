@@ -49,7 +49,7 @@ class RobotContainer {
 
 
   frc::Joystick m_xbox{0};
-  frc::Joystick m_stick1{1};
+  frc::Joystick m_stick{2};
   
   void ConfigureBindings();
 };

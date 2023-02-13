@@ -22,6 +22,7 @@ void Elevator::Periodic() {
    frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
    frc::SmartDashboard::PutNumber("Elevator tiltVal", tiltVal);
    frc::SmartDashboard::PutNumber("Elevator armVal", armVal);
+
    //Elevator height
    frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
    frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
@@ -31,7 +32,7 @@ void Elevator::Periodic() {
    frc::SmartDashboard::PutNumber("Elevator Tilt Encoder", re_tiltElevator.GetPosition());
 
    //Elevator arm
-   frc::SmartDashboard::PutBoolean("Elevator Arm limit switc", ls_arm.Get());
+   frc::SmartDashboard::PutBoolean("Elevator Arm limit switch", ls_arm.Get());
    frc::SmartDashboard::PutNumber("Elevator Arm encoder", re_arm.GetPosition());
    
    frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", resetElevatorFinished);
