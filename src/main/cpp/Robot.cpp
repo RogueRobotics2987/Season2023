@@ -35,6 +35,7 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
+  m_container.ResetOdometry();
   m_container.ZeroHeading();
   m_autonomousCommand = m_container.GetAutonomousCommand();
 

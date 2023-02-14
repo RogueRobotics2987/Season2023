@@ -7,8 +7,11 @@
 
 RobotContainer::RobotContainer() {
 
-  m_chooser.SetDefaultOption("Simple Auto", m_simpleAuto.get());
+  m_chooser.AddOption("Simple Auto", m_simpleAuto.get()); //SetDefaultOption
   m_chooser.AddOption("Complex Auto", m_complexAuto.get());
+  m_chooser.SetDefaultOption("Command Auto", m_complexAuto.get());
+
+
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
 
@@ -134,6 +137,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // Runs the chosen command in autonomous
+  // SequentialAuto test = SequentialAuto(m_drive);
   return m_chooser.GetSelected();
 }
 

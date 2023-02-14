@@ -33,6 +33,7 @@
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 #include "commands/Autos.h"
+#include "commands/SequentialAuto.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -74,6 +75,6 @@ class RobotContainer {
 
   frc2::CommandPtr m_simpleAuto = autos::SimpleAuto(m_drive);
   frc2::CommandPtr m_complexAuto = autos::ComplexAuto(m_drive);
-
+  frc2::CommandPtr m_CommandAuto = autos::CommandPath(m_drive);
   void ConfigureButtonBindings();
 };
