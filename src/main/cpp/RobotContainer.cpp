@@ -40,52 +40,51 @@ RobotContainer::RobotContainer() {
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
- m_drive.SetDefaultCommand(frc2::RunCommand(
-      [this] {
-        //   std::cout << "sea out in robot container" << std::endl;
-          frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
-          frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
-          frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
-        
-        bool noJoystick = false;
-        bool noJoystickX = false;
-        bool noJoystickY = false;
-        bool noJoystickRot = false;
-        double safeX = m_driverController.GetX();
-        if(fabs(safeX)<0.1) {
-            safeX=0;
-            noJoystickX = true;
-            }
-        double safeY =  m_driverController.GetY();
-        if(fabs(safeY)<0.1) { 
-            safeY=0;
-            noJoystickY = true;
-            }
-        double safeRot = m_driverController.GetZ();
-        if(fabs(safeRot)<0.1) {
-            safeRot=0;
-            noJoystickRot = true;
-            }
-            noJoystick = noJoystickX && noJoystickY && noJoystickRot;
+  m_drive.SetDefaultCommand(frc2::RunCommand(
+    [this] {
+      //   std::cout << "sea out in robot container" << std::endl;
+      frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
+      frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
+      frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
+      
+      bool noJoystick = false;
+      bool noJoystickX = false;
+      bool noJoystickY = false;
+      bool noJoystickRot = false;
+      double safeX = m_driverController.GetX();
+      if(fabs(safeX)<0.1) {
+          safeX=0;
+          noJoystickX = true;
+      }
+      double safeY =  m_driverController.GetY();
+      if(fabs(safeY)<0.1) { 
+          safeY=0;
+          noJoystickY = true;
+      }
+      double safeRot = m_driverController.GetZ();
+      if(fabs(safeRot)<0.1) {
+          safeRot=0;
+          noJoystickRot = true;
+      }
+      noJoystick = noJoystickX && noJoystickY && noJoystickRot;
 
-            frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
-        
-        // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
-        
-        m_drive.Drive(units::meters_per_second_t(
-                         -safeY * AutoConstants::kMaxSpeed),
-                      units::meters_per_second_t(
-                         -safeX * AutoConstants::kMaxSpeed),
-                      units::radians_per_second_t(
-                         -safeRot * PI),
-                      false,
-                      noJoystick);
-        // m_drive.Drive(units::meters_per_second_t(0),
-        // units::meters_per_second_t(1),
-        // units::radians_per_second_t(0),
-        // false);
-      },
-      {&m_drive}));
+      frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
+      
+      // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
+      
+      m_drive.Drive(units::meters_per_second_t(
+                        -safeY * AutoConstants::kMaxSpeed),
+                    units::meters_per_second_t(
+                        -safeX * AutoConstants::kMaxSpeed),
+                    units::radians_per_second_t(
+                        -safeRot * PI),
+                    false,
+                    noJoystick);
+      // m_drive.Drive(units::meters_per_second_t(0),
+      // units::meters_per_second_t(1),
+      // units::radians_per_second_t(0),
+      // false);
+    }, {&m_drive}));
 }
 
 void RobotContainer::ConfigureButtonBindings() {

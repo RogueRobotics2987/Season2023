@@ -87,9 +87,9 @@ constexpr int kFrontRightTurningMotorPort = 3;//4 for tshirt
 constexpr int kRearRightTurningMotorPort = 5; //6 for tshirt
 
 constexpr int kFrontLeftTurningEncoderNumber = 13; //9 for tshirt
-constexpr int kRearLeftTurningEncoderNumber = 14; //12 for tshirt
-constexpr int kFrontRightTurningEncoderNumber = 15;//10 for tshirt
-constexpr int kRearRightTurningEncoderNumber = 16;//11 for tshirt
+constexpr int kRearLeftTurningEncoderNumber = 16; //12 for tshirt
+constexpr int kFrontRightTurningEncoderNumber = 14;//10 for tshirt
+constexpr int kRearRightTurningEncoderNumber = 15;//11 for tshirt
 
 // constexpr int Actuator = 40;
 
@@ -161,7 +161,7 @@ constexpr double kPRearRightVel = 0.5;
 
 namespace ModuleConstants {
 constexpr double wheelOffset = 0;
-constexpr double gearRatio = 8.16; //we measured 8.91
+constexpr double gearRatio = 8.14; //we measured 8.91
 constexpr int kEncoderCPR = 1;
 constexpr double kWheelDiameterMeters = 0.0977; // 0.0762
 constexpr double kDriveEncoderDistancePerPulse =
@@ -172,8 +172,8 @@ constexpr double kTurningEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
     (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
 
-constexpr double kPModuleTurningController = 0.5;
-constexpr double kPModuleDriveController = 0.1;
+constexpr double kPModuleTurningController = 0.003; // 0.5 //0.003
+constexpr double kPModuleDriveController = 0.0; // 0.1
 // TODO Lower Value of P to 0.0001,  Change Value of p Till its the Highest Without Osilation, 
 constexpr double kFFModuleDriveController = 0.264636;
 
@@ -204,5 +204,5 @@ extern const frc::TrapezoidProfile<units::radians>::Constraints
 }  // namespace AutoConstants
 
 namespace OIConstants {
-constexpr int kDriverControllerPort = 0;
+constexpr int kDriverControllerPort = 2;
 }  // namespace OIConstants

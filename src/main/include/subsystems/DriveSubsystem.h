@@ -115,7 +115,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  bool WheelsStraight = true;
+//   bool WheelsStraight = false;
   SwerveModule m_frontLeft;
   SwerveModule m_frontRight;
   SwerveModule m_rearLeft;
