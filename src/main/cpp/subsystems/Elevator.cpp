@@ -10,7 +10,7 @@
 
 Elevator::Elevator() {
    m_vertElevatorMotorLeft.SetInverted(false);
-   m_vertElevatorMotorRight.SetInverted(false);
+   m_vertElevatorMotorRight.SetInverted(true);
    m_vertElevatorMotorRight.Follow(m_vertElevatorMotorLeft); //now you only call the left motor
    m_tiltElevatorMotor.SetInverted(false);
 
@@ -40,29 +40,29 @@ void Elevator::Periodic() {
 
    if (ElevatorState == FIND_ZERO){
       //limit switch is were the elevator is closest to the ground 
-      m_vertElevatorMotorLeft.Set(0.1);//go to forward limit switch
+      //m_vertElevatorMotorLeft.Set(0.1);//go to forward limit switch
 
       //limit switch is where the elevator is all the way tilted towards the back of the robot
       m_tiltElevatorMotor.Set(-0.1);//go to reverse limit switch
 
       //limit switch is when the arm is all the way up
-      m_armMotor.Set(0.1);//go to forward limit switch
+      //m_armMotor.Set(0.05);//go to forward limit switch
 
-        if((ls_vertElevator.Get() == true) && (ls_tiltElevator.Get() == true) && (ls_arm.Get() == true)) { 
-            re_vertElevator.SetPosition(0);
+        if(/*(ls_vertElevator.Get() == true) && */(ls_tiltElevator.Get() == true) /*&& (ls_arm.Get() == true)*/) { 
+            //re_vertElevator.SetPosition(0);
             re_tiltElevator.SetPosition(0);
-            re_arm.SetPosition(0);
-            m_vertElevatorMotorLeft.Set(0);
+            //re_arm.SetPosition(0);
+            //m_vertElevatorMotorLeft.Set(0);
             m_tiltElevatorMotor.Set(0);
-            m_armMotor.Set(0);
+            //m_armMotor.Set(0);
             frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
             ElevatorState = MANUAL_MODE; 
         } 
 
    } else if (ElevatorState == MANUAL_MODE){
-      m_vertElevatorMotorLeft.Set(verticalVal);
+      //m_vertElevatorMotorLeft.Set(verticalVal);
       m_tiltElevatorMotor.Set(tiltVal);
-      m_armMotor.Set(armVal);
+      //m_armMotor.Set(armVal);
    } else if (ElevatorState == PLACE_HIGH){
 
    } else if (ElevatorState == PLACE_MID){
@@ -92,38 +92,24 @@ void Elevator::ElevatorTilt(double lean){
       tiltVal = 0;
    }
 }
-
 void Elevator::ElevatorArm(double armXboxVal){
    if (enableElevator == true) {
-      armVal = -armXboxVal;//negative?
+      armVal = -armXboxVal;
    } else {
       armVal = 0;
    }
 }
 
 
-/*void Elevator::Close(int SolenoidNum){ //logic copied from t-shirt cannon
-    if(SolenoidNum==1){
-        std::cout << "Solenoid 1 is closing" << std::endl;
-        ShooterSolenoid1.Set(frc::DoubleSolenoid::kForward);
-    } 
+frc2::CommandPtr Elevator::ClawOpenCommand() {
+   return this->RunOnce(
+      [this] { clawSolenoid.Set(frc::DoubleSolenoid::kReverse); });
 }
-void Elevator::Open(int SolenoidNum){ 
-    if(SolenoidNum==1){
-        ShooterSolenoid1.Set(frc::DoubleSolenoid::kReverse);
-    } 
-}*/
-
-
-   frc2::CommandPtr Elevator::ClawOpenCommand() {
-      return this->RunOnce(
-         [this] { clawSolenoid.Set(frc::DoubleSolenoid::kReverse); });
-   }
 
 frc2::CommandPtr Elevator::ClawCloseCommand() {
-      return this->RunOnce(
-         [this] { clawSolenoid.Set(frc::DoubleSolenoid::kForward); });
-   }
+   return this->RunOnce(
+      [this] { clawSolenoid.Set(frc::DoubleSolenoid::kForward); });
+}
 
 
 frc2::CommandPtr Elevator::SetPlaceHighState(){

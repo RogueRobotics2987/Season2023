@@ -20,6 +20,7 @@
 #include "subsystems/Compressor.h"
 #include <frc/DoubleSolenoid.h>
 #include <frc/Compressor.h>
+#include <cameraserver/CameraServer.h>
 
 
 
@@ -48,8 +49,8 @@ class RobotContainer {
   CompressorObject m_compressor;
 
 
-  frc::Joystick m_xbox{0};
-  frc::Joystick m_stick{2};
-  
+  frc::XboxController m_xbox{0};
+  frc::Joystick m_stick1{2};
+
   void ConfigureBindings();
 };

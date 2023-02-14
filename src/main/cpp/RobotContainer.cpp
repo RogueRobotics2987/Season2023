@@ -24,6 +24,8 @@ void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
   frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
   frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
+  frc2::JoystickButton(&m_stick1, 4).OnTrue(m_elevator.ClawOpenCommand()); //on joystick
+  frc2::JoystickButton(&m_stick1, 3).OnFalse(m_elevator.ClawCloseCommand()); //on  joystick
 
   frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState());
   frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());

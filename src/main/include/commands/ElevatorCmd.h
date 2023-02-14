@@ -22,7 +22,7 @@ class ElevatorCmd
     : public frc2::CommandHelper<frc2::CommandBase, ElevatorCmd> {
  public:
   ElevatorCmd();
-  ElevatorCmd(Elevator &elevator, frc::Joystick &xbox, frc::Joystick &stick1);
+  ElevatorCmd(Elevator &elevator, frc::XboxController &xbox, frc::Joystick &stick1);
   
   void Initialize() override;
 
@@ -35,6 +35,6 @@ class ElevatorCmd
 
  private:
   Elevator* m_elevator = nullptr;
-  frc::Joystick* m_xbox = nullptr;
+  frc::XboxController* m_xbox = nullptr;
   frc::Joystick* m_stick1 = nullptr;
 };

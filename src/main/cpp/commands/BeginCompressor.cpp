@@ -6,6 +6,7 @@
 
 BeginCompressor::BeginCompressor(CompressorObject &compressor) {
   // Use addRequirements() here to declare subsystem dependencies.
+  m_compressor = &compressor;
   AddRequirements(m_compressor);
 }
 
