@@ -70,7 +70,7 @@ int m_MotorControllerTurning,
   // Set the distance (in this case, angle, radians) per pulse for the turning encoder.
   // This is the the angle through an entire rotation (2 * wpi::numbers::pi)
   // divided by the encoder resolution.
-  m_turningEncoder->ConfigFeedbackCoefficient(7.0/150.0,"Radians", 
+  m_turningEncoder->ConfigFeedbackCoefficient(0.001534,"Radians", 
                                               ctre::phoenix::sensors::SensorTimeBase());
   // Limit the PID Controller's input range between -pi and pi and set the input
   // to be continuous.
@@ -82,6 +82,7 @@ int m_MotorControllerTurning,
   m_turningPIDController.SetP(
     frc::SmartDashboard::PutNumber("Enter P Value for Turn" + std::to_string(m_turningMotor->GetDeviceId()), 
     ModuleConstants::kPModuleTurningController));
+  m_turningPIDController.SetTolerance(units::radian_t(10));
   frc::SmartDashboard::PutNumber("KFF Input " + std::to_string(m_driveMotor->GetDeviceId()), ModuleConstants::kFFModuleDriveController);
 
   frc::SmartDashboard::PutNumber("Wheel Offset " + std::to_string(m_turningMotor->GetDeviceId()), ModuleConstants::wheelOffset);
@@ -120,6 +121,20 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& referenceState)
   
   auto turnOutput = m_turningPIDController.Calculate(
       units::radian_t( m_turningEncoder->GetPosition() /* * 78.73*/ + m_wheelOffset), referenceState.angle.Radians());
+
+  double errorTest = m_turningEncoder->GetPosition() - referenceState.angle.Radians().value();
+
+  while(fabs(errorTest)>M_PI){
+    if(errorTest>0){
+      errorTest=errorTest-M_PI;
+    }else{
+      errorTest=errorTest+M_PI;
+    }
+  }
+  
+  if(fabs(errorTest)<0.06){
+    turnOutput=0.0;
+  }
   
   frc::SmartDashboard::PutNumber("Drive Output " + std::to_string(m_driveMotor->GetDeviceId()), driveOutput);
 
@@ -133,7 +148,10 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& referenceState)
                                  m_turningEncoder->GetPosition() + m_wheelOffset /* * 78.73*/);
   frc::SmartDashboard::PutNumber("Motor Set Position - " + std::to_string(m_turningMotor->GetDeviceId()),
                                  double(referenceState.angle.Radians()) /* * 78.73*/);
-  frc::SmartDashboard::PutNumber(std::to_string(m_turningMotor->GetDeviceId()), turnOutput);
+  frc::SmartDashboard::PutNumber("Turning Motor output" + std::to_string(m_turningMotor->GetDeviceId()), turnOutput);
+  frc::SmartDashboard::PutNumber("Turning Motor error" + std::to_string(m_turningMotor->GetDeviceId()), fabs(fmod(errorTest,M_PI)));
+
+  frc::SmartDashboard::PutBoolean("Turning motor at setpoint",m_turningPIDController.AtSetpoint());
 
   // const auto state = frc::SwerveModuleState::Optimize(
   //     referenceState, units::radian_t{m_turningEncoder.GetDistance()});
@@ -158,7 +176,7 @@ void SwerveModule::ResetEncoders() {
 
 void SwerveModule::ConfigMotorControllers(){
   m_driveMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-  m_turningMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  m_turningMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
 
   frc::ProfiledPIDController<units::radians> SwerveModule::GetTurnPID(){
