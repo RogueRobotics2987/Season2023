@@ -173,12 +173,12 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
     bl.speed = (units::velocity::meters_per_second_t)(0.5 * bl.speed);
     br.speed = (units::velocity::meters_per_second_t)(0.5 * br.speed);
   }
-  // if(WheelsStraight == true){
-  //   fl.angle = (units::angle::degree_t)(0);
-  //   fr.angle = (units::angle::degree_t)(0);
-  //   bl.angle = (units::angle::degree_t)(0);
-  //   br.angle = (units::angle::degree_t)(0);
-  // }
+  if(WheelsStraight == true){
+    fl.angle = (units::angle::degree_t)(0);
+    fr.angle = (units::angle::degree_t)(0);
+    bl.angle = (units::angle::degree_t)(0);
+    br.angle = (units::angle::degree_t)(0);
+  }
   m_frontLeft.SetDesiredState(fl);
   m_frontRight.SetDesiredState(fr);
   m_rearLeft.SetDesiredState(bl);

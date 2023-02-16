@@ -129,5 +129,6 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
   bool driveSlow = false;
-  frc::Field2d m_field;
+  bool WheelsStraight = false;
+  frc::Field2d m_field; 
 };

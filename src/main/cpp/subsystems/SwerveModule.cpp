@@ -49,6 +49,7 @@ int m_MotorControllerTurning,
   m_driveMotor = new rev::CANSparkMax(m_MotorController, rev::CANSparkMax::MotorType::kBrushless);
   m_driveMotor->SetOpenLoopRampRate(1);
   m_turningMotor = new rev::CANSparkMax(m_MotorControllerTurning, rev::CANSparkMax::MotorType::kBrushless);
+  m_turningMotor->SetInverted(true);
   //  samDriveEncoder = new rev::CANEncoder(*samDriveMotor, m_EncoderType, m_counts_per_rev);
   m_driveEncoder = new rev::SparkMaxRelativeEncoder(m_driveMotor->GetEncoder(m_EncoderType, m_counts_per_rev));
   //  samTurningEncoder = new rev::CANEncoder(*samTurningMotor, m_EncoderTypeTurning, m_counts_per_revTurning);
@@ -122,19 +123,19 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& referenceState)
   auto turnOutput = m_turningPIDController.Calculate(
       units::radian_t( m_turningEncoder->GetPosition() /* * 78.73*/ + m_wheelOffset), referenceState.angle.Radians());
 
-  double errorTest = m_turningEncoder->GetPosition() - referenceState.angle.Radians().value();
+  // double errorTest = m_turningEncoder->GetPosition() - referenceState.angle.Radians().value();
 
-  while(fabs(errorTest)>M_PI){
-    if(errorTest>0){
-      errorTest=errorTest-M_PI;
-    }else{
-      errorTest=errorTest+M_PI;
-    }
-  }
+  // while(fabs(errorTest)>M_PI){
+  //   if(errorTest>0){
+  //     errorTest=errorTest-M_PI;
+  //   }else{
+  //     errorTest=errorTest+M_PI;
+  //   }
+  // }
   
-  if(fabs(errorTest)<0.06){
-    turnOutput=0.0;
-  }
+  // if(fabs(errorTest)<0.06){
+  //   turnOutput=0.0;
+  // }
   
   frc::SmartDashboard::PutNumber("Drive Output " + std::to_string(m_driveMotor->GetDeviceId()), driveOutput);
 
@@ -145,11 +146,11 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& referenceState)
   frc::SmartDashboard::PutNumber("Get Drive Positon" + std::to_string(m_driveMotor->GetDeviceId()), 
                                 m_driveEncoder->GetPosition());
   frc::SmartDashboard::PutNumber("get rotation Position " + std::to_string(m_turningMotor->GetDeviceId()), 
-                                 m_turningEncoder->GetPosition() + m_wheelOffset /* * 78.73*/);
+                                 m_turningEncoder->GetPosition() *180/M_PI);
   frc::SmartDashboard::PutNumber("Motor Set Position - " + std::to_string(m_turningMotor->GetDeviceId()),
-                                 double(referenceState.angle.Radians()) /* * 78.73*/);
+                                 double(referenceState.angle.Radians()));
   frc::SmartDashboard::PutNumber("Turning Motor output" + std::to_string(m_turningMotor->GetDeviceId()), turnOutput);
-  frc::SmartDashboard::PutNumber("Turning Motor error" + std::to_string(m_turningMotor->GetDeviceId()), fabs(fmod(errorTest,M_PI)));
+  //frc::SmartDashboard::PutNumber("Turning Motor error" + std::to_string(m_turningMotor->GetDeviceId()), fabs(fmod(errorTest,M_PI)));
 
   frc::SmartDashboard::PutBoolean("Turning motor at setpoint",m_turningPIDController.AtSetpoint());
 
