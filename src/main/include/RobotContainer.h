@@ -53,6 +53,10 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
 
+  frc2::CommandPtr DrivePath1(DriveSubsystem &m_drive);
+
+  frc2::CommandPtr DrivePath2(DriveSubsystem &m_drive);
+
   void ZeroHeading();
 
   void ConfigMotorControllers();
@@ -77,4 +81,8 @@ class RobotContainer {
   frc2::CommandPtr m_complexAuto = autos::ComplexAuto(m_drive);
   frc2::CommandPtr m_CommandAuto = autos::CommandPath(m_drive);
   void ConfigureButtonBindings();
+
+  frc2::CommandPtr Drive1 = DrivePath1(m_drive);
+  frc2::CommandPtr Drive2 = DrivePath2(m_drive);
+  frc2::InstantCommand TestCommand = frc2::InstantCommand([this] {std::cout<<"Hello World" << std::endl;});
 };
