@@ -44,26 +44,30 @@ class Elevator : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax m_vertElevatorMotorLeft = rev::CANSparkMax(10, rev::CANSparkMax::MotorType::kBrushless);
   rev::CANSparkMax m_vertElevatorMotorRight = rev::CANSparkMax(9, rev::CANSparkMax::MotorType::kBrushless);
-  rev::SparkMaxLimitSwitch ls_vertElevator = m_vertElevatorMotorLeft.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyClosed);//forward limit switch
+  rev::SparkMaxLimitSwitch ls_vertElevator = m_vertElevatorMotorLeft.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
+  rev::SparkMaxLimitSwitch ls_vertElevatorR = m_vertElevatorMotorLeft.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
   rev::SparkMaxRelativeEncoder re_vertElevator= m_vertElevatorMotorLeft.GetEncoder(); 
 
   enum ElevatorState_t {INIT, FIND_ZERO, MANUAL_MODE, PLACE_HIGH, PLACE_MID, PLACE_LOW}; 
   ElevatorState_t ElevatorState = FIND_ZERO;
 
   rev::CANSparkMax m_tiltElevatorMotor = rev::CANSparkMax(12, rev::CANSparkMax::MotorType::kBrushless);
-  rev::SparkMaxLimitSwitch ls_tiltElevator = m_tiltElevatorMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyClosed); //reverse limit switch
+  //thsi limit switch is supposed to be normally closed in Rev and noramlly open in code. Why? no idea
+  rev::SparkMaxLimitSwitch ls_tiltElevator = m_tiltElevatorMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen); //reverse limit switch
+  rev::SparkMaxLimitSwitch ls_tiltElevatorF = m_tiltElevatorMotor.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen); //reverse limit switch
   rev::SparkMaxRelativeEncoder re_tiltElevator = m_tiltElevatorMotor.GetEncoder(); 
 
   rev::CANSparkMax m_armMotor = rev::CANSparkMax(11, rev::CANSparkMax::MotorType::kBrushless);//in brake mode and can only go -11 turns
-  rev::SparkMaxLimitSwitch ls_arm = m_armMotor.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyClosed);//forward limit switch
+  rev::SparkMaxLimitSwitch ls_arm = m_armMotor.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
+  rev::SparkMaxLimitSwitch ls_armR = m_armMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
   rev::SparkMaxRelativeEncoder re_arm = m_armMotor.GetEncoder(); 
 
   double verticalVal = 0.0;
   double tiltVal = 0.0;
   double armVal = 0.0;
   bool resetElevatorFinished = false;
-  bool enableElevator = true; //turns off elevator for outreach events when kids have the robot
-
+  bool enableElevator = true; //when false, it turns off elevator for outreach events when kids have the robot
+  
   //claw open and close on pneumatics
   frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(1, frc::PneumaticsModuleType::REVPH, 0, 7); 
 
