@@ -136,7 +136,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 */
 
 frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
-      PathPlannerTrajectory examplePath = PathPlanner::loadPath("Move_1", PathConstraints(3_mps, 1_mps_sq));
+      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1", PathConstraints(3_mps, 1_mps_sq));
 
 
       std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -146,7 +146,7 @@ frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, true, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -156,7 +156,7 @@ frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
   };
 
 frc2::CommandPtr RobotContainer::DrivePath2(DriveSubsystem &m_drive){
-      PathPlannerTrajectory examplePath = PathPlanner::loadPath("Move_2", PathConstraints(3_mps, 1_mps_sq));
+      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2", PathConstraints(3_mps, 1_mps_sq));
 
 
       std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -182,8 +182,9 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
     std::vector<std::unique_ptr<Command>> commands;
 
+  commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Place Square" << std::endl;}));
   commands.emplace_back(Drive1.get());
-  commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Hello World" << std::endl;}));
+  commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
   commands.emplace_back(Drive2.get());
 
   // // auto group = SequentialCommandGroup(std::move(commands));
