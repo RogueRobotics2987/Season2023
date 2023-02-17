@@ -39,17 +39,17 @@ RobotContainer::RobotContainer() {
       bool noJoystickY = false;
       bool noJoystickRot = false;
       double safeX = m_stick1.GetX();
-      if(fabs(safeX)<0.1) {
+      if(fabs(safeX)<0.15) {
           safeX=0;
           noJoystickX = true;
       }
       double safeY =  m_stick1.GetY();
-      if(fabs(safeY)<0.1) { 
+      if(fabs(safeY)<0.15) { 
           safeY=0;
           noJoystickY = true;
       }
       double safeRot = m_stick1.GetZ();
-      if(fabs(safeRot)<0.1) {
+      if(fabs(safeRot)<0.5) {
           safeRot=0;
           noJoystickRot = true;
       }
