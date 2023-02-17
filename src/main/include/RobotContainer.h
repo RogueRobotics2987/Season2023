@@ -9,7 +9,6 @@
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
 #include "Constants.h"
-#include "subsystems/ExampleSubsystem.h"
 #include "commands/ElevatorCmd.h"
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/button/Trigger.h>
@@ -35,16 +34,10 @@ class RobotContainer {
  public:
   RobotContainer();
 
-  frc2::CommandPtr GetAutonomousCommand();
-  //frc2::Command* ElevatorCommand = new ElevatorCmd(m_elevator, m_xbox, m_stick1);
 
  private:
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  frc2::CommandXboxController m_driverController{
-      OperatorConstants::kDriverControllerPort};
-
+ 
   // The robot's subsystems are defined here...
-  ExampleSubsystem m_subsystem;
   Elevator m_elevator;
   CompressorObject m_compressor;
 
