@@ -22,6 +22,21 @@
 #include <cameraserver/CameraServer.h>
 
 
+#include <frc/XboxController.h>
+#include <frc/controller/PIDController.h>
+#include <frc/controller/ProfiledPIDController.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include <frc2/command/Command.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/PIDCommand.h>
+#include <frc2/command/ParallelRaceGroup.h>
+#include <frc2/command/RunCommand.h>
+#include <frc/Joystick.h>
+#include <iostream>
+#include <units/angle.h>
+
+#include "Constants.h"
+#include "subsystems/DriveSubsystem.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -35,15 +50,31 @@ class RobotContainer {
   RobotContainer();
 
 
+  void ConfigureBindings();
+  frc2::Command* GetAutonomousCommand();
+
+  void ZeroHeading();
+
+  void ConfigMotorControllers();
+
+  void ResetOdometry();
+
+  frc2::Command* GetPathCommand();
+
  private:
- 
-  // The robot's subsystems are defined here...
-  Elevator m_elevator;
+  // The driver's controller
+  frc::Joystick m_stick1{2};
+  frc::XboxController m_xbox{0};
+  // The robot's subsystems and commands are defined here...
+
+  // The robot's subsystems
+  DriveSubsystem m_drive;
+   Elevator m_elevator;
   CompressorObject m_compressor;
 
 
-  frc::XboxController m_xbox{0};
-  frc::Joystick m_stick1{2};
+  // The chooser for the autonomous routines
+  frc::SendableChooser<frc2::Command*> m_chooser;
 
-  void ConfigureBindings();
+  void ConfigureButtonBindings();
 };
