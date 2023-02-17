@@ -13,6 +13,8 @@ Elevator::Elevator() {
    //m_vertElevatorMotorRight.SetInverted(true);
    m_vertElevatorMotorRight.Follow(m_vertElevatorMotorLeft, true); //now you only call the left motor
    m_tiltElevatorMotor.SetInverted(false);
+   frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", resetElevatorFinished);
+
 }
 
 // This method will be called once per scheduler run
@@ -20,12 +22,12 @@ void Elevator::Periodic() {
    frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
    frc::SmartDashboard::PutNumber("Elevator tiltVal", tiltVal);
    frc::SmartDashboard::PutNumber("Elevator armVal", armVal);
-   frc::SmartDashboard::PutNumber("Elevator armXboxVal", 10000);
+   //frc::SmartDashboard::PutNumber("Elevator armXboxVal", 10000);
 
 
    //Elevator height
-   //frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
-  // frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
+   frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
+   frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
 
    //Elevator tilt
    frc::SmartDashboard::PutBoolean("Elevator Tilt limit switch", ls_tiltElevator.Get());
@@ -35,16 +37,15 @@ void Elevator::Periodic() {
    frc::SmartDashboard::PutBoolean("Elevator Arm limit switch", ls_arm.Get());
    frc::SmartDashboard::PutNumber("Elevator Arm encoder", re_arm.GetPosition());
    
-   frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", resetElevatorFinished);
    frc::SmartDashboard::PutNumber("Elevator state", ElevatorState);
 
    frc::SmartDashboard::PutNumber("Elevator vert motor 10 output", m_vertElevatorMotorLeft.GetAppliedOutput());
    if (ElevatorState == FIND_ZERO){
       //limit switch is were the elevator is closest to the ground 
-      m_vertElevatorMotorLeft.Set(0.1);//go to forward limit switch
+      m_vertElevatorMotorLeft.Set(-0.1);//go to forward limit switch
 
       //limit switch is where the elevator is all the way tilted towards the back of the robot
-      m_tiltElevatorMotor.Set(0.1);//go to reverse limit switch
+      m_tiltElevatorMotor.Set(-0.1);//go to reverse limit switch
 
       //limit switch is when the arm is all the way up
       m_armMotor.Set(0.05);//go to forward limit switch
@@ -53,9 +54,6 @@ void Elevator::Periodic() {
             re_vertElevator.SetPosition(0);
             re_tiltElevator.SetPosition(0);
             re_arm.SetPosition(0);
-            m_vertElevatorMotorLeft.Set(0);
-            m_tiltElevatorMotor.Set(0);
-            m_armMotor.Set(0);
             frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
             ElevatorState = MANUAL_MODE; 
         } 
