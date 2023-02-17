@@ -202,6 +202,10 @@ units::degree_t DriveSubsystem::GetHeading() const {
   return m_gyro.GetRotation2d().Degrees();
 }
 
+float DriveSubsystem::GetPitch() {
+  return m_gyro.GetPitch();
+  }
+
 frc2::CommandPtr DriveSubsystem::ZeroHeading() {
   return this->RunOnce(
     [this] {m_gyro.Reset(); });

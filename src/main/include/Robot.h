@@ -28,4 +28,6 @@ class Robot : public frc::TimedRobot {
   frc2::Command* m_autonomousCommand = nullptr;
 
   RobotContainer m_container;
+
+  AutoBalance AutoCmd;
 };

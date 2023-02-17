@@ -21,11 +21,13 @@
 #include <units/velocity.h>
 #include <frc/XboxController.h>
 #include <frc/controller/ProfiledPIDController.h>
+#include <frc/interfaces/Gyro.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/Command.h>
 #include <frc2/command/Commands.h>
 #include <frc2/command/PIDCommand.h>
+#include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
 #include <frc/Joystick.h>
@@ -40,6 +42,7 @@ using namespace DriveConstants;
 using namespace pathplanner;
 using namespace frc2;
 
+#include "commands/AutoBalance.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -78,6 +81,10 @@ class RobotContainer {
 
   // The robot's subsystems
   DriveSubsystem m_drive;
+
+  //frc2::Command *AutoCmd;
+
+  frc2::Command* AutoCmd = new AutoBalance(m_drive);
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
