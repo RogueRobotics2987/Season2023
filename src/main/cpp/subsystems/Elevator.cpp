@@ -54,12 +54,12 @@ void Elevator::Periodic() {
          re_arm.SetPosition(0);
       }
       
-        if((ls_vertElevator.Get() == true) && (ls_tiltElevator.Get() == true)) { 
-            re_vertElevator.SetPosition(0);
-            re_tiltElevator.SetPosition(0);
-            frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
-            ElevatorState = MANUAL_MODE; 
-        } 
+      if((ls_vertElevator.Get() == true) && (ls_tiltElevator.Get() == true)) { 
+         re_vertElevator.SetPosition(0);
+         re_tiltElevator.SetPosition(0);
+         frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
+         ElevatorState = MANUAL_MODE; 
+      } 
 
    } else if (ElevatorState == MANUAL_MODE){
 
