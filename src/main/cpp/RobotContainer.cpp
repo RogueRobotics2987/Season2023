@@ -37,23 +37,26 @@ RobotContainer::RobotContainer() {
         bool noJoystickY = false;
         bool noJoystickRot = false;
         double safeX = m_driverController.GetX();
-        if(fabs(safeX)<0.1) {
+        if(fabs(safeX)<0.3) {
             safeX=0;
             noJoystickX = true;
             }
         double safeY =  m_driverController.GetY();
-        if(fabs(safeY)<0.1) { 
+        if(fabs(safeY)<0.3) { 
             safeY=0;
             noJoystickY = true;
             }
         double safeRot = m_driverController.GetZ();
-        if(fabs(safeRot)<0.1) {
+        if(fabs(safeRot)<0.3) {
             safeRot=0;
             noJoystickRot = true;
             }
             noJoystick = noJoystickX && noJoystickY && noJoystickRot;
 
             frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
+            frc::SmartDashboard::PutNumber("SafeX Val: ", safeX);
+            frc::SmartDashboard::PutNumber("SafeY Val: ", safeY);
+            frc::SmartDashboard::PutNumber("SafeRot Val: ", safeRot);
         
         // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
         
@@ -77,6 +80,7 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_driverController, 7).OnTrue(m_drive.SetDriveSlow(true));
     frc2::JoystickButton(&m_driverController, 7).OnFalse(m_drive.SetDriveSlow(false));
     frc2::JoystickButton(&m_driverController, 1).OnTrue(m_drive.ButtonZeroHeading());
+    // frc2::JoystickButton(&m_driverController, 11).OnTrue(AutoCmd);
     frc2::JoystickButton(&m_driverController, 11).OnTrue(AutoCmd);
 }
 /*
@@ -188,8 +192,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
   commands.emplace_back(Drive2.get());
   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
+  commands.emplace_back(AutoCmd);
 
-  //TODO Merge with sams code for charge station auto
 
   // // auto group = SequentialCommandGroup(std::move(commands));
 
@@ -233,6 +237,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
 
   void RobotContainer::ResetOdometry(){
-    m_drive.ResetOdometry(frc::Pose2d{3.60_m, 0.75_m, 180_deg});
+    // m_drive.ResetOdometry(frc::Pose2d{4.0_m, 4.5_m, 180_deg}); //SimpleStation
+    // m_drive.ResetOdometry(frc::Pose2d{3.60_m, 0.75_m, 180_deg}); for ChargeStation1Place-ChargeStation2 paths
+    m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1
   }
 

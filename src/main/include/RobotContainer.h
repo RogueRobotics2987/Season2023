@@ -37,6 +37,7 @@
 #include "subsystems/DriveSubsystem.h"
 #include "commands/Autos.h"
 #include "commands/SequentialAuto.h"
+#include "commands/AutoBalance.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -84,7 +85,7 @@ class RobotContainer {
 
   //frc2::Command *AutoCmd;
 
-  frc2::Command* AutoCmd = new AutoBalance(m_drive);
+  frc2::Command* AutoCmd = new AutoBalance(m_drive, m_driverController);
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;

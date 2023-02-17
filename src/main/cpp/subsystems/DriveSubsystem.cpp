@@ -206,6 +206,10 @@ float DriveSubsystem::GetPitch() {
   return m_gyro.GetPitch();
   }
 
+float DriveSubsystem::GetRoll(){
+  return m_gyro.GetRoll();
+}
+
 frc2::CommandPtr DriveSubsystem::ZeroHeading() {
   return this->RunOnce(
     [this] {m_gyro.Reset(); });
