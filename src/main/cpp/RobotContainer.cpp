@@ -30,25 +30,25 @@ RobotContainer::RobotContainer() {
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
       //   std::cout << "sea out in robot container" << std::endl;
-      frc::SmartDashboard::PutNumber("Left Hand Y", m_stick1.GetX());
-      frc::SmartDashboard::PutNumber("Right Hand Y", m_stick1.GetY());
-      frc::SmartDashboard::PutNumber("Left Hand X", m_stick1.GetZ());
+      frc::SmartDashboard::PutNumber("Xbox left  X axis", m_xbox.GetLeftX());
+      frc::SmartDashboard::PutNumber("Xbox Left y axis", m_xbox.GetLeftY());
+      frc::SmartDashboard::PutNumber("Xbox Right X axis", m_xbox.GetRightX());
       
       bool noJoystick = false;
       bool noJoystickX = false;
       bool noJoystickY = false;
       bool noJoystickRot = false;
-      double safeX = m_stick1.GetX();
+      double safeX = m_newXbox.GetLeftX();
       if(fabs(safeX)<0.1) {
           safeX=0;
           noJoystickX = true;
       }
-      double safeY =  m_stick1.GetY();
+      double safeY =  m_newXbox.GetLeftY();
       if(fabs(safeY)<0.1) { 
           safeY=0;
           noJoystickY = true;
       }
-      double safeRot = m_stick1.GetZ();
+      double safeRot = m_newXbox.GetRightX();
       if(fabs(safeRot)<0.1) {
           safeRot=0;
           noJoystickRot = true;
@@ -84,8 +84,8 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
   frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
-  frc2::JoystickButton(&m_stick1, 4).OnTrue(m_elevator.ClawOpenCommand()); //on joystick
-  frc2::JoystickButton(&m_stick1, 3).OnFalse(m_elevator.ClawCloseCommand()); //on  joystick
+  frc2::JoystickButton(&m_newXbox, 3).OnTrue(m_elevator.ClawOpenCommand()); //Button X
+  frc2::JoystickButton(&m_newXbox, 1).OnFalse(m_elevator.ClawCloseCommand()); //Button A
 
   //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
   //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());

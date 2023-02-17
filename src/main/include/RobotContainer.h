@@ -74,6 +74,7 @@ class RobotContainer {
   // The driver's controller
   frc::Joystick m_stick1{2};
   frc::XboxController m_xbox{0};
+  frc::XboxController m_newXbox{1};
   // The robot's subsystems and commands are defined here...
 
   // The robot's subsystems
