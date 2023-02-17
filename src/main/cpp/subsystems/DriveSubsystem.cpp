@@ -11,6 +11,11 @@
 
 #include "Constants.h"
 
+// for limelight, configOdometry (temp?)
+#include <iostream>
+#include <span>
+using namespace std;
+
 using namespace DriveConstants;
 
 DriveSubsystem::DriveSubsystem()
@@ -236,4 +241,28 @@ void DriveSubsystem::ConfigMotorControllers(){
   m_frontRight.ConfigMotorControllers();
   m_rearLeft.ConfigMotorControllers();
   m_rearRight.ConfigMotorControllers();
+}
+
+frc2::CommandPtr DriveSubsystem::ConfigOdometry(){
+  return this ->RunOnce( [this] {
+    double default_array[6] = {};
+    //numAT = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("numapriltagsvisable", 0);
+
+    std::vector<double> botpose = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->
+                                  GetNumberArray("botpose", std::span{default_array, std::size(default_array)});
+  
+    for(int i=0; i<6; i++){
+      cout << botpose[i] << ", ";
+    }
+
+    /*if(numAT > 1){
+      cout << numAT << endl;
+    } else {
+      cout << numAT << endl;
+    }*/
+
+    frc::Pose2d pose(units::meter_t(botpose.at(0)), units::meter_t(botpose.at(1)), units::radian_t(botpose.at(5)));
+    ResetOdometry(pose);
+
+  });
 }

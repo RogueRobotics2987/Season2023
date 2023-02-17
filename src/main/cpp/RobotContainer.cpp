@@ -92,6 +92,7 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
     frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
 
+    frc2::JoystickButton(&m_driverController, 2).OnTrue(m_drive.ConfigOdometry());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
