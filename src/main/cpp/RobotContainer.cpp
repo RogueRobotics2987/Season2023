@@ -5,36 +5,24 @@
 #include "RobotContainer.h"
 
 #include <frc2/command/button/Trigger.h>
-
-#include "commands/Autos.h"
-#include "commands/ExampleCommand.h"
 #include <frc2/command/button/JoystickButton.h>
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
+  m_lights.SetDefaultCommand(LightsCmd(m_lights, m_xbox, m_newXbox));
 
   // Configure the button bindings
   ConfigureBindings();
-  frc2::JoystickButton(&m_driverController, 1).OnTrue(m_lights.ConeDesired());
-  frc2::JoystickButton(&m_driverController, 2).OnTrue(m_lights.CubeDesired());
-  frc2::JoystickButton(&m_driverController, 3).OnTrue(m_lights.RedColor());
-  frc2::JoystickButton(&m_driverController, 4).OnTrue(m_lights.BlueColor());
+  
 }
 void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
-
-  // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-  frc2::Trigger([this] {
-    return m_subsystem.ExampleCondition();
-  }).OnTrue(ExampleCommand(&m_subsystem).ToPtr());
-
-  // Schedule `ExampleMethodCommand` when the Xbox controller's B button is
-  // pressed, cancelling on release.
-  m_driverController.B().WhileTrue(m_subsystem.ExampleMethodCommand());
+  frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
+  frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
+  frc2::JoystickButton(&m_xbox, 7).OnTrue(m_lights.RedColor());
+  frc2::JoystickButton(&m_xbox, 8).OnTrue(m_lights.BlueColor());
+  // Schedule `ExampleCommand` when `exampleCondition` changes to `true`)
+ 
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
-  // An example command will be run in autonomous
-  return autos::ExampleAuto(&m_subsystem);
-}
 

@@ -8,10 +8,12 @@
 #include <frc2/command/SubsystemBase.h>
 //#include <frc/Servo.h>
 #include <frc2/command/CommandPtr.h>
+#include <frc/XboxController.h>
 
 class lights : public frc2::SubsystemBase {
  public:
   lights();
+  void setStickPOV(int stickPOV);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -33,4 +35,6 @@ class lights : public frc2::SubsystemBase {
  bool bluecolor = false;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
+
+ int cur_stickPOV = 0;
 };

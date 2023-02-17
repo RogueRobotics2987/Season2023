@@ -39,7 +39,11 @@ void lights::Periodic() {
         // why are you still looking at these
     } 
 }
-  frc2::CommandPtr lights::CubeDesired() {
+void lights::setStickPOV(int stickPOV){
+    cur_stickPOV = stickPOV;
+}
+
+frc2::CommandPtr lights::CubeDesired() {
         return this->RunOnce(
     [this] { 
         cubedesired = true;
