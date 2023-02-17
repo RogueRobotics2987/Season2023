@@ -44,8 +44,8 @@ class Elevator : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax m_vertElevatorMotorLeft = rev::CANSparkMax(10, rev::CANSparkMax::MotorType::kBrushless);
   rev::CANSparkMax m_vertElevatorMotorRight = rev::CANSparkMax(9, rev::CANSparkMax::MotorType::kBrushless);
-  rev::SparkMaxLimitSwitch ls_vertElevator = m_vertElevatorMotorLeft.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
-  rev::SparkMaxLimitSwitch ls_vertElevatorR = m_vertElevatorMotorLeft.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
+  rev::SparkMaxLimitSwitch ls_vertElevator = m_vertElevatorMotorLeft.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
+  rev::SparkMaxLimitSwitch ls_vertElevatorF = m_vertElevatorMotorLeft.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
   rev::SparkMaxRelativeEncoder re_vertElevator= m_vertElevatorMotorLeft.GetEncoder(); 
 
   enum ElevatorState_t {INIT, FIND_ZERO, MANUAL_MODE, PLACE_HIGH, PLACE_MID, PLACE_LOW}; 

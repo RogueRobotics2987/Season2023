@@ -10,8 +10,8 @@
 
 Elevator::Elevator() {
    m_vertElevatorMotorLeft.SetInverted(false);
-   m_vertElevatorMotorRight.SetInverted(true);
-   m_vertElevatorMotorRight.Follow(m_vertElevatorMotorLeft); //now you only call the left motor
+   //m_vertElevatorMotorRight.SetInverted(true);
+   m_vertElevatorMotorRight.Follow(m_vertElevatorMotorLeft, true); //now you only call the left motor
    m_tiltElevatorMotor.SetInverted(false);
 }
 
@@ -24,8 +24,8 @@ void Elevator::Periodic() {
 
 
    //Elevator height
-   frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
-   frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
+   //frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
+  // frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
 
    //Elevator tilt
    frc::SmartDashboard::PutBoolean("Elevator Tilt limit switch", ls_tiltElevator.Get());
@@ -38,6 +38,7 @@ void Elevator::Periodic() {
    frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", resetElevatorFinished);
    frc::SmartDashboard::PutNumber("Elevator state", ElevatorState);
 
+   frc::SmartDashboard::PutNumber("Elevator vert motor 10 output", m_vertElevatorMotorLeft.GetAppliedOutput());
    if (ElevatorState == FIND_ZERO){
       //limit switch is were the elevator is closest to the ground 
       m_vertElevatorMotorLeft.Set(0.1);//go to forward limit switch
@@ -73,7 +74,14 @@ void Elevator::Periodic() {
          m_tiltElevatorMotor.Set(tiltVal);
       }
 
+      /*if (ls_vertElevator.Get() == true){
+         frc::SmartDashboard::PutNumber("Elevator final output", verticalVal);
+         m_vertElevatorMotorLeft.Set(verticalVal);
+      } else {
+         m_vertElevatorMotorLeft.Set(0);
+      }*/
       m_vertElevatorMotorLeft.Set(verticalVal);
+
 
    } else if (ElevatorState == PLACE_HIGH){
 
@@ -85,8 +93,9 @@ void Elevator::Periodic() {
 }
 
 void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) { 
-   frc::SmartDashboard::PutNumber("elevatorUp Value", elevatorUp);
-   frc::SmartDashboard::PutNumber("elevatorDown Value", elevatorDown);
+   frc::SmartDashboard::PutNumber("ElevatorUp Value", elevatorUp);
+   frc::SmartDashboard::PutNumber("ElevatorDown Value", elevatorDown);
+   frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
 
    verticalVal =elevatorUp - elevatorDown;
 
