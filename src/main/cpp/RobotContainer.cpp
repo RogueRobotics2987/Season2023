@@ -206,6 +206,15 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     return (double)m_drive.GetHeading();
   }
 
+  double RobotContainer::GetOdometry(){
+    frc::Pose2d Pose = m_drive.GetPose();
+    return (double)Pose.Rotation().Degrees();
+    
+    // m_drive.GetPose();
+  };
+
+  // double RobotContainer::GetRotation(){}
+
   void RobotContainer::ZeroHeading(){
     m_drive.ZeroHeading();
 }
@@ -215,6 +224,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
 
   void RobotContainer::ResetOdometry(){
-    m_drive.ResetOdometry(frc::Pose2d{0_m, 0_m, 0_deg});
+    m_drive.ResetOdometry(frc::Pose2d{3.60_m, 0.75_m, 180_deg});
   }
 

@@ -59,6 +59,8 @@ class RobotContainer {
   frc2::CommandPtr DrivePath2(DriveSubsystem &m_drive);
 
   double GetHeading();
+
+  double GetOdometry();
   
   void ZeroHeading();
 

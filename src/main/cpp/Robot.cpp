@@ -19,6 +19,8 @@ void Robot::RobotInit() {}
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
+  frc::SmartDashboard::PutNumber("GyroPosition", m_container.GetHeading());
+  frc::SmartDashboard::PutNumber("OdometryPosition", m_container.GetOdometry());
 }
 
 /**
@@ -45,7 +47,7 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-  frc::SmartDashboard::PutNumber("GyroPosition", m_container.GetHeading());
+
 }
 
 void Robot::TeleopInit() {
