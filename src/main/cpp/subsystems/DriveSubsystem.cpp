@@ -19,28 +19,6 @@ using namespace DriveConstants;
 using namespace std;
 
 DriveSubsystem::DriveSubsystem(): 
-  // m_frontLeft{kFrontLeftDriveMotorPort,
-  //               kFrontLeftTurningMotorPort,
-  //               kFrontLeftDriveEncoderPorts,
-  //               kFrontLeftTurningEncoderPorts,
-  //               kFrontLeftDriveEncoderReversed,
-  //               kFrontLeftTurningEncoderReversed},
-
-  //   m_rearLeft{
-  //       kRearLeftDriveMotorPort,       kRearLeftTurningMotorPort,
-  //       kRearLeftDriveEncoderPorts,    kRearLeftTurningEncoderPorts,
-  //       kRearLeftDriveEncoderReversed, kRearLeftTurningEncoderReversed},
-
-  //   m_frontRight{
-  //       kFrontRightDriveMotorPort,       kFrontRightTurningMotorPort,
-  //       kFrontRightDriveEncoderPorts,    kFrontRightTurningEncoderPorts,
-  //       kFrontRightDriveEncoderReversed, kFrontRightTurningEncoderReversed},
-
-  //   m_rearRight{
-  //       kRearRightDriveMotorPort,       kRearRightTurningMotorPort,
-  //       kRearRightDriveEncoderPorts,    kRearRightTurningEncoderPorts,
-  //       kRearRightDriveEncoderReversed, kRearRightTurningEncoderReversed},
-
   m_frontLeft{
     kFrontLeftDriveMotorPort, m_EncoderType, kFrontLeftDriveCPR, 
     kFrontLeftTurningMotorPort, 
@@ -69,15 +47,14 @@ DriveSubsystem::DriveSubsystem():
     kRearRightTurningEncoderNumber,
     kRearRightTurningEncoderReversed
   },
-
-
   m_odometry{kDriveKinematics,
              m_gyro.GetRotation2d(),
              {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
               m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-              frc::Pose2d{}} 
-                 
-{frc::SmartDashboard::PutData("Field", &m_field);}
+              frc::Pose2d{}}                 
+{
+  frc::SmartDashboard::PutData("Field", &m_field);
+}
 
 frc2::CommandPtr DriveSubsystem::SetDriveSlow(bool m_bool){
   return this->RunOnce(
@@ -233,9 +210,7 @@ frc2::CommandPtr DriveSubsystem::ConfigOdometry(){
 
     std::vector<double> botpose = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->
                                   GetNumberArray("botpose", std::span{default_array, std::size(default_array)});
-    // double position[1] = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetDoubleArrayTopic("botpose");
-    // double position[] = {nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetDoubleArrayTopic()};
-
+    
     for(int i=0; i<6; i++){
       cout << botpose[i] << ", ";
     }
