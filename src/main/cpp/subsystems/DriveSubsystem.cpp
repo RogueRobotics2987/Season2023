@@ -215,6 +215,18 @@ frc2::CommandPtr DriveSubsystem::ZeroHeading() {
     [this] {m_gyro.Reset(); });
 }
 
+frc2::CommandPtr DriveSubsystem::FieldOrientatedTrue() { //idk
+   return this->RunOnce(
+      [this] { fieldOrientated = true;
+      frc::SmartDashboard::PutBoolean("Field orientated control", fieldOrientated); });
+}
+
+frc2::CommandPtr DriveSubsystem::FieldOrientatedFalse() { //idk
+   return this->RunOnce(
+      [this] { fieldOrientated = false;
+      frc::SmartDashboard::PutBoolean("Field orientated control", fieldOrientated); });
+}
+
 double DriveSubsystem::GetTurnRate() {
   return -m_gyro.GetRate();
 }

@@ -77,6 +77,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * Zeroes the heading of the robot.
    */
   frc2::CommandPtr ZeroHeading();
+  frc2::CommandPtr FieldOrientatedTrue(); //field orientated driving
+  frc2::CommandPtr FieldOrientatedFalse(); //field centric driving
 
   /**
    * Returns the turn rate of the robot.
@@ -144,6 +146,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   // for limelight, configOdometry
   int numAT = 0;
+  bool fieldOrientated = false;
   //int cur_pipeline = 7;
 };
 

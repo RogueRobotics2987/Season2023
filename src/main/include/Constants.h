@@ -200,7 +200,7 @@ namespace AutoConstants {
     units::compound_unit<units::radians,
                          units::inverse<units::squared<units::second>>>;
 */
-constexpr auto kMaxSpeed = 3.0_mps;
+constexpr auto kMaxSpeed = 3.5_mps;
 constexpr auto kMaxAcceleration = 0.5_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;
 constexpr auto kMaxAngularAcceleration = 3.142_rad_per_s_sq;
