@@ -15,9 +15,10 @@ RobotContainer::RobotContainer() {
 
   // Configure the button bindings
   ConfigureBindings();
-  frc2::JoystickButton(&m_driverController, 1).OnTrue(m_lights.ConeDesired(true));
-  frc2::JoystickButton(&m_driverController, 2).OnTrue(m_lights.CubeDesired(true));
-
+  frc2::JoystickButton(&m_driverController, 1).OnTrue(m_lights.ConeDesired());
+  frc2::JoystickButton(&m_driverController, 2).OnTrue(m_lights.CubeDesired());
+  frc2::JoystickButton(&m_driverController, 3).OnTrue(m_lights.RedColor());
+  frc2::JoystickButton(&m_driverController, 4).OnTrue(m_lights.BlueColor());
 }
 void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here

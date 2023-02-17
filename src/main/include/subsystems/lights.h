@@ -4,8 +4,9 @@
 
 #pragma once
 
+#include <frc/DigitalOutput.h>
 #include <frc2/command/SubsystemBase.h>
-#include <frc/Servo.h>
+//#include <frc/Servo.h>
 #include <frc2/command/CommandPtr.h>
 
 class lights : public frc2::SubsystemBase {
@@ -16,12 +17,20 @@ class lights : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  frc2::CommandPtr CubeDesired(bool input);
-  frc2::CommandPtr ConeDesired(bool input);
+  frc2::CommandPtr CubeDesired();
+  frc2::CommandPtr ConeDesired();
+  frc2::CommandPtr RedColor();
+  frc2::CommandPtr BlueColor();
  private:
- frc::Servo exampleServo {1};
- bool cubedesired = true;
+ frc::DigitalOutput output1 {1};
+ frc::DigitalOutput output2 {2};
+ frc::DigitalOutput output3 {3};
+ frc::DigitalOutput output4 {4};
+ //frc::Servo exampleServo {1};
+ bool cubedesired = false;
  bool conedesired = false;
+ bool redcolor = false;
+ bool bluecolor = false;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };

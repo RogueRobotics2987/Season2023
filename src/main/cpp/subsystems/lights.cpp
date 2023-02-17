@@ -9,24 +9,69 @@ lights::lights() = default;
 // This method will be called once per scheduler run
 void lights::Periodic() {
     if (cubedesired) {
-        exampleServo.SetAngle(0);
+        output4.Set(0);
+        output2.Set(0);
+        output1.Set(1);
+        output3.Set(0);
+        //exampleServo.SetAngle(0);
+        // set to send or not send electrical signal to notify arduino to turn purple.
     }
     else if (conedesired) {
-        exampleServo.SetAngle(360);
+        output4.Set(0);
+        output2.Set(1);
+        output1.Set(0);
+        output3.Set(0);
+        //exampleServo.SetAngle(360);
+        // set to send or not send electrical signal to notify arduino to turn yellow.
     }
+    else if (redcolor) {
+        output4.Set(0);
+        output2.Set(0);
+        output1.Set(0);
+        output3.Set(1);
+        //you get the point.
+    } 
+    else if (bluecolor) {
+        output4.Set(1);
+        output2.Set(0);
+        output1.Set(0);
+        output3.Set(0);
+        // why are you still looking at these
+    } 
 }
-
-frc2::CommandPtr lights::CubeDesired(bool input) {
-    return this->RunOnce(
-    [this, input] {
-        cubedesired = input;
-    conedesired = !input;
+  frc2::CommandPtr lights::CubeDesired() {
+        return this->RunOnce(
+    [this] { 
+        cubedesired = true;
+        conedesired = false;
+        redcolor = false;
+        bluecolor = false;
      });
 }
-frc2::CommandPtr lights::ConeDesired(bool input) {
+frc2::CommandPtr lights::ConeDesired() {
         return this->RunOnce(
-    [this, input] {
-        conedesired = input;
-    cubedesired = !input;
+    [this] {
+        conedesired = true;
+        cubedesired = false;
+        redcolor = false;
+        bluecolor = false;
+     });
+}
+frc2::CommandPtr lights::RedColor() {
+        return this->RunOnce(
+    [this] {
+    redcolor = true;
+    conedesired = false;
+    cubedesired = false;
+    bluecolor = false;
+     });
+}
+frc2::CommandPtr lights::BlueColor() {
+        return this->RunOnce(
+    [this] {
+    bluecolor = true;
+    conedesired = false;
+    cubedesired = false;
+    redcolor = false;
      });
 }
