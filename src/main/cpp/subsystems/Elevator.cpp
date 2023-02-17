@@ -51,13 +51,17 @@ void Elevator::Periodic() {
       //
       m_armMotor.Set(0.05);//go to forward limit switch
 
-        if((ls_vertElevator.Get() == true) && (ls_tiltElevator.Get() == true) && (ls_arm.Get() == true)) { 
-            re_vertElevator.SetPosition(0);
-            re_tiltElevator.SetPosition(0);
-            re_arm.SetPosition(0);
-            frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
-            ElevatorState = MANUAL_MODE; 
-        } 
+      if (ls_arm.Get() == true){
+         re_arm.SetPosition(0);
+      }
+      
+      if((ls_vertElevator.Get() == true) && (ls_tiltElevator.Get() == true)) { 
+         re_vertElevator.SetPosition(0);
+         re_tiltElevator.SetPosition(0);
+         re_arm.SetPosition(0);
+         frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
+         ElevatorState = MANUAL_MODE; 
+      } 
 
    } else if (ElevatorState == MANUAL_MODE){
 
