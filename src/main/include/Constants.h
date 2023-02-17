@@ -175,7 +175,7 @@ constexpr double kTurningEncoderDistancePerPulse =
 constexpr double kPModuleTurningController = 1.0;//1.0; // 0.5 //0.003
 constexpr double kPModuleDriveController = 0.1; // 0.1
 // TODO Lower Value of P to 0.0001,  Change Value of p Till its the Highest Without Osilation, 
-constexpr double kFFModuleDriveController = 0.28;
+constexpr double kFFModuleDriveController = 0.259375;
 
 }  // namespace ModuleConstants
 

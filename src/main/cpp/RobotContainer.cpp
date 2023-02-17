@@ -43,25 +43,25 @@ RobotContainer::RobotContainer() {
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
       //   std::cout << "sea out in robot container" << std::endl;
-      frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
-      frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
-      frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
+      frc::SmartDashboard::PutNumber("Left Hand Y", m_stick1.GetX());
+      frc::SmartDashboard::PutNumber("Right Hand Y", m_stick1.GetY());
+      frc::SmartDashboard::PutNumber("Left Hand X", m_stick1.GetZ());
       
       bool noJoystick = false;
       bool noJoystickX = false;
       bool noJoystickY = false;
       bool noJoystickRot = false;
-      double safeX = m_driverController.GetX();
+      double safeX = m_stick1.GetX();
       if(fabs(safeX)<0.1) {
           safeX=0;
           noJoystickX = true;
       }
-      double safeY =  m_driverController.GetY();
+      double safeY =  m_stick1.GetY();
       if(fabs(safeY)<0.1) { 
           safeY=0;
           noJoystickY = true;
       }
-      double safeRot = m_driverController.GetZ();
+      double safeRot = m_stick1.GetZ();
       if(fabs(safeRot)<0.1) {
           safeRot=0;
           noJoystickRot = true;
@@ -88,9 +88,9 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-    frc2::JoystickButton(&m_driverController, 7).OnTrue(m_drive.SetDriveSlow(true));
-    frc2::JoystickButton(&m_driverController, 7).OnFalse(m_drive.SetDriveSlow(false));
-    frc2::JoystickButton(&m_driverController, 1).OnTrue(m_drive.ButtonZeroHeading());
+    frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
+    frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
+    frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
 
 }
 
