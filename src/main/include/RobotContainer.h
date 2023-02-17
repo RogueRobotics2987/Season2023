@@ -22,6 +22,7 @@
 #include <frc/XboxController.h>
 #include <frc/controller/ProfiledPIDController.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/Command.h>
 #include <frc2/command/Commands.h>
 #include <frc2/command/PIDCommand.h>
@@ -57,6 +58,8 @@ class RobotContainer {
 
   frc2::CommandPtr DrivePath2(DriveSubsystem &m_drive);
 
+  double GetHeading();
+  
   void ZeroHeading();
 
   void ConfigMotorControllers();
@@ -84,5 +87,4 @@ class RobotContainer {
 
   frc2::CommandPtr Drive1 = DrivePath1(m_drive);
   frc2::CommandPtr Drive2 = DrivePath2(m_drive);
-  frc2::InstantCommand TestCommand = frc2::InstantCommand([this] {std::cout<<"Hello World" << std::endl;});
 };

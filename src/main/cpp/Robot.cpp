@@ -35,8 +35,8 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  m_container.ResetOdometry();
   m_container.ZeroHeading();
+  m_container.ResetOdometry();
   m_autonomousCommand = m_container.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
@@ -44,7 +44,9 @@ void Robot::AutonomousInit() {
   }
 }
 
-void Robot::AutonomousPeriodic() {}
+void Robot::AutonomousPeriodic() {
+  frc::SmartDashboard::PutNumber("GyroPosition", m_container.GetHeading());
+}
 
 void Robot::TeleopInit() {
   // m_container.ZeroHeading(); //wont work if init pose is not equal to 0
