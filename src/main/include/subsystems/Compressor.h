@@ -4,12 +4,11 @@
 
 #pragma once
 
-#include <frc2/command/SubsystemBase.h>
-#include <frc/DoubleSolenoid.h>
 #include <frc/Compressor.h>
 #include <frc/Solenoid.h>
 #include <frc/DoubleSolenoid.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc2/command/SubsystemBase.h>
 
 
 class CompressorObject : public frc2::SubsystemBase {

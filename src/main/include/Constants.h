@@ -39,7 +39,8 @@ namespace ElevatorConstants {
     constexpr double vertDeadzone = 0.08;
     constexpr double armMaxPositiveSpeed = 0.1;
     constexpr double armMaxNegativeSpeed = -0.05;
-
+    constexpr double tiltDeadzone = 0.08;
+    constexpr double armDeadzone = 0.08;
 }
 // namespace DriveConstants {
 // constexpr int kFrontLeftDriveMotorPort = 0;

@@ -62,26 +62,21 @@ void Elevator::Periodic() {
 
    } else if (ElevatorState == MANUAL_MODE){
 
+      m_armMotor.Set(armVal);
+      m_tiltElevatorMotor.Set(tiltVal);
+      m_vertElevatorMotorLeft.Set(verticalVal);
+
       if (ls_arm.Get() == true){
          re_arm.SetPosition(0);
-      } else {
-         m_armMotor.Set(armVal);
       }
 
       if (ls_tiltElevator.Get() == true){
-         m_tiltElevatorMotor.Set(tiltVal);
-      } else {
-         m_tiltElevatorMotor.Set(tiltVal);
+         re_tiltElevator.SetPosition(0);
       }
 
-      /*if (ls_vertElevator.Get() == true){
-         frc::SmartDashboard::PutNumber("Elevator final output", verticalVal);
-         m_vertElevatorMotorLeft.Set(verticalVal);
-      } else {
-         m_vertElevatorMotorLeft.Set(0);
-      }*/
-      m_vertElevatorMotorLeft.Set(verticalVal);
-
+      if (ls_vertElevator.Get() == true){
+         re_vertElevator.SetPosition(0);
+      }
 
    } else if (ElevatorState == PLACE_HIGH){
 
@@ -114,9 +109,13 @@ void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) {
 void Elevator::ElevatorTilt(double lean){
    if (enableElevator == true){
       tiltVal = -lean;
+   } else if (fabs(tiltVal) < ElevatorConstants::tiltDeadzone){
+      tiltVal = 0;
    } else {
       tiltVal = 0;
    }
+
+
 }
 
 void Elevator::ElevatorArm(double armXboxVal){
@@ -126,6 +125,8 @@ void Elevator::ElevatorArm(double armXboxVal){
 
    if (enableElevator == true){
       armVal = armXboxVal * (0.15);
+   } else if (fabs(armVal) < ElevatorConstants::armDeadzone) {
+      armVal = 0;
    } else {
       armVal = 0;
    }
@@ -142,19 +143,21 @@ frc2::CommandPtr Elevator::ClawCloseCommand() {
       [this] { clawSolenoid.Set(frc::DoubleSolenoid::kForward); });
 }
 
-
 frc2::CommandPtr Elevator::SetPlaceHighState(){
-   ElevatorState = PLACE_HIGH;
+  return this->RunOnce(
+      [this] { ElevatorState = PLACE_HIGH; });
 }
 
 frc2::CommandPtr Elevator::SetPlaceMidState(){
-   ElevatorState = PLACE_MID;
+  return this->RunOnce(
+      [this] { ElevatorState = PLACE_MID; });
 }
-
 frc2::CommandPtr Elevator::SetPlaceLowState(){
-   ElevatorState = PLACE_LOW;
+   return this->RunOnce(
+      [this] { ElevatorState = PLACE_LOW; });
 }
 
 frc2::CommandPtr Elevator::SetManualElevatorState(){
-   ElevatorState = MANUAL_MODE;
+  return this->RunOnce(
+      [this] { ElevatorState = MANUAL_MODE; });
 }

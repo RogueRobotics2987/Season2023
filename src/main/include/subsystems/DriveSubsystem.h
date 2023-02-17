@@ -138,16 +138,12 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
   bool driveSlow = false;
-<<<<<<< HEAD
   bool WheelsStraight = false;
-  frc::Field2d m_field; 
-=======
 
   frc::Field2d m_field;
 
   // for limelight, configOdometry
   int numAT = 0;
   //int cur_pipeline = 7;
->>>>>>> abbb8c8fb2e798e42d99e52020b24e89aa2f3932
 };
 

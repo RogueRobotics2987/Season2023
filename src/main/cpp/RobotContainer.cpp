@@ -7,52 +7,6 @@
 #include <frc2/command/button/Trigger.h>
 
 
-RobotContainer::RobotContainer() {
-  // Initialize all of your commands and subsystems here
-  m_elevator.SetDefaultCommand(ElevatorCmd(m_elevator, m_xbox, m_stick1));
-  m_compressor.SetDefaultCommand(BeginCompressor(m_compressor));
-
-  //m_elevator.SetDefaultCommand(ElevatorCmd());
-  // Configure the button bindings
-  ConfigureBindings();
-}
-
-void RobotContainer::ConfigureBindings() {
-  // Configure your trigger bindings here
-  frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
-  frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
-  frc2::JoystickButton(&m_stick1, 4).OnTrue(m_elevator.ClawOpenCommand()); //on joystick
-  frc2::JoystickButton(&m_stick1, 3).OnFalse(m_elevator.ClawCloseCommand()); //on  joystick
-
-  frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState());
-  frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
-  frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
-  frc2::JoystickButton(&m_stick1, 1).OnTrue(m_elevator.SetManualElevatorState());
-
-  
-  
-}
-
-#include <utility>
-
-#include <frc/controller/PIDController.h>
-#include <frc/geometry/Translation2d.h>
-#include <frc/shuffleboard/Shuffleboard.h>
-#include <frc/trajectory/Trajectory.h>
-#include <frc/trajectory/TrajectoryGenerator.h>
-#include <frc2/command/InstantCommand.h>
-#include <frc2/command/SequentialCommandGroup.h>
-#include <frc2/command/SwerveControllerCommand.h>
-#include <frc2/command/button/JoystickButton.h>
-#include <pathplanner/lib/auto/SwerveAutoBuilder.h>
-#include <pathplanner/lib/PathPlanner.h>
-#include <units/angle.h>
-#include <units/velocity.h>
-
-
-
-#include "Constants.h"
-#include "subsystems/DriveSubsystem.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -65,6 +19,10 @@ RobotContainer::RobotContainer() {
 
   // Configure the button bindings
   ConfigureButtonBindings();
+  m_elevator.SetDefaultCommand(ElevatorCmd(m_elevator, m_xbox, m_stick1));
+  m_compressor.SetDefaultCommand(BeginCompressor(m_compressor));
+
+
 
   // Set up default drive command
   // The left stick controls translation of the robot.
@@ -117,11 +75,23 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-    frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
-    frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
-    frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
+  frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
+  frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
+  frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
 
-    frc2::JoystickButton(&m_driverController, 2).OnTrue(m_drive.ConfigOdometry());
+  frc2::JoystickButton(&m_stick1, 2).OnTrue(m_drive.ConfigOdometry());
+
+
+  frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
+  frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
+  frc2::JoystickButton(&m_stick1, 4).OnTrue(m_elevator.ClawOpenCommand()); //on joystick
+  frc2::JoystickButton(&m_stick1, 3).OnFalse(m_elevator.ClawCloseCommand()); //on  joystick
+
+  //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
+  //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
+  //frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
+  frc2::JoystickButton(&m_stick1, 5).OnTrue(m_elevator.SetManualElevatorState());//need to change
+
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
