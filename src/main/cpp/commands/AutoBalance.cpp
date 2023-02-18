@@ -105,10 +105,10 @@ void AutoBalance::Execute() {
           m_timer.Start();
         }
         else if(m_drive->GetPitch() >= -3) {
-          m_drive->Drive(0_mps, -0.15_mps, 0_rad_per_s, false, false);
+          m_drive->Drive(0_mps, -0.1_mps, 0_rad_per_s, false, false);
         }
         else if(m_drive->GetPitch() <= 3) {
-          m_drive->Drive(0_mps, 0.15_mps, 0_rad_per_s, false, false);
+          m_drive->Drive(0_mps, 0.1_mps, 0_rad_per_s, false, false);
         }
       }
       // while(m_state == 5) {

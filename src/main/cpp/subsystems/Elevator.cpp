@@ -46,7 +46,7 @@ void Elevator::Periodic() {
       m_vertElevatorMotorLeft.Set(-0.1);//go to forward limit switch
 
       //limit switch is where the elevator is all the way tilted towards the back of the robot
-      m_tiltElevatorMotor.Set(-0.1);//go to reverse limit switch
+      m_tiltElevatorMotor.Set(-0.2);//go to reverse limit switch
 
       //limit switch is when the arm is all the way up
       //

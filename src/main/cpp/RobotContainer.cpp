@@ -14,8 +14,12 @@ using namespace pathplanner;
 
 RobotContainer::RobotContainer() {
 
-  frc::SmartDashboard::PutString("AutoAllienceSelector", "My default");
-  // frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
+  // m_chooser.SetDefaultOption("Simple Auto", m_simpleAuto.get()); //SetDefaultOption
+  // m_chooser.AddOption("Complex Auto", m_complexAuto.get());
+  // m_chooser.AddOption("Command Auto", m_complexAuto.get());
+
+  frc::SmartDashboard::PutNumber("PathSelector", 0);
+  frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
 
 
   ConfigMotorControllers();
@@ -165,47 +169,33 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
                                AutoConstants::kMaxAcceleration);
   // Add kinematics to ensure max speed is actually obeyed
   config.SetKinematics(m_drive.kDriveKinematics);
-
   // An example trajectory to follow.  All units in meters.
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
-
       //x moves forward backward
-
       //y moves left right
-
       frc::Pose2d{0_m, 0_m, 0_deg},
       {frc::Translation2d{0.3_m, 0_m} , frc::Translation2d{0.6_m, 0_m}, frc::Translation2d{1_m, 0_m}},
       frc::Pose2d{0_m, 0_m, 0_deg},
-
       // frc::Pose2d{0_m, 0_m, 0_deg},
       // {frc::Translation2d{1_m, 1_m} , frc::Translation2d{2_m, 0_m}, frc::Translation2d{3_m, -1_m}},
       // frc::Pose2d{4_m, 0_m, 0_deg},
       // Pass the config
       config);
-
   frc::ProfiledPIDController<units::radians> thetaController{
       AutoConstants::kPThetaController, 0, 0,
       AutoConstants::kThetaControllerConstraints};
-
   thetaController.EnableContinuousInput(units::radian_t{-std::numbers::pi},
                                         units::radian_t{std::numbers::pi});
-
   frc2::SwerveControllerCommand<4> swerveControllerCommand(
       exampleTrajectory, [this]() {return m_drive.GetPose(); },
-
       m_drive.kDriveKinematics,
-
        frc2::PIDController{AutoConstants::kPXController, 0, 0},
       frc2::PIDController{AutoConstants::kPYController, 0, 0}, thetaController,
-
       [this](auto moduleStates) { m_drive.SetModuleStates(moduleStates); },
-
       {&m_drive});
-
   // Reset odometry to the starting pose of the trajectory.
   m_drive.ResetOdometry(exampleTrajectory.InitialPose());
-
   // no auto
   return new frc2::SequentialCommandGroup(
       std::move(swerveControllerCommand),
@@ -215,18 +205,22 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 */
 
 frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
-    std::string selectedPath = frc::SmartDashboard::GetString("AutoAllienceSelector", "My default");
-    PathPlannerTrajectory examplePath;
+  int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
+  PathPlannerTrajectory examplePath;
 
-    if(selectedPath == "Blue"){
-      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(3_mps, 1_mps_sq));
-
-    }
-    else{
-      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(3_mps, 1_mps_sq));
-    }
-
-
+  if(pathselector == 0){
+    examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(3_mps, 1_mps_sq));
+  }
+  else {
+    //if(pathselector == 1){
+    examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(3_mps, 1_mps_sq));
+  }
+  // else if(pathselector == 2){
+  //   examplePath = PathPlanner::loadPath("NothingBlue", PathConstraints(3_mps, 1_mps_sq), true);
+  // }
+  // else{
+  //   examplePath= PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(3_mps, 1_mps_sq), true);
+  // }
 
       std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
@@ -245,18 +239,22 @@ frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
   };
 
 frc2::CommandPtr RobotContainer::DrivePath2(DriveSubsystem &m_drive){
-    std::string selectedPath = frc::SmartDashboard::GetString("AutoAllienceSelector", "My default");
-
+    int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
     PathPlannerTrajectory examplePath;
 
-    if(selectedPath == "Blue"){
-      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(3_mps, 1_mps_sq));
-
+    if(pathselector == 0){
+      examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(3_mps, 1_mps_sq), true);
     }
-    else{
-      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Red",  PathConstraints(3_mps, 1_mps_sq));
+    else {
+      //if(pathselector == 1){
+      examplePath = PathPlanner::loadPath("ChargeStation2Red", PathConstraints(3_mps, 1_mps_sq), true);
     }
-
+    // else if(pathselector == 2){
+    //   examplePath = PathPlanner::loadPath("NothingBlue", PathConstraints(3_mps, 1_mps_sq), true);
+    // }
+    // else{
+    //   examplePath= PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(3_mps, 1_mps_sq), true);
+    // }
 
       std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
@@ -281,12 +279,19 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
     std::vector<std::unique_ptr<Command>> commands;
 
+  // int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
 
+  // if(pathselector == 0){
   commands.emplace_back(Drive1.get());
   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-
+  // }
+  // if(pathselector == 1){
   commands.emplace_back(Drive2.get());
   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
+  // }
+  // if(pathselector == 2){
+  // commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Reads incorrectly" << std::endl;}));
+  // }
   // commands.emplace_back(AutoCmd);
 
 
@@ -334,12 +339,19 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   void RobotContainer::ResetOdometry(){
     // m_drive.ResetOdometry(frc::Pose2d{4.0_m, 4.5_m, 180_deg}); //SimpleStation
     // m_drive.ResetOdometry(frc::Pose2d{3.60_m, 0.75_m, 180_deg}); for ChargeStation1Place-ChargeStation2 paths
-    std::string selectedPath = frc::SmartDashboard::GetString("AutoAllienceSelector", "My default");
-    if(selectedPath == "Blue"){
-    m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
-    }
-    if(selectedPath == "Red"){
-    m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 180_deg}); //ChargeStation1Red
-    }
-  }
+    int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
 
+    if(pathselector == 0){
+      m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
+    }
+    else {
+    //if(pathselector == 1){
+      m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg}); //ChargeStation1Red
+    }
+    // else if(pathselector ==2){
+    //   m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
+    // }
+    // else{
+    //   m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg});
+    // }
+  }
