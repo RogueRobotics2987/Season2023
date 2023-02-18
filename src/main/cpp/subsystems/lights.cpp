@@ -8,6 +8,39 @@ lights::lights() = default;
 
 // This method will be called once per scheduler run
 void lights::Periodic() {
+    if(cur_stickPOV != -1){ // if POV has been pressed
+        // turn desired LED pattern to true, rest to false
+        if(cur_stickPOV == 0){
+            cubedesired = true;
+
+            conedesired = false;
+            redcolor = false;
+            bluecolor = false;
+
+        } else if(cur_stickPOV == 90){
+            conedesired = true;
+
+            cubedesired = false;
+            redcolor = false;
+            bluecolor = false;
+
+        } else if(cur_stickPOV == 180){
+            redcolor = true;
+
+            cubedesired = false;
+            conedesired = false;
+            bluecolor = false;
+
+        } else if(cur_stickPOV == 270){
+            bluecolor = true;
+
+            cubedesired = false;
+            conedesired = false;
+            redcolor = false;
+        }
+    }
+
+    // start desired LED pattern if one is true
     if (cubedesired) {
         output4.Set(0);
         output2.Set(0);
@@ -40,7 +73,9 @@ void lights::Periodic() {
     } 
 }
 void lights::setStickPOV(int stickPOV){
-    cur_stickPOV = stickPOV;
+    if(stickPOV != -1){
+        cur_stickPOV = stickPOV;
+    }
 }
 
 frc2::CommandPtr lights::CubeDesired() {

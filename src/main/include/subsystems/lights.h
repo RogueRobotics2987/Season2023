@@ -24,17 +24,17 @@ class lights : public frc2::SubsystemBase {
   frc2::CommandPtr RedColor();
   frc2::CommandPtr BlueColor();
  private:
- frc::DigitalOutput output1 {1};
- frc::DigitalOutput output2 {2};
- frc::DigitalOutput output3 {3};
- frc::DigitalOutput output4 {4};
- //frc::Servo exampleServo {1};
- bool cubedesired = false;
- bool conedesired = false;
- bool redcolor = false;
- bool bluecolor = false;
+  frc::DigitalOutput output1 {1};
+  frc::DigitalOutput output2 {2};
+  frc::DigitalOutput output3 {3};
+  frc::DigitalOutput output4 {4};
+  //frc::Servo exampleServo {1};
+  bool cubedesired = false;
+  bool conedesired = false;
+  bool redcolor = false;
+  bool bluecolor = false;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
- int cur_stickPOV = 0;
+  int cur_stickPOV = -1;
 };

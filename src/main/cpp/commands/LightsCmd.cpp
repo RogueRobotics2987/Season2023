@@ -11,7 +11,7 @@ LightsCmd::LightsCmd(lights &leds, frc::XboxController &xbox, frc::XboxControlle
   m_newXbox = &newXbox;
 }
 
-// Called when the command is initially scheduled.
+// Called when the command isj initially scheduled.
 void LightsCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
