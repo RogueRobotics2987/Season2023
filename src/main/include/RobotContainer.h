@@ -75,9 +75,12 @@ class RobotContainer {
   // void ConfigureBindings();
   frc2::Command* GetAutonomousCommand();
 
-  frc2::CommandPtr DrivePath1(DriveSubsystem &m_drive);
+  frc2::CommandPtr DriveCrgStnBlue1(DriveSubsystem &m_drive);
+  frc2::CommandPtr DriveCrgStnBlue2(DriveSubsystem &m_drive);
 
-  frc2::CommandPtr DrivePath2(DriveSubsystem &m_drive);
+  frc2::CommandPtr DriveCrgStnRed1(DriveSubsystem &m_drive);
+  frc2::CommandPtr DriveCrgStnRed2(DriveSubsystem &m_drive);
+
 
   double GetHeading();
 
@@ -116,6 +119,10 @@ class RobotContainer {
   frc2::CommandPtr m_CommandAuto = autos::CommandPath(m_drive);
   void ConfigureButtonBindings();
 
-  frc2::CommandPtr Drive1 = DrivePath1(m_drive);
-  frc2::CommandPtr Drive2 = DrivePath2(m_drive);
+  frc2::CommandPtr DriveCrgStnRed1cmd = DriveCrgStnRed1(m_drive);
+  frc2::CommandPtr DriveCrgStnRed2cmd = DriveCrgStnRed2(m_drive);
+
+  frc2::CommandPtr DriveCrgStnBlue1cmd = DriveCrgStnBlue1(m_drive);
+  frc2::CommandPtr DriveCrgStnBlue2cmd = DriveCrgStnBlue2(m_drive);
+
 };

@@ -41,7 +41,7 @@ void Robot::DisabledPeriodic() {}
  */
 void Robot::AutonomousInit() {
   m_container.ZeroHeading();
-  m_container.ResetOdometry();
+  // m_container.ResetOdometry();
   m_autonomousCommand = m_container.GetAutonomousCommand();
   
   if (m_autonomousCommand != nullptr) {

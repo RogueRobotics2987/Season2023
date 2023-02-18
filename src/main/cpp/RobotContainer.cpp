@@ -212,28 +212,15 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 }
 */
 
-frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
-  int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
-  PathPlannerTrajectory examplePath;
-  pathselector = 1;
 
-  if(pathselector == 0){
-    examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(3_mps, 1_mps_sq));
-    std::cout<<"ChargeStation1Blue"<<std::endl;
-  }
-  else {
-    //if(pathselector == 1){
-    examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(3_mps, 1_mps_sq));
-    std::cout<<"ChargeStation1Red"<<std::endl;
-  }
-  // else if(pathselector == 2){
-  //   examplePath = PathPlanner::loadPath("NothingBlue", PathConstraints(3_mps, 1_mps_sq), true);
-  // }
-  // else{
-  //   examplePath= PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(3_mps, 1_mps_sq), true);
-  // }
+//Red Paths
 
-      std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+frc2::CommandPtr RobotContainer::DriveCrgStnRed1(DriveSubsystem &m_drive){
+
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(3_mps, 1_mps_sq), true);
+  std::cout<<"ChargeStation1Red"<<std::endl;
+
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
   SwerveAutoBuilder autoBuilder(
       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
@@ -247,30 +234,58 @@ frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
   );
 
   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+};
 
-frc2::CommandPtr RobotContainer::DrivePath2(DriveSubsystem &m_drive){
-    int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
-    PathPlannerTrajectory examplePath;
-    pathselector = 1;
+frc2::CommandPtr RobotContainer::DriveCrgStnRed2(DriveSubsystem &m_drive){
 
-    if(pathselector == 0){
-      examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(3_mps, 1_mps_sq), true);
-      std::cout<<"ChargeStation2Blue"<<std::endl;
-    }
-    else {
-      //if(pathselector == 1){
-      examplePath = PathPlanner::loadPath("ChargeStation2Red", PathConstraints(3_mps, 1_mps_sq), true);
-      std::cout<<"ChargeStation2Red"<<std::endl;
-    }
-    // else if(pathselector == 2){
-    //   examplePath = PathPlanner::loadPath("NothingBlue", PathConstraints(3_mps, 1_mps_sq), true);
-    // }
-    // else{
-    //   examplePath= PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(3_mps, 1_mps_sq), true);
-    // }
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(3_mps, 1_mps_sq), true);
+  std::cout<<"ChargeStation2Red"<<std::endl;
 
-      std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+
+  SwerveAutoBuilder autoBuilder(
+      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      eventMap, // Our event map
+      { &m_drive }, // Drive requirements, usually just a single drive subsystem
+      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  );
+
+  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+};
+
+//Blue paths
+
+frc2::CommandPtr RobotContainer::DriveCrgStnBlue1(DriveSubsystem &m_drive){
+
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(3_mps, 1_mps_sq), true);
+  std::cout<<"ChargeStation1Blue"<<std::endl;
+
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+
+  SwerveAutoBuilder autoBuilder(
+      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      eventMap, // Our event map
+      { &m_drive }, // Drive requirements, usually just a single drive subsystem
+      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  );
+
+  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+};
+
+frc2::CommandPtr RobotContainer::DriveCrgStnBlue2(DriveSubsystem &m_drive){
+
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(3_mps, 1_mps_sq), true);
+  std::cout<<"ChargeStation2Blue"<<std::endl;
+
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
   SwerveAutoBuilder autoBuilder(
       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
@@ -293,19 +308,42 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
     std::vector<std::unique_ptr<Command>> commands;
 
-  // int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
+  int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
 
-  // if(pathselector == 0){
-  commands.emplace_back(Drive1.get());
-  commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-  // }
-  // if(pathselector == 1){
-  commands.emplace_back(Drive2.get());
-  commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
-  // }
-  // if(pathselector == 2){
-  // commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Reads incorrectly" << std::endl;}));
-  // }
+  //Red Path
+  if(pathselector == 0){
+    ResetOdometry();
+    commands.emplace_back(DriveCrgStnRed1cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+    commands.emplace_back(DriveCrgStnRed2cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
+  }
+  //Blue Path
+  else if(pathselector == 1){
+    ResetOdometry();
+    commands.emplace_back(DriveCrgStnBlue1cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+    commands.emplace_back(DriveCrgStnBlue2cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));    
+  }
+  //Red Charge Station
+  else if(pathselector == 2){
+    ResetOdometry();
+    commands.emplace_back(DriveCrgStnRed1cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+    commands.emplace_back(DriveCrgStnRed2cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
+    commands.emplace_back(AutoCmd);
+  }
+  //Blue Charge station
+  else{
+    ResetOdometry();
+    commands.emplace_back(DriveCrgStnBlue1cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+    commands.emplace_back(DriveCrgStnBlue2cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
+    commands.emplace_back(AutoCmd);
+  }
   // commands.emplace_back(AutoCmd);
 
 
@@ -354,16 +392,16 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     // m_drive.ResetOdometry(frc::Pose2d{4.0_m, 4.5_m, 180_deg}); //SimpleStation
     // m_drive.ResetOdometry(frc::Pose2d{3.60_m, 0.75_m, 180_deg}); for ChargeStation1Place-ChargeStation2 paths
     int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
-    pathselector = 1;
+    // pathselector = 1;
 
     if(pathselector == 0){
-      m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
-      std::cout<<"OdometryBlue"<<std::endl;
+      m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg}); //ChargeStation1Red
+      std::cout<<"OdometryRed"<<std::endl;
     }
     else {
     //if(pathselector == 1){
-      m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg}); //ChargeStation1Red
-      std::cout<<"OdometryRed"<<std::endl;
+      m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
+      std::cout<<"OdometryBlue"<<std::endl;
     }
     // else if(pathselector ==2){
     //   m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
