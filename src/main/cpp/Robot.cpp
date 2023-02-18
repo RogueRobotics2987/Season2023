@@ -22,8 +22,9 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
-  frc::SmartDashboard::PutNumber("GyroPosition", m_container.GetHeading());
-  frc::SmartDashboard::PutNumber("OdometryPosition", m_container.GetOdometry());
+  //commented out to test, 2/17
+  //frc::SmartDashboard::PutNumber("GyroPosition", m_container.GetHeading());
+  //frc::SmartDashboard::PutNumber("OdometryPosition", m_container.GetOdometry());
 }
 
 /**

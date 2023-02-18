@@ -37,9 +37,10 @@ RobotContainer::RobotContainer() {
  m_drive.SetDefaultCommand(frc2::RunCommand(
       [this] {
         //   std::cout << "sea out in robot container" << std::endl;
-          frc::SmartDashboard::PutNumber("Left Hand Y", m_stick1.GetLeftY());
-          frc::SmartDashboard::PutNumber("Right Hand Y", m_stick1.GetRightY());
-          frc::SmartDashboard::PutNumber("Left Hand X", m_stick1.GetLeftX());
+            //commented out to test, 2/17
+          //frc::SmartDashboard::PutNumber("Left Hand Y", m_stick1.GetLeftY());
+          //frc::SmartDashboard::PutNumber("Right Hand Y", m_stick1.GetRightY());
+          //frc::SmartDashboard::PutNumber("Left Hand X", m_stick1.GetLeftX());
         
         bool noJoystick = false;
         bool noJoystickX = false;
@@ -155,6 +156,11 @@ void RobotContainer::ConfigureButtonBindings() {
   //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
   //frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
   frc2::JoystickButton(&m_stick1, 5).OnTrue(m_elevator.SetManualElevatorState());//need to change
+
+  frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
+  frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
+  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
+  frc2::JoystickButton(&m_xbox, 4).OnTrue(m_lights.BlueColor());
 
 }
 /*

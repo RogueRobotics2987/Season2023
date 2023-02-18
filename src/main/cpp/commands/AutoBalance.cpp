@@ -25,15 +25,16 @@ void AutoBalance::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void AutoBalance::Execute() {
-  frc::SmartDashboard::PutNumber("Auto State", m_state);
-  frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-  frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+void AutoBalance::Execute() {  
+  //commented out to test, 2/17
+  // frc::SmartDashboard::PutNumber("Auto State", m_state);
+  // frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
+  // frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
   if(m_state == 0) {
     // m_angle = frc::SmartDashboard::GetNumber("m_angle value: ", m_angle);
-      frc::SmartDashboard::PutNumber("Auto State", m_state);
-      frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-      frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+      // frc::SmartDashboard::PutNumber("Auto State", m_state);
+      // frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
+      // frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
       m_drive->Drive(0_mps, 2.0_mps, 0_rad_per_s, false, false);
       if(m_drive->GetPitch() >= 9 || m_drive->GetPitch() <= -9) {
         m_state = 1;
@@ -41,9 +42,9 @@ void AutoBalance::Execute() {
       
     }
     if(m_state == 1){
-      frc::SmartDashboard::PutNumber("Auto State", m_state);
-      frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-      frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+      // frc::SmartDashboard::PutNumber("Auto State", m_state);
+      // frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
+      // frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
       m_drive->Drive(0_mps, 0.45_mps, 0_rad_per_s, false, false);
       if(m_drive->GetPitch() <= 4.5 && m_drive->GetPitch() >= -4.5) {
         m_state = 2;
@@ -51,9 +52,9 @@ void AutoBalance::Execute() {
       
     }
     if(m_state == 2) {
-      frc::SmartDashboard::PutNumber("Auto State", m_state);
-      frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-      frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+      // frc::SmartDashboard::PutNumber("Auto State", m_state);
+      // frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
+      // frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
       m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
       if(m_drive->GetPitch() <= -3 && backwardsCheck == false) {
         m_state = 3;
@@ -81,9 +82,9 @@ void AutoBalance::Execute() {
       
     }
       if(m_state == 3) {
-        frc::SmartDashboard::PutNumber("Auto State", m_state);
-        frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-        frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+        // frc::SmartDashboard::PutNumber("Auto State", m_state);
+        // frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
+        // frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
         if(m_timer.Get() <= 0.75_s) {
           m_drive->Drive(0_mps, -0.4_mps, 0_rad_per_s, false, false);
         }
@@ -97,9 +98,9 @@ void AutoBalance::Execute() {
       // }
     }
       if(m_state == 4) {
-        frc::SmartDashboard::PutNumber("Auto State", m_state);
-        frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-        frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+        // frc::SmartDashboard::PutNumber("Auto State", m_state);
+        // frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
+        // frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
         if(m_drive->GetPitch() < 3 && m_drive->GetPitch() > -3) {
           m_state = 2;
           m_timer.Start();

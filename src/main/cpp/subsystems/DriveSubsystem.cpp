@@ -87,19 +87,20 @@ frc2::CommandPtr DriveSubsystem::SetDriveSlow(bool m_bool){
 }
 
 void DriveSubsystem::Periodic() {
-  frc::SmartDashboard::PutNumber("Gyro Yaw: ", m_gyro.GetYaw());
-  frc::SmartDashboard::PutNumber("Gyro Pitch: ", m_gyro.GetPitch());
-  frc::SmartDashboard::PutNumber("Gyro Roll: ", m_gyro.GetRoll());
-  frc::SmartDashboard::PutNumber("Gyro Angle X: ", m_gyro.GetRawGyroX());
-  frc::SmartDashboard::PutNumber("Gyro Angle Y: ", m_gyro.GetRawGyroY());
-  frc::SmartDashboard::PutNumber("Gyro Angle Z: ", m_gyro.GetRawGyroZ());
+    //commented out to test, 2/17
+  // frc::SmartDashboard::PutNumber("Gyro Yaw: ", m_gyro.GetYaw());
+  // frc::SmartDashboard::PutNumber("Gyro Pitch: ", m_gyro.GetPitch());
+  // frc::SmartDashboard::PutNumber("Gyro Roll: ", m_gyro.GetRoll());
+  // frc::SmartDashboard::PutNumber("Gyro Angle X: ", m_gyro.GetRawGyroX());
+  // frc::SmartDashboard::PutNumber("Gyro Angle Y: ", m_gyro.GetRawGyroY());
+  // frc::SmartDashboard::PutNumber("Gyro Angle Z: ", m_gyro.GetRawGyroZ());
 
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(m_gyro.GetRotation2d(),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 
-    frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
+    //frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
 
   m_field.SetRobotPose(m_odometry.GetPose());
 }
@@ -110,7 +111,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            bool fieldRelative,
                            bool noJoystick) {
                       
-  frc::SmartDashboard::PutNumber("ROT value: ", rot.value());
+  //frc::SmartDashboard::PutNumber("ROT value: ", rot.value());
   auto states = kDriveKinematics.ToSwerveModuleStates(
       fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                           xSpeed, ySpeed, rot, m_gyro.GetRotation2d())
@@ -130,13 +131,14 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   //float angleDiffFL = fabs((float)(fl.angle.Degrees()) - currentAngle);
   //float angleOff = fabs(currentAngle - desiredAngle);
   float angleOff = (float)m_frontLeft.GetTurnPID().GetPositionError();
-  frc::SmartDashboard::PutNumber("Fl Current angle", currentAngle);
-  frc::SmartDashboard::PutNumber("Fl Angle Diff",angleOff);
+    //commented out to test, 2/17
+  // frc::SmartDashboard::PutNumber("Fl Current angle", currentAngle);
+  // frc::SmartDashboard::PutNumber("Fl Angle Diff",angleOff);
   // frc::SmartDashboard::PutNumber("m_frontLeft State Angle", m_frontLeft.GetState().angle.Degrees().value());
-  frc::SmartDashboard::PutNumber("Fl Desired angle",(float)fl.angle.Degrees());
-  frc::SmartDashboard::PutNumber("Fr Desired angle",(float)fr.angle.Degrees());
-  frc::SmartDashboard::PutNumber("Bl Desired angle",(float)bl.angle.Degrees());
-  frc::SmartDashboard::PutNumber("Br Desired angle",(float)br.angle.Degrees());
+  // frc::SmartDashboard::PutNumber("Fl Desired angle",(float)fl.angle.Degrees());
+  // frc::SmartDashboard::PutNumber("Fr Desired angle",(float)fr.angle.Degrees());
+  // frc::SmartDashboard::PutNumber("Bl Desired angle",(float)bl.angle.Degrees());
+  // frc::SmartDashboard::PutNumber("Br Desired angle",(float)br.angle.Degrees());
   float epsilon = 1.0/10.0;
   // angleOff = angleOff && fabs((angleDiffFR < 10)) && (!noJoystick);
   // angleOff = angleOff && fabs((angleDiffBR < 10)) && (!noJoystick);

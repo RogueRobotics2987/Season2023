@@ -60,10 +60,11 @@
 #include "Constants.h"
 #include "commands/BeginCompressor.h"
 #include "commands/ElevatorCmd.h"
-#include "subsystems/DriveSubsystem.h"
 #include "commands/Autos.h"
 #include "commands/SequentialAuto.h"
 #include "commands/AutoBalance.h"
+#include "subsystems/DriveSubsystem.h"
+#include "subsystems/Lights.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -107,7 +108,7 @@ class RobotContainer {
 
  private:
   // The driver's controller
-  frc::XboxController m_stick1{1};
+  frc::XboxController m_stick1{2};
   frc::XboxController m_xbox{0};
   // The robot's subsystems and commands are defined here...
 
@@ -115,6 +116,7 @@ class RobotContainer {
   DriveSubsystem m_drive;
   Elevator m_elevator;
   CompressorObject m_compressor;
+  Lights m_lights;
 
 
   //frc2::Command *AutoCmd;
