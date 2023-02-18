@@ -65,7 +65,14 @@ RobotContainer::RobotContainer() {
       frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
       
       // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
-      bool fieldOrientated = frc::SmartDashboard::GetBoolean("Field orientated control", false); 
+      bool fieldOrientated; 
+
+      if (m_newXbox.GetRawAxis(3)> 0.15){
+        fieldOrientated = false;
+      }
+      if (m_newXbox.GetRawAxis(3)< 0.15){
+        fieldOrientated = true;
+      }
       m_drive.Drive(units::meters_per_second_t(
                         -safeY * AutoConstants::kMaxSpeed),
                     units::meters_per_second_t(
@@ -155,6 +162,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
+  frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
 
   frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
