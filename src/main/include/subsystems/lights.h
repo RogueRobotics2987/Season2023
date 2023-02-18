@@ -9,9 +9,9 @@
 #include <frc/XboxController.h>
 #include <frc2/command/CommandPtr.h>
 
-class lights : public frc2::SubsystemBase {
+class Lights : public frc2::SubsystemBase {
  public:
-  lights();
+  Lights();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.

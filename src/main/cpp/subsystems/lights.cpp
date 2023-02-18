@@ -4,10 +4,10 @@
 
 #include "subsystems/lights.h"
 
-lights::lights() = default;
+Lights::lights() = default;
 
 // This method will be called once per scheduler run
-void lights::Periodic() {
+void Lights::Periodic() {
     if (cubeDesired) {
         output1.Set(1);
         output2.Set(0);
@@ -31,7 +31,7 @@ void lights::Periodic() {
     }
 }
 
-frc2::CommandPtr lights::CubeDesired() {
+frc2::CommandPtr Lights::CubeDesired() {
     return this->RunOnce(
         [this] {
             cubeDesired = true; 
@@ -40,7 +40,7 @@ frc2::CommandPtr lights::CubeDesired() {
             blueColor = false; });
 }
 
-frc2::CommandPtr lights::ConeDesired() {
+frc2::CommandPtr Lights::ConeDesired() {
     return this->RunOnce(
         [this] {
             cubeDesired = false; 
@@ -49,7 +49,7 @@ frc2::CommandPtr lights::ConeDesired() {
             blueColor = false; });
 }
 
-frc2::CommandPtr lights::RedColor() {
+frc2::CommandPtr Lights::RedColor() {
     return this->RunOnce(
         [this] {
             cubeDesired = false; 
@@ -57,7 +57,7 @@ frc2::CommandPtr lights::RedColor() {
             redColor = true;
             blueColor = false; });
 }
-frc2::CommandPtr lights::BlueColor() {
+frc2::CommandPtr Lights::BlueColor() {
     return this->RunOnce(
         [this] {
             cubeDesired = false; 
