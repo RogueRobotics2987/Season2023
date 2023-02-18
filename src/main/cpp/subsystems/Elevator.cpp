@@ -28,7 +28,7 @@ void Elevator::Periodic() {
 
    //Elevator height
    //frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
-  // frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
+   //frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
 
    //Elevator tilt
    // frc::SmartDashboard::PutBoolean("Elevator Tilt limit switch", ls_tiltElevator.Get());

@@ -4,12 +4,13 @@
 
 #pragma once
 
+#include <frc/Timer.h>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/button/CommandXboxController.h>
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
-#include "subsystems/Elevator.h"
+
+#include "subsystems/DriveSubsystem.h"
 
 /**
  * An example command.
@@ -18,14 +19,16 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ElevatorCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ElevatorCmd> {
+class AutoBalance
+    : public frc2::CommandHelper<frc2::CommandBase, AutoBalance> {
  public:
-  ElevatorCmd();
-  ElevatorCmd(Elevator &elevator, frc::XboxController &xbox, frc::XboxController &stick1);
-  
+  AutoBalance(DriveSubsystem& l_drive, frc::XboxController &l_Joystick);
+
+  AutoBalance();
+
   void Initialize() override;
 
+  void Periodic();
 
   void Execute() override;
 
@@ -33,8 +36,14 @@ class ElevatorCmd
 
   bool IsFinished() override;
 
- private:
-  Elevator* m_elevator = nullptr;
-  frc::XboxController* m_xbox = nullptr;
-  frc::XboxController* m_stick1 = nullptr;
+  frc2::CommandPtr runCmd(bool run);
+
+  private:
+    DriveSubsystem* m_drive;
+    int m_state;
+    double m_angle;
+    frc::Timer m_timer;
+    bool backwardsCheck;
+    bool autoCheck;
+    frc::XboxController* m_Joystick;
 };

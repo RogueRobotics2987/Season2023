@@ -76,6 +76,12 @@ class DriveSubsystem : public frc2::SubsystemBase {
   /**
    * Zeroes the heading of the robot.
    */
+
+  float GetPitch();
+
+  float GetRoll();
+
+
   frc2::CommandPtr ZeroHeading();
   frc2::CommandPtr FieldOrientatedTrue(); //field orientated driving
   frc2::CommandPtr FieldOrientatedFalse(); //field centric driving

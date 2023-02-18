@@ -215,9 +215,20 @@ units::degree_t DriveSubsystem::GetHeading() const {
   return m_gyro.GetRotation2d().Degrees();
 }
 
+float DriveSubsystem::GetPitch() {
+  return m_gyro.GetPitch();
+  }
+
+float DriveSubsystem::GetRoll(){
+  return m_gyro.GetRoll();
+}
+
 frc2::CommandPtr DriveSubsystem::ZeroHeading() {
   return this->RunOnce(
-    [this] {m_gyro.Reset(); });
+    [this] {
+      //m_gyro.SetAngleAdjustment(90);
+    m_gyro.Reset();
+    });
 }
 
 frc2::CommandPtr DriveSubsystem::FieldOrientatedTrue() { //idk

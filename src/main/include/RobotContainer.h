@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <utility>
+
+#include <frc/controller/PIDController.h> //TODO this libaray list is bloated
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
 #include <frc/DoubleSolenoid.h>
@@ -24,7 +27,22 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/InstantCommand.h>
+#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/SwerveControllerCommand.h>
+#include <frc2/command/button/JoystickButton.h>
+#include <pathplanner/lib/auto/SwerveAutoBuilder.h>
+#include <pathplanner/lib/PathPlanner.h>
+#include <units/angle.h>
+#include <units/velocity.h>
+#include <frc/XboxController.h>
+#include <frc/controller/ProfiledPIDController.h>
+#include <frc/interfaces/Gyro.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc2/command/Command.h>
+#include <frc2/command/Commands.h>
 #include <frc2/command/PIDCommand.h>
+#include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
@@ -43,6 +61,15 @@
 #include "commands/BeginCompressor.h"
 #include "commands/ElevatorCmd.h"
 #include "subsystems/DriveSubsystem.h"
+#include "commands/Autos.h"
+#include "commands/SequentialAuto.h"
+#include "commands/AutoBalance.h"
+
+using namespace DriveConstants;
+using namespace pathplanner;
+using namespace frc2;
+
+#include "commands/AutoBalance.h"
 #include "subsystems/SwerveModule.h"
 #include "subsystems/lights.h"
 
@@ -59,20 +86,28 @@ class RobotContainer {
   RobotContainer();
 
 
-  void ConfigureBindings();
+  // void ConfigureBindings();
   frc2::Command* GetAutonomousCommand();
 
+  frc2::CommandPtr DrivePath1(DriveSubsystem &m_drive);
+
+  frc2::CommandPtr DrivePath2(DriveSubsystem &m_drive);
+
+  double GetHeading();
+
+  double GetOdometry();
+  
   void ZeroHeading();
 
   void ConfigMotorControllers();
 
   void ResetOdometry();
 
-  frc2::Command* GetPathCommand();
+  frc2::CommandPtr GetPathCommand();
 
  private:
   // The driver's controller
-  frc::Joystick m_stick1{2};
+  frc::XboxController m_stick1{1};
   frc::XboxController m_xbox{0};
   frc::XboxController m_newXbox{1};
   // The robot's subsystems and commands are defined here...
@@ -83,8 +118,18 @@ class RobotContainer {
   CompressorObject m_compressor;
   lights m_lights;
 
+  //frc2::Command *AutoCmd;
+
+  frc2::Command* AutoCmd = new AutoBalance(m_drive, m_stick1);
+
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 
+  frc2::CommandPtr m_simpleAuto = autos::SimpleAuto(m_drive);
+  frc2::CommandPtr m_complexAuto = autos::ComplexAuto(m_drive);
+  frc2::CommandPtr m_CommandAuto = autos::CommandPath(m_drive);
   void ConfigureButtonBindings();
+
+  frc2::CommandPtr Drive1 = DrivePath1(m_drive);
+  frc2::CommandPtr Drive2 = DrivePath2(m_drive);
 };
