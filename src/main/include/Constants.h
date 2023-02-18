@@ -22,13 +22,26 @@
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
- * numerical or bool constants.  This should not be used for any other purpose.
+ * numerical or boolean constants.  This should not be used for any other
+ * purpose.
  *
  * It is generally a good idea to place constants into subsystem- or
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
 
+namespace OperatorConstants {
+
+
+}  // namespace OperatorConstants
+
+namespace ElevatorConstants {
+    constexpr double vertDeadzone = 0.08;
+    constexpr double armMaxPositiveSpeed = 0.1;
+    constexpr double armMaxNegativeSpeed = -0.05;
+    constexpr double tiltDeadzone = 0.08;
+    constexpr double armDeadzone = 0.08;
+}
 // namespace DriveConstants {
 // constexpr int kFrontLeftDriveMotorPort = 0;
 // constexpr int kRearLeftDriveMotorPort = 2;
@@ -76,20 +89,20 @@
 // }  // namespace DriveConstants
 
 namespace DriveConstants {
-constexpr int kFrontLeftDriveMotorPort = 13;
-constexpr int kRearLeftDriveMotorPort = 7;
-constexpr int kFrontRightDriveMotorPort = 3;
-constexpr int kRearRightDriveMotorPort = 5;
+constexpr int kFrontLeftDriveMotorPort = 2; //13 for tshirt cannon
+constexpr int kRearLeftDriveMotorPort = 8; //7 for tshirt
+constexpr int kFrontRightDriveMotorPort = 4; //3 for tshirt
+constexpr int kRearRightDriveMotorPort = 6; // 5 for tshirt
 
-constexpr int kFrontLeftTurningMotorPort = 2;
-constexpr int kRearLeftTurningMotorPort = 8;
-constexpr int kFrontRightTurningMotorPort = 4;
-constexpr int kRearRightTurningMotorPort = 6;
+constexpr int kFrontLeftTurningMotorPort = 1; //2 for tshirt
+constexpr int kRearLeftTurningMotorPort = 7; // 8 for tshirt
+constexpr int kFrontRightTurningMotorPort = 3;//4 for tshirt
+constexpr int kRearRightTurningMotorPort = 5; //6 for tshirt
 
-constexpr int kFrontLeftTurningEncoderNumber = 9;
-constexpr int kRearLeftTurningEncoderNumber = 12;
-constexpr int kFrontRightTurningEncoderNumber = 10;
-constexpr int kRearRightTurningEncoderNumber = 11;
+constexpr int kFrontLeftTurningEncoderNumber = 13; //9 for tshirt
+constexpr int kRearLeftTurningEncoderNumber = 16; //12 for tshirt
+constexpr int kFrontRightTurningEncoderNumber = 14;//10 for tshirt
+constexpr int kRearRightTurningEncoderNumber = 15;//11 for tshirt
 
 // constexpr int Actuator = 40;
 
@@ -161,7 +174,7 @@ constexpr double kPRearRightVel = 0.5;
 
 namespace ModuleConstants {
 constexpr double wheelOffset = 0;
-constexpr double gearRatio = 8.16; //we measured 8.91
+constexpr double gearRatio = 8.14; //we measured 8.91
 constexpr int kEncoderCPR = 1;
 constexpr double kWheelDiameterMeters = 0.0977; // 0.0762
 constexpr double kDriveEncoderDistancePerPulse =
@@ -172,10 +185,10 @@ constexpr double kTurningEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
     (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
 
-constexpr double kPModuleTurningController = 0.5;
-constexpr double kPModuleDriveController = 0.1;
+constexpr double kPModuleTurningController = 1.0;//1.0; // 0.5 //0.003
+constexpr double kPModuleDriveController = 0.1; // 0.1
 // TODO Lower Value of P to 0.0001,  Change Value of p Till its the Highest Without Osilation, 
-constexpr double kFFModuleDriveController = 0.264636;
+constexpr double kFFModuleDriveController = 0.259375;
 
 }  // namespace ModuleConstants
 
@@ -187,7 +200,7 @@ namespace AutoConstants {
     units::compound_unit<units::radians,
                          units::inverse<units::squared<units::second>>>;
 */
-constexpr auto kMaxSpeed = 3.0_mps;
+constexpr auto kMaxSpeed = 3.5_mps;
 constexpr auto kMaxAcceleration = 0.5_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;
 constexpr auto kMaxAngularAcceleration = 3.142_rad_per_s_sq;
@@ -204,5 +217,5 @@ extern const frc::TrapezoidProfile<units::radians>::Constraints
 }  // namespace AutoConstants
 
 namespace OIConstants {
-constexpr int kDriverControllerPort = 0;
+constexpr int kDriverControllerPort = 2;
 }  // namespace OIConstants

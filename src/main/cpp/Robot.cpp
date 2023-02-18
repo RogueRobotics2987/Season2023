@@ -4,10 +4,13 @@
 
 #include "Robot.h"
 
-#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+
+  frc::CameraServer::StartAutomaticCapture();
+
+}
 
 /**
  * This function is called every 20 ms, no matter the mode. Use
@@ -19,6 +22,8 @@ void Robot::RobotInit() {}
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
+  frc::SmartDashboard::PutNumber("GyroPosition", m_container.GetHeading());
+  frc::SmartDashboard::PutNumber("OdometryPosition", m_container.GetOdometry());
 }
 
 /**
@@ -36,18 +41,21 @@ void Robot::DisabledPeriodic() {}
  */
 void Robot::AutonomousInit() {
   m_container.ZeroHeading();
+  m_container.ResetOdometry();
   m_autonomousCommand = m_container.GetAutonomousCommand();
-
+  
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
 }
 
-void Robot::AutonomousPeriodic() {}
+void Robot::AutonomousPeriodic() {
+
+}
 
 void Robot::TeleopInit() {
-  m_container.ZeroHeading();
-  m_container.ResetOdometry(); //TODO may need to be removed to avoid confusion in position from autonomous and teleop
+  // m_container.ZeroHeading(); //wont work if init pose is not equal to 0
+  // m_container.ResetOdometry(); //TODO may need to be removed to avoid confusion in position from autonomous and teleop
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove

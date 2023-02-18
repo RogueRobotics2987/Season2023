@@ -4,10 +4,13 @@
 
 #pragma once
 
+#include <optional>
+#include <frc2/command/CommandPtr.h>
 #include <frc/TimedRobot.h>
 #include <frc2/command/Command.h>
 
 #include "RobotContainer.h"
+#include "commands/Autos.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -27,4 +30,6 @@ class Robot : public frc::TimedRobot {
   frc2::Command* m_autonomousCommand = nullptr;
 
   RobotContainer m_container;
+
+  AutoBalance AutoCmd;
 };

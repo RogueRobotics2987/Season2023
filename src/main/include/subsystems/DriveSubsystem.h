@@ -76,7 +76,15 @@ class DriveSubsystem : public frc2::SubsystemBase {
   /**
    * Zeroes the heading of the robot.
    */
+
+  float GetPitch();
+
+  float GetRoll();
+
+
   frc2::CommandPtr ZeroHeading();
+  frc2::CommandPtr FieldOrientatedTrue(); //field orientated driving
+  frc2::CommandPtr FieldOrientatedFalse(); //field centric driving
 
   /**
    * Returns the turn rate of the robot.
@@ -100,6 +108,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   void ResetOdometry(frc::Pose2d pose);
 
   frc2::CommandPtr SetDriveSlow(bool m_bool);
+  
 
   frc2::CommandPtr ButtonZeroHeading();
 
@@ -123,7 +132,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-
+//   bool WheelsStraight = false;
   SwerveModule m_frontLeft;
   SwerveModule m_frontRight;
   SwerveModule m_rearLeft;
@@ -137,10 +146,13 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
   bool driveSlow = false;
+  bool WheelsStraight = false;
 
   frc::Field2d m_field;
 
   // for limelight, configOdometry
   int numAT = 0;
+  bool fieldOrientated = false;
   //int cur_pipeline = 7;
 };
+
