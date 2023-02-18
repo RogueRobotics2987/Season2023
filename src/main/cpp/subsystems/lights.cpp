@@ -4,7 +4,7 @@
 
 #include "subsystems/lights.h"
 
-Lights::lights() = default;
+Lights::Lights() = default;
 
 // This method will be called once per scheduler run
 void Lights::Periodic() {
