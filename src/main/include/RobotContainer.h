@@ -93,7 +93,7 @@ class RobotContainer {
 
  private:
   // The driver's controller
-  frc::XboxController m_stick1{1};
+  //frc::Joystick m_stick1{2};
   frc::XboxController m_xbox{0};
   frc::XboxController m_newXbox{1};
   // The robot's subsystems and commands are defined here...
@@ -106,7 +106,7 @@ class RobotContainer {
 
   //frc2::Command *AutoCmd;
 
-  frc2::Command* AutoCmd = new AutoBalance(m_drive, m_stick1);
+  frc2::Command* AutoCmd = new AutoBalance(m_drive, m_newXbox);
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;

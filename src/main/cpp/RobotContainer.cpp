@@ -28,7 +28,7 @@ RobotContainer::RobotContainer() {
 
   // Configure the button bindings
   ConfigureButtonBindings();
-  m_elevator.SetDefaultCommand(ElevatorCmd(m_elevator, m_xbox, m_stick1));
+  m_elevator.SetDefaultCommand(ElevatorCmd(m_elevator, m_xbox, m_newXbox));
   m_compressor.SetDefaultCommand(BeginCompressor(m_compressor));
 
   // Set up default drive command
@@ -136,11 +136,12 @@ RobotContainer::RobotContainer() {
 // }
 
 void RobotContainer::ConfigureButtonBindings() {
-  frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
-  frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
-  frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
+  //needs to be changed to xbox
+  //frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
+  //frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
+  //frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
 
-  frc2::JoystickButton(&m_stick1, 2).OnTrue(m_drive.ConfigOdometry());
+  //frc2::JoystickButton(&m_stick1, 2).OnTrue(m_drive.ConfigOdometry());
 
 
   frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
@@ -151,7 +152,7 @@ void RobotContainer::ConfigureButtonBindings() {
   //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
   //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
   //frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
-  frc2::JoystickButton(&m_stick1, 7).OnTrue(m_elevator.SetManualElevatorState());//need to change
+  frc2::JoystickButton(&m_xbox, 7).OnTrue(m_elevator.SetManualElevatorState());//need to change
 
   frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());

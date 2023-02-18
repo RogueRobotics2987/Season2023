@@ -5,11 +5,11 @@
 #include "commands/ElevatorCmd.h"
 
 ElevatorCmd::ElevatorCmd(){}
-ElevatorCmd::ElevatorCmd(Elevator &elevator, frc::XboxController &xbox, frc::XboxController &stick1) {
+ElevatorCmd::ElevatorCmd(Elevator &elevator, frc::XboxController &xbox, frc::XboxController &newXbox) {
   // Use addRequirements() here to declare subsystem dependencies.
   m_elevator = &elevator;
   m_xbox = &xbox;
-  m_stick1 = &stick1;
+  m_newXbox = &newXbox;
   AddRequirements({m_elevator});
 
 }
