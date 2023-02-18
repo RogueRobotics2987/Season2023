@@ -6,10 +6,12 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/button/CommandXboxController.h>
-#include <frc/Joystick.h>
-#include <frc/XboxController.h>
-#include "subsystems/Elevator.h"
+#include "subsystems/DriveSubsystem.h"
+#include <frc/smartdashboard/SmartDashboard.h>
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableInstance.h"
+#include "networktables/NetworkTableEntry.h"
+#include "networktables/NetworkTableValue.h"
 
 /**
  * An example command.
@@ -18,14 +20,13 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ElevatorCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ElevatorCmd> {
+class AutoAlign
+    : public frc2::CommandHelper<frc2::CommandBase, AutoAlign> {
  public:
-  ElevatorCmd();
-  ElevatorCmd(Elevator &elevator, frc::XboxController &xbox, frc::XboxController &newxbox);
-  
-  void Initialize() override;
+  AutoAlign();
+  AutoAlign(DriveSubsystem& l_drive);
 
+  void Initialize() override;
 
   void Execute() override;
 
@@ -33,8 +34,7 @@ class ElevatorCmd
 
   bool IsFinished() override;
 
- private:
-  Elevator* m_elevator = nullptr;
-  frc::XboxController* m_xbox = nullptr;
-  frc::XboxController* m_newXbox = nullptr;
+  private:
+  DriveSubsystem* m_drive;
+  double kp;
 };

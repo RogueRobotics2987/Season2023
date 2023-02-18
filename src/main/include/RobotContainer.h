@@ -42,8 +42,10 @@
 #include "Constants.h"
 #include "commands/BeginCompressor.h"
 #include "commands/ElevatorCmd.h"
+#include "commands/AutoAlign.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/SwerveModule.h"
+#include "subsystems/Limelight.h"
 
 
 
@@ -72,7 +74,8 @@ class RobotContainer {
 
  private:
   // The driver's controller
-  frc::Joystick m_stick1{2};
+  // frc::Joystick m_newXbox{2};
+  frc::XboxController m_newXbox{1};
   frc::XboxController m_xbox{0};
   // The robot's subsystems and commands are defined here...
 
@@ -80,6 +83,12 @@ class RobotContainer {
   DriveSubsystem m_drive;
   Elevator m_elevator;
   CompressorObject m_compressor;
+  Limelight m_limelight;
+  AutoAlign m_AutoAlign;
+
+  frc2::Command* AlignCmd = new AutoAlign(m_drive);
+
+  
 
 
   // The chooser for the autonomous routines

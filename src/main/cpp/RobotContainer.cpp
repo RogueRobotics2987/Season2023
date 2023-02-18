@@ -19,7 +19,7 @@ RobotContainer::RobotContainer() {
 
   // Configure the button bindings
   ConfigureButtonBindings();
-  m_elevator.SetDefaultCommand(ElevatorCmd(m_elevator, m_xbox, m_stick1));
+  m_elevator.SetDefaultCommand(ElevatorCmd(m_elevator, m_xbox, m_newXbox));
   m_compressor.SetDefaultCommand(BeginCompressor(m_compressor));
 
 
@@ -30,25 +30,25 @@ RobotContainer::RobotContainer() {
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
       //   std::cout << "sea out in robot container" << std::endl;
-      frc::SmartDashboard::PutNumber("Left Hand Y", m_stick1.GetX());
-      frc::SmartDashboard::PutNumber("Right Hand Y", m_stick1.GetY());
-      frc::SmartDashboard::PutNumber("Left Hand X", m_stick1.GetZ());
+      frc::SmartDashboard::PutNumber("Left Hand Y", m_newXbox.GetLeftX());
+      frc::SmartDashboard::PutNumber("Right Hand Y", m_newXbox.GetLeftY());
+      frc::SmartDashboard::PutNumber("Left Hand X", m_newXbox.GetRightX());
       
       bool noJoystick = false;
       bool noJoystickX = false;
       bool noJoystickY = false;
       bool noJoystickRot = false;
-      double safeX = m_stick1.GetX();
+      double safeX = m_newXbox.GetLeftX();
       if(fabs(safeX)<0.15) {
           safeX=0;
           noJoystickX = true;
       }
-      double safeY =  m_stick1.GetY();
+      double safeY =  m_newXbox.GetLeftY();
       if(fabs(safeY)<0.15) { 
           safeY=0;
           noJoystickY = true;
       }
-      double safeRot = m_stick1.GetZ();
+      double safeRot = m_newXbox.GetRightX();
       if(fabs(safeRot)<0.5) {
           safeRot=0;
           noJoystickRot = true;
@@ -75,22 +75,37 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
-  frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
-  frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
+  frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.SetDriveSlow(true));
+  frc2::JoystickButton(&m_newXbox, 7).OnFalse(m_drive.SetDriveSlow(false));
+  frc2::JoystickButton(&m_newXbox, 1).OnTrue(m_drive.ButtonZeroHeading());
 
-  frc2::JoystickButton(&m_stick1, 2).OnTrue(m_drive.ConfigOdometry());
+  frc2::JoystickButton(&m_newXbox, 2).OnTrue(m_drive.ConfigOdometry());
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
   frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
-  frc2::JoystickButton(&m_stick1, 4).OnTrue(m_elevator.ClawOpenCommand()); //on joystick
-  frc2::JoystickButton(&m_stick1, 3).OnFalse(m_elevator.ClawCloseCommand()); //on  joystick
+  frc2::JoystickButton(&m_newXbox, 4).OnTrue(m_elevator.ClawOpenCommand()); //on joystick
+  frc2::JoystickButton(&m_newXbox, 3).OnFalse(m_elevator.ClawCloseCommand()); //on  joystick
 
-  //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
-  //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
-  //frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
-  frc2::JoystickButton(&m_stick1, 5).OnTrue(m_elevator.SetManualElevatorState());//need to change
+  //frc2::JoystickButton(&m_newXbox, 14).OnTrue(m_elevator.SetPlaceHighState())
+  //frc2::JoystickButton(&m_newXbox, 15).OnTrue(m_elevator.SetPlaceMidState());
+  //frc2::JoystickButton(&m_newXbox, 16).OnTrue(m_elevator.SetPlaceLowState());
+  frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_elevator.SetManualElevatorState());//need to change
+  frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_limelight.ToggleLight());
+  frc2::JoystickButton(&m_newXbox, 8).OnTrue(AlignCmd);
 
 }
 
