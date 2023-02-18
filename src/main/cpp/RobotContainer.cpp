@@ -30,9 +30,10 @@ RobotContainer::RobotContainer() {
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
       //   std::cout << "sea out in robot container" << std::endl;
-      frc::SmartDashboard::PutNumber("Xbox left  X axis", m_xbox.GetLeftX());
-      frc::SmartDashboard::PutNumber("Xbox Left y axis", m_xbox.GetLeftY());
-      frc::SmartDashboard::PutNumber("Xbox Right X axis", m_xbox.GetRightX());
+      // commented out to test, 2/17
+      // frc::SmartDashboard::PutNumber("Xbox left  X axis", m_xbox.GetLeftX());
+      // frc::SmartDashboard::PutNumber("Xbox Left y axis", m_xbox.GetLeftY());
+      // frc::SmartDashboard::PutNumber("Xbox Right X axis", m_xbox.GetRightX());
       
       bool noJoystick = false;
       bool noJoystickX = false;
