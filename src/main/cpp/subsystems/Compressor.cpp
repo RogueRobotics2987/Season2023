@@ -12,7 +12,6 @@ CompressorObject::CompressorObject() {
 void CompressorObject::Periodic() {
     if (debugCompressorEnabled){
         bool pressureSwitch = phCompressor.GetPressureSwitchValue();
-        //double current = phCompressor.GetCompressorCurrent(); //was GetComressorCurrent but that doesn't exist in c++  
         isEnabled = phCompressor.Enabled(); //checks if the compressor is enabled
 
         // commented out to test, 2/17
