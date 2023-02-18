@@ -151,7 +151,7 @@ void RobotContainer::ConfigureButtonBindings() {
   //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
   //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
   //frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
-  frc2::JoystickButton(&m_stick1, 5).OnTrue(m_elevator.SetManualElevatorState());//need to change
+  frc2::JoystickButton(&m_stick1, 7).OnTrue(m_elevator.SetManualElevatorState());//need to change
 
   frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
