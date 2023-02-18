@@ -215,13 +215,16 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
   int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
   PathPlannerTrajectory examplePath;
+  pathselector = 1;
 
   if(pathselector == 0){
     examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(3_mps, 1_mps_sq));
+    std::cout<<"ChargeStation1Blue"<<std::endl;
   }
   else {
     //if(pathselector == 1){
     examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(3_mps, 1_mps_sq));
+    std::cout<<"ChargeStation1Red"<<std::endl;
   }
   // else if(pathselector == 2){
   //   examplePath = PathPlanner::loadPath("NothingBlue", PathConstraints(3_mps, 1_mps_sq), true);
@@ -249,13 +252,16 @@ frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
 frc2::CommandPtr RobotContainer::DrivePath2(DriveSubsystem &m_drive){
     int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
     PathPlannerTrajectory examplePath;
+    pathselector = 1;
 
     if(pathselector == 0){
       examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(3_mps, 1_mps_sq), true);
+      std::cout<<"ChargeStation2Blue"<<std::endl;
     }
     else {
       //if(pathselector == 1){
       examplePath = PathPlanner::loadPath("ChargeStation2Red", PathConstraints(3_mps, 1_mps_sq), true);
+      std::cout<<"ChargeStation2Red"<<std::endl;
     }
     // else if(pathselector == 2){
     //   examplePath = PathPlanner::loadPath("NothingBlue", PathConstraints(3_mps, 1_mps_sq), true);
@@ -348,13 +354,16 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     // m_drive.ResetOdometry(frc::Pose2d{4.0_m, 4.5_m, 180_deg}); //SimpleStation
     // m_drive.ResetOdometry(frc::Pose2d{3.60_m, 0.75_m, 180_deg}); for ChargeStation1Place-ChargeStation2 paths
     int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
+    pathselector = 1;
 
     if(pathselector == 0){
       m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
+      std::cout<<"OdometryBlue"<<std::endl;
     }
     else {
     //if(pathselector == 1){
       m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg}); //ChargeStation1Red
+      std::cout<<"OdometryRed"<<std::endl;
     }
     // else if(pathselector ==2){
     //   m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
