@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <optional>
+#include <frc2/command/CommandPtr.h>
 #include <frc/TimedRobot.h>
 #include <frc2/command/Command.h>
 

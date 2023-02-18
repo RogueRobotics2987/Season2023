@@ -4,13 +4,9 @@
 
 #pragma once
 
-#include <frc/Timer.h>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/Joystick.h>
-#include <frc/XboxController.h>
-
-#include "subsystems/DriveSubsystem.h"
+#include "subsystems/Compressor.h"
 
 /**
  * An example command.
@@ -19,16 +15,13 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class AutoBalance
-    : public frc2::CommandHelper<frc2::CommandBase, AutoBalance> {
+class BeginCompressor
+    : public frc2::CommandHelper<frc2::CommandBase, BeginCompressor> {
  public:
-  AutoBalance(DriveSubsystem& l_drive, frc::XboxController &l_Joystick);
-
-  AutoBalance();
+  BeginCompressor();
+  BeginCompressor(CompressorObject &compressor);
 
   void Initialize() override;
-
-  void Periodic();
 
   void Execute() override;
 
@@ -36,14 +29,7 @@ class AutoBalance
 
   bool IsFinished() override;
 
-  frc2::CommandPtr runCmd(bool run);
-
   private:
-    DriveSubsystem* m_drive;
-    int m_state;
-    double m_angle;
-    frc::Timer m_timer;
-    bool backwardsCheck;
-    bool autoCheck;
-    frc::XboxController* m_Joystick;
+    CompressorObject* m_compressor = nullptr;
+
 };

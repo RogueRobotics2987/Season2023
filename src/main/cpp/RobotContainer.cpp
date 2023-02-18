@@ -4,6 +4,13 @@
 
 #include "RobotContainer.h"
 
+#include <frc2/command/button/Trigger.h>
+
+
+
+using namespace DriveConstants;
+using namespace pathplanner;
+
 
 RobotContainer::RobotContainer() {
 
@@ -21,6 +28,8 @@ RobotContainer::RobotContainer() {
 
   // Configure the button bindings
   ConfigureButtonBindings();
+  m_elevator.SetDefaultCommand(ElevatorCmd(m_elevator, m_xbox, m_stick1));
+  m_compressor.SetDefaultCommand(BeginCompressor(m_compressor));
 
   // Set up default drive command
   // The left stick controls translation of the robot.
@@ -28,25 +37,25 @@ RobotContainer::RobotContainer() {
  m_drive.SetDefaultCommand(frc2::RunCommand(
       [this] {
         //   std::cout << "sea out in robot container" << std::endl;
-          frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
-          frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
-          frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
+          frc::SmartDashboard::PutNumber("Left Hand Y", m_stick1.GetLeftY());
+          frc::SmartDashboard::PutNumber("Right Hand Y", m_stick1.GetRightY());
+          frc::SmartDashboard::PutNumber("Left Hand X", m_stick1.GetLeftX());
         
         bool noJoystick = false;
         bool noJoystickX = false;
         bool noJoystickY = false;
         bool noJoystickRot = false;
-        double safeX = m_driverController.GetX();
+        double safeX = m_stick1.GetLeftX();
         if(fabs(safeX)<0.3) {
             safeX=0;
             noJoystickX = true;
             }
-        double safeY =  m_driverController.GetY();
+        double safeY =  m_stick1.GetLeftY();
         if(fabs(safeY)<0.3) { 
             safeY=0;
             noJoystickY = true;
             }
-        double safeRot = m_driverController.GetZ();
+        double safeRot = m_stick1.GetRightX();
         if(fabs(safeRot)<0.3) {
             safeRot=0;
             noJoystickRot = true;
@@ -76,12 +85,77 @@ RobotContainer::RobotContainer() {
       {&m_drive}));
 }
 
+// void RobotContainer::ConfigureButtonBindings() {
+//     frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
+//     frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
+//     frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
+//     // frc2::JoystickButton(&m_stick1, 11).OnTrue(AutoCmd);
+//     frc2::JoystickButton(&m_stick1, 11).OnTrue(AutoCmd);
+//   m_drive.SetDefaultCommand(frc2::RunCommand(
+//     [this] {
+//       //   std::cout << "sea out in robot container" << std::endl;
+//       frc::SmartDashboard::PutNumber("Left Hand Y", m_stick1.GetX());
+//       frc::SmartDashboard::PutNumber("Right Hand Y", m_stick1.GetY());
+//       frc::SmartDashboard::PutNumber("Left Hand X", m_stick1.GetZ());
+      
+//       bool noJoystick = false;
+//       bool noJoystickX = false;
+//       bool noJoystickY = false;
+//       bool noJoystickRot = false;
+//       double safeX = m_stick1.GetX();
+//       if(fabs(safeX)<0.15) {
+//           safeX=0;
+//           noJoystickX = true;
+//       }
+//       double safeY =  m_stick1.GetY();
+//       if(fabs(safeY)<0.15) { 
+//           safeY=0;
+//           noJoystickY = true;
+//       }
+//       double safeRot = m_stick1.GetZ();
+//       if(fabs(safeRot)<0.5) {
+//           safeRot=0;
+//           noJoystickRot = true;
+//       }
+//       noJoystick = noJoystickX && noJoystickY && noJoystickRot;
+
+//       frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
+      
+//       // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
+      
+//       m_drive.Drive(units::meters_per_second_t(
+//                         -safeY * AutoConstants::kMaxSpeed),
+//                     units::meters_per_second_t(
+//                         -safeX * AutoConstants::kMaxSpeed),
+//                     units::radians_per_second_t(
+//                         -safeRot * PI),
+//                     false,
+//                     noJoystick);
+//       // m_drive.Drive(units::meters_per_second_t(0),
+//       // units::meters_per_second_t(1),
+//       // units::radians_per_second_t(0),
+//       // false);
+//     }, {&m_drive}));
+// }
+
 void RobotContainer::ConfigureButtonBindings() {
-    frc2::JoystickButton(&m_driverController, 7).OnTrue(m_drive.SetDriveSlow(true));
-    frc2::JoystickButton(&m_driverController, 7).OnFalse(m_drive.SetDriveSlow(false));
-    frc2::JoystickButton(&m_driverController, 1).OnTrue(m_drive.ButtonZeroHeading());
-    // frc2::JoystickButton(&m_driverController, 11).OnTrue(AutoCmd);
-    frc2::JoystickButton(&m_driverController, 11).OnTrue(AutoCmd);
+  frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
+  frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
+  frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
+
+  frc2::JoystickButton(&m_stick1, 2).OnTrue(m_drive.ConfigOdometry());
+
+
+  frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
+  frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
+  frc2::JoystickButton(&m_stick1, 4).OnTrue(m_elevator.ClawOpenCommand()); //on joystick
+  frc2::JoystickButton(&m_stick1, 3).OnFalse(m_elevator.ClawCloseCommand()); //on  joystick
+
+  //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
+  //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
+  //frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
+  frc2::JoystickButton(&m_stick1, 5).OnTrue(m_elevator.SetManualElevatorState());//need to change
+
 }
 /*
 frc2::Command* RobotContainer::GetAutonomousCommand() {
@@ -192,7 +266,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
   commands.emplace_back(Drive2.get());
   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
-  commands.emplace_back(AutoCmd);
+  // commands.emplace_back(AutoCmd);
 
 
   // // auto group = SequentialCommandGroup(std::move(commands));

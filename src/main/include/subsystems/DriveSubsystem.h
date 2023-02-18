@@ -25,6 +25,12 @@
 #include "Constants.h"
 #include "SwerveModule.h"
 
+// for limelight, configOdometry
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableInstance.h"
+#include "networktables/NetworkTableEntry.h"
+#include "networktables/NetworkTableValue.h"
+
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
   DriveSubsystem();
@@ -100,10 +106,14 @@ class DriveSubsystem : public frc2::SubsystemBase {
   void ResetOdometry(frc::Pose2d pose);
 
   frc2::CommandPtr SetDriveSlow(bool m_bool);
+  
 
   frc2::CommandPtr ButtonZeroHeading();
 
   void ConfigMotorControllers();
+
+  // what this does with limelight
+  frc2::CommandPtr ConfigOdometry();
 
 
   units::meter_t kTrackWidth =
@@ -120,7 +130,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-
+//   bool WheelsStraight = false;
   SwerveModule m_frontLeft;
   SwerveModule m_frontRight;
   SwerveModule m_rearLeft;
@@ -134,6 +144,12 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
   bool driveSlow = false;
+  bool WheelsStraight = false;
 
   frc::Field2d m_field;
+
+  // for limelight, configOdometry
+  int numAT = 0;
+  //int cur_pipeline = 7;
 };
+
