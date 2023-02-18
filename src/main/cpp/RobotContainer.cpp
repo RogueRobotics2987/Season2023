@@ -14,13 +14,8 @@ using namespace pathplanner;
 
 RobotContainer::RobotContainer() {
 
-  m_chooser.SetDefaultOption("Simple Auto", m_simpleAuto.get()); //SetDefaultOption
-  m_chooser.AddOption("Complex Auto", m_complexAuto.get());
-  m_chooser.AddOption("Command Auto", m_complexAuto.get());
-
-
-
-  frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
+  frc::SmartDashboard::PutString("AutoAllienceSelector", "My default");
+  // frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
 
 
   ConfigMotorControllers();
@@ -220,7 +215,17 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 */
 
 frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
-      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1", PathConstraints(3_mps, 1_mps_sq));
+    std::string selectedPath = frc::SmartDashboard::GetString("AutoAllienceSelector", "My default");
+    PathPlannerTrajectory examplePath;
+
+    if(selectedPath == "Blue"){
+      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(3_mps, 1_mps_sq));
+
+    }
+    else{
+      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(3_mps, 1_mps_sq));
+    }
+
 
 
       std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -240,7 +245,17 @@ frc2::CommandPtr RobotContainer::DrivePath1(DriveSubsystem &m_drive){
   };
 
 frc2::CommandPtr RobotContainer::DrivePath2(DriveSubsystem &m_drive){
-      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2", PathConstraints(3_mps, 1_mps_sq), true);
+    std::string selectedPath = frc::SmartDashboard::GetString("AutoAllienceSelector", "My default");
+
+    PathPlannerTrajectory examplePath;
+
+    if(selectedPath == "Blue"){
+      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(3_mps, 1_mps_sq));
+
+    }
+    else{
+      PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Red",  PathConstraints(3_mps, 1_mps_sq));
+    }
 
 
       std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -319,6 +334,12 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   void RobotContainer::ResetOdometry(){
     // m_drive.ResetOdometry(frc::Pose2d{4.0_m, 4.5_m, 180_deg}); //SimpleStation
     // m_drive.ResetOdometry(frc::Pose2d{3.60_m, 0.75_m, 180_deg}); for ChargeStation1Place-ChargeStation2 paths
-    m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1
+    std::string selectedPath = frc::SmartDashboard::GetString("AutoAllienceSelector", "My default");
+    if(selectedPath == "Blue"){
+    m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
+    }
+    if(selectedPath == "Red"){
+    m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 180_deg}); //ChargeStation1Red
+    }
   }
 
