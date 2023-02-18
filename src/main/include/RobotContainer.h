@@ -44,7 +44,7 @@
 #include "commands/ElevatorCmd.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/SwerveModule.h"
-
+#include "subsystems/lights.h"
 
 
 /**
@@ -81,7 +81,7 @@ class RobotContainer {
   DriveSubsystem m_drive;
   Elevator m_elevator;
   CompressorObject m_compressor;
-
+  lights m_lights;
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
