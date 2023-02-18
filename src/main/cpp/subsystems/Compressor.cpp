@@ -15,8 +15,10 @@ void CompressorObject::Periodic() {
         //double current = phCompressor.GetCompressorCurrent(); //was GetComressorCurrent but that doesn't exist in c++  
         isEnabled = phCompressor.Enabled(); //checks if the compressor is enabled
 
-        frc::SmartDashboard::PutBoolean("Compressor enabled", isEnabled);
-        frc::SmartDashboard::PutBoolean("Compressor pressureSwitch", pressureSwitch);
+        // commented out to test, 2/17
+        //frc::SmartDashboard::PutBoolean("Compressor enabled", isEnabled);
+        //frc::SmartDashboard::PutBoolean("Compressor pressureSwitch", pressureSwitch);
+
         //frc::SmartDashboard::PutNumber("Compressor current", current);
     }
 }
