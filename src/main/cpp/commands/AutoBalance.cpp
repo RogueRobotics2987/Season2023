@@ -7,6 +7,7 @@
 AutoBalance::AutoBalance(DriveSubsystem& l_drive) {
   // Use addRequirements() here to declare subsystem dependencies.
   m_drive = &l_drive;
+  SetName("AutoBalance");
   AddRequirements({m_drive});
 }
 
@@ -34,7 +35,7 @@ void AutoBalance::Execute() {
       }
     }
     while(m_state == 1){
-      m_drive->Drive(0.4_mps, 0_mps, 0_rad_per_s, false, false);
+      m_drive->Drive(0.3_mps, 0_mps, 0_rad_per_s, false, false);
       if(m_drive->GetPitch() <= m_angle / 2 && m_drive->GetPitch() >= -m_angle / 2) {
         m_state = 2;
       }
@@ -43,13 +44,13 @@ void AutoBalance::Execute() {
     frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
         m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
 
-      if(m_drive->GetPitch() <= -8) {
+      if(m_drive->GetPitch() <= 8 && m_drive->GetPitch() > 7.75) {
         m_state = 3;
       }
     }
       while(m_state == 3) {
-        m_drive->Drive(0.4_mps * 2, 0_mps, 0_rad_per_s, false, false);
-      if(m_drive->GetPitch() >= -8) {
+        m_drive->Drive(-0.2_mps, 0_mps, 0_rad_per_s, false, false);
+      if(m_drive->GetPitch() <= 7.75) {
         m_state = 2;
       }
     }

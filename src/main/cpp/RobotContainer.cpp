@@ -30,6 +30,7 @@ using namespace pathplanner;
 
 
 RobotContainer::RobotContainer() {
+    frc::SmartDashboard::PutData(&m_drive);
 
     ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
@@ -41,7 +42,7 @@ RobotContainer::RobotContainer() {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
  m_drive.SetDefaultCommand(frc2::RunCommand(
-      [this] {
+      [this] {   //frc2::CommandBase::SetName("Drive");
         //   std::cout << "sea out in robot container" << std::endl;
           frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
           frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
