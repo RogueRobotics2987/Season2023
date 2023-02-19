@@ -14,6 +14,10 @@
 #include <frc/DoubleSolenoid.h> 
 #include "Constants.h"
 #include <iostream>
+#include <frc/Encoder.h>
+#include <frc/controller/PIDController.h>
+#include <frc/controller/ProfiledPIDController.h>
+
 
 class Elevator : public frc2::SubsystemBase {
  public:
@@ -26,7 +30,8 @@ class Elevator : public frc2::SubsystemBase {
   frc2::CommandPtr SetPlaceMidState();
   frc2::CommandPtr SetPlaceLowState();
   frc2::CommandPtr SetManualElevatorState();
-  
+  frc2::CommandPtr SetArmPos(double angle);
+
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -52,23 +57,27 @@ class Elevator : public frc2::SubsystemBase {
   ElevatorState_t ElevatorState = FIND_ZERO;
 
   rev::CANSparkMax m_tiltElevatorMotor = rev::CANSparkMax(12, rev::CANSparkMax::MotorType::kBrushless);
-  //thsi limit switch is supposed to be normally closed in Rev and noramlly open in code. Why? no idea
+  //this limit switch is supposed to be normally closed in Rev and noramlly open in code. Why? no idea
   rev::SparkMaxLimitSwitch ls_tiltElevator = m_tiltElevatorMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen); //reverse limit switch
   rev::SparkMaxLimitSwitch ls_tiltElevatorF = m_tiltElevatorMotor.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen); //reverse limit switch
   rev::SparkMaxRelativeEncoder re_tiltElevator = m_tiltElevatorMotor.GetEncoder(); 
 
   rev::CANSparkMax m_armMotor = rev::CANSparkMax(11, rev::CANSparkMax::MotorType::kBrushless);//in brake mode and can only go -11 turns
+  //soft limit was -11, now its -180 in rev hardware client
   rev::SparkMaxLimitSwitch ls_arm = m_armMotor.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
   rev::SparkMaxLimitSwitch ls_armR = m_armMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
   rev::SparkMaxRelativeEncoder re_arm = m_armMotor.GetEncoder(); 
+  
 
   double verticalVal = 0.0;
   double tiltVal = 0.0;
-  double armVal = 0.0;
+  double armPos = 0.0;
   bool resetElevatorFinished = false;
   bool enableElevator = true; //when false, it turns off elevator for outreach events when kids have the robot
   
   //claw open and close on pneumatics
   frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(1, frc::PneumaticsModuleType::REVPH, 0, 7); 
+
+  frc::PIDController m_armPIDController{ElevatorConstants::kPModuleArmController, 0, 0};
 
 };
