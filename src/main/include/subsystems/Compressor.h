@@ -4,27 +4,32 @@
 
 #pragma once
 
+#include <frc/Compressor.h>
+#include <frc/Solenoid.h>
+#include <frc/DoubleSolenoid.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/SubsystemBase.h>
-#include "rev/CANSparkMax.h"
-#include <frc2/command/CommandPtr.h>
 
-#include <frc2/command/Commands.h>
-#include <frc2/command/FunctionalCommand.h>
 
-class Intake : public frc2::SubsystemBase {
+class CompressorObject : public frc2::SubsystemBase {
  public:
-  Intake();
-
-  frc2::CommandPtr MotorMoveCommand();
-  frc2::CommandPtr StopMoveCommand();
+  CompressorObject();
+  //~CompressorObject();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
+  void StartCompressor();
+  void DisableCompressor();
+
+  bool debugCompressorEnabled = true;
+
 
  private:
+
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::CANSparkMax m_intakeMotor = rev::CANSparkMax(60, rev::CANSparkMax::MotorType::kBrushless);
+  frc::Compressor phCompressor{1, frc::PneumaticsModuleType::REVPH};  //wpilub
+  bool isEnabled = false;
 
 };

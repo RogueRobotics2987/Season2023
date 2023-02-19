@@ -4,13 +4,23 @@
 
 #pragma once
 
-#include <frc2/command/CommandPtr.h>
+#include <frc2/command/CommandBase.h>
+#include <frc2/command/CommandHelper.h>
 
-#include "subsystems/ExampleSubsystem.h"
+#include "subsystems/DriveSubsystem.h"
 
-namespace autos {
 /**
- * Example static factory for an autonomous command.
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
  */
-frc2::CommandPtr ExampleAuto(ExampleSubsystem* subsystem);
+namespace autos {
+
+frc2::CommandPtr SimpleAuto(DriveSubsystem &m_drive);
+frc2::CommandPtr ComplexAuto(DriveSubsystem &m_drive);
+frc2::CommandPtr CommandPath(DriveSubsystem &m_drive);
+
+
 }  // namespace autos
