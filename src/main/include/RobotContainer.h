@@ -57,7 +57,7 @@ class RobotContainer {
 
   //frc2::Command *AutoCmd;
 
-  frc2::Command* AutoCmd = new AutoBalance(m_drive);
+  frc2::Command* AutoCmd = new AutoBalance(m_drive, m_driverController);
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;

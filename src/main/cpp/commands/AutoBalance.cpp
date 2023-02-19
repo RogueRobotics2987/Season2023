@@ -4,71 +4,158 @@
 
 #include "commands/AutoBalance.h"
 
-AutoBalance::AutoBalance(DriveSubsystem& l_drive) {
+AutoBalance::AutoBalance(DriveSubsystem& l_drive, frc::Joystick &l_Joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
   m_drive = &l_drive;
   SetName("AutoBalance");
+  m_Joystick = &l_Joystick;
   AddRequirements({m_drive});
 }
 
-AutoBalance::AutoBalance(){
-
-}
-
+AutoBalance::AutoBalance(){}
 // Called when the command is initially scheduled.
 void AutoBalance::Initialize() {
   m_state = 0;
+  backwardsCheck = false;
+  m_timer.Reset();
+  m_timer.Stop();
+  autoCheck = m_Joystick->GetRawButton(11);
 // Called repea  
-  m_angle = 9;
-  frc::SmartDashboard::PutNumber("m_angle value: ", m_angle);
+  // m_angle = 9;
+  // frc::SmartDashboard::PutNumber("m_angle value: ", m_angle);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoBalance::Execute() {
-  
-  while(m_state == 0) {
-    m_angle = frc::SmartDashboard::GetNumber("m_angle value: ", m_angle);
-    frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-      m_drive->Drive(0.4_mps * 2, 0_mps, 0_rad_per_s, false, false);
-      if(m_drive->GetPitch() >= m_angle || m_drive->GetPitch() <= -m_angle) {
+  frc::SmartDashboard::PutNumber("Auto State", m_state);
+  frc::SmartDashboard::PutNumber("Auto Roll", m_drive->GetRoll());
+  frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+  if(m_state == 0) {
+    // m_angle = frc::SmartDashboard::GetNumber("m_angle value: ", m_angle);
+      frc::SmartDashboard::PutNumber("Auto State", m_state);
+      frc::SmartDashboard::PutNumber("Auto Roll", m_drive->GetRoll());
+      frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+      m_drive->Drive(0_mps, 0.8_mps, 0_rad_per_s, false, false);
+      if(m_drive->GetRoll() >= 9 || m_drive->GetRoll() <= -9) {
         m_state = 1;
       }
+      
     }
-    while(m_state == 1){
-      m_drive->Drive(0.3_mps, 0_mps, 0_rad_per_s, false, false);
-      if(m_drive->GetPitch() <= m_angle / 2 && m_drive->GetPitch() >= -m_angle / 2) {
+    if(m_state == 1){
+      frc::SmartDashboard::PutNumber("Auto State", m_state);
+      frc::SmartDashboard::PutNumber("Auto Roll", m_drive->GetRoll());
+      frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+      m_drive->Drive(0_mps, 0.45_mps, 0_rad_per_s, false, false);
+      if(m_drive->GetRoll() <= 4.5 && m_drive->GetRoll() >= -4.5) {
         m_state = 2;
       }
+      
     }
-    while(m_state == 2) {
-    frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
-        m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
-
-      if(m_drive->GetPitch() <= 8 && m_drive->GetPitch() > 7.75) {
+    if(m_state == 2) {
+      frc::SmartDashboard::PutNumber("Auto State", m_state);
+      frc::SmartDashboard::PutNumber("Auto Roll", m_drive->GetRoll());
+      frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+      m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
+      if(m_drive->GetRoll() <= -8 && backwardsCheck == false) {
         m_state = 3;
+        m_timer.Start();
+        backwardsCheck = true;
       }
+      else if(m_drive->GetRoll() < 1 && m_drive->GetRoll() > -1 && m_timer.Get() > 5.0_s) {
+          m_state = 5;
+        }
+        else if(m_timer.Get() <= 5_s && m_drive->GetRoll() < 1 && m_drive->GetRoll() > -1) {
+          m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
+        }
+        else {
+          m_state = 4;
+          m_timer.Reset();
+          m_timer.Stop();
+        }
+      // else if(m_drive->GetPitch() > 1 || m_drive->GetPitch() < -1) {
+      //   m_state = 4;
+      //   m_timer.Stop();
+      // }
+      // else if(m_drive->GetPitch() < 1 && m_drive->GetPitch() > -1 && m_timer.Get() >= 5_s) {
+      //   m_state = 5;
+      // }
+      
     }
-      while(m_state == 3) {
-        m_drive->Drive(-0.2_mps, 0_mps, 0_rad_per_s, false, false);
-      if(m_drive->GetPitch() <= 7.75) {
-        m_state = 2;
+      if(m_state == 3) {
+        frc::SmartDashboard::PutNumber("Auto State", m_state);
+        frc::SmartDashboard::PutNumber("Auto Roll", m_drive->GetRoll());
+        frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+        if(m_timer.Get() <= 0.75_s) {
+          m_drive->Drive(0_mps, -0.4_mps, 0_rad_per_s, false, false);
+        }
+        else {
+          m_state = 4;
+          m_timer.Reset();
+          m_timer.Stop();
+        }
+      // if(m_drive->GetPitch() <= 7.75) {
+      //   m_state = 2;
+      // }
+    }
+      if(m_state == 4) {
+        frc::SmartDashboard::PutNumber("Auto State", m_state);
+        frc::SmartDashboard::PutNumber("Auto Roll", m_drive->GetRoll());
+        frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+        if(m_drive->GetRoll() < 2 && m_drive->GetRoll() > -2) {
+          m_state = 2;
+          m_timer.Start();
+        }
+        else if(m_drive->GetRoll() >= -1) {
+          m_drive->Drive(0_mps, 0.15_mps, 0_rad_per_s, false, false);
+        }
+        else if(m_drive->GetRoll() <= 1) {
+          m_drive->Drive(0_mps, -0.15_mps, 0_rad_per_s, false, false);
+        }
       }
-    }
-  float curAngle = m_drive->GetPitch();
-  units::meters_per_second_t speed = units::meters_per_second_t(0.125 * curAngle);
+      // while(m_state == 5) {
+      //   frc::SmartDashboard::PutNumber("Auto State", m_state);
+      //   frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
+      //   frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
+      //   m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
+      //   if(m_drive->GetPitch() < 1 && m_drive->GetPitch() > -1 && m_timer.Get() > 5_s) {
+      //     m_state = 6;
+      //   }
+      //   else if(m_timer.Get() <= 5_s && m_drive->GetPitch() < 1 && m_drive->GetPitch() > -1) {
+      //     m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
+      //   }
+      //   else {
+      //     m_state = 4;
+      //     m_timer.Reset();
+      //     m_timer.Stop();
+      //   }
+      // }
 
-if(curAngle >= 1 || curAngle <= -1) {
-  m_drive->Drive(-speed, 0_mps, 0_rad_per_s, false, false);
-} else {
-  m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, false);
+// if(curAngle >= 1 || curAngle <= -1) {
+//   m_drive->Drive(-speed, 0_mps, 0_rad_per_s, false, false);
+// } else {
+//   m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, false);
+// }
+if(!m_Joystick->GetRawButton(11) && autoCheck){
+  m_state = 5;
 }
 }
     //while(m_state == 2) {
       // m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, false);
     //}
+
+// frc2::CommandPtr AutoBalance::runCmd(bool run){
+//   return this->RunOnce(
+//     [this, run] {m_runCmd = run; });
+// }
+
 void AutoBalance::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool AutoBalance::IsFinished() {
-  return false;
+  if(m_state == 5){
+    return true;
+  }
+  else{
+    return false;
+  }
 }

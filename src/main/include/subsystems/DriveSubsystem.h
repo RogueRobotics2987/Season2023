@@ -73,6 +73,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   float GetPitch();
 
+  float GetRoll();
+
 
   frc2::CommandPtr ZeroHeading();
 

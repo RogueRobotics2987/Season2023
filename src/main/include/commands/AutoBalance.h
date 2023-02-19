@@ -4,8 +4,10 @@
 
 #pragma once
 
+#include <frc/Timer.h>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/Joystick.h>
 
 #include "subsystems/DriveSubsystem.h"
 
@@ -19,11 +21,13 @@
 class AutoBalance
     : public frc2::CommandHelper<frc2::CommandBase, AutoBalance> {
  public:
-  AutoBalance(DriveSubsystem& l_drive);
+  AutoBalance(DriveSubsystem& l_drive, frc::Joystick &l_Joystick);
 
   AutoBalance();
 
   void Initialize() override;
+
+  void Periodic();
 
   void Execute() override;
 
@@ -31,8 +35,14 @@ class AutoBalance
 
   bool IsFinished() override;
 
+  frc2::CommandPtr runCmd(bool run);
+
   private:
     DriveSubsystem* m_drive;
     int m_state;
     double m_angle;
+    frc::Timer m_timer;
+    bool backwardsCheck;
+    bool autoCheck;
+    frc::Joystick* m_Joystick;
 };
