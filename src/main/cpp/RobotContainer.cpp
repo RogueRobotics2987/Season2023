@@ -238,7 +238,7 @@ frc2::CommandPtr RobotContainer::DriveCrgStnRed1(DriveSubsystem &m_drive){
 
 frc2::CommandPtr RobotContainer::DriveCrgStnRed2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(3_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Red", PathConstraints(3_mps, 1_mps_sq), true);
   std::cout<<"ChargeStation2Red"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -394,7 +394,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 2);
     // pathselector = 1;
 
-    if(pathselector == 0){
+    if(pathselector == 0 || pathselector == 2){
       m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg}); //ChargeStation1Red
       std::cout<<"OdometryRed"<<std::endl;
     }
