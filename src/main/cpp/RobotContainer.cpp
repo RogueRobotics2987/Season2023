@@ -14,10 +14,6 @@ using namespace pathplanner;
 
 RobotContainer::RobotContainer() {
 
-  // m_chooser.SetDefaultOption("Simple Auto", m_simpleAuto.get()); //SetDefaultOption
-  // m_chooser.AddOption("Complex Auto", m_complexAuto.get());
-  // m_chooser.AddOption("Command Auto", m_complexAuto.get());
-
   frc::SmartDashboard::PutNumber("PathSelector", 0);
   frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
 

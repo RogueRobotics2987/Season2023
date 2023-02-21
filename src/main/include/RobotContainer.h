@@ -48,8 +48,6 @@
 #include "commands/ElevatorCmd.h"
 #include "commands/AutoBalance.h"
 #include "subsystems/Lights.h"
-#include "commands/Autos.h"
-#include "commands/SequentialAuto.h"
 #include "commands/AutoBalance.h"
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
@@ -114,9 +112,6 @@ class RobotContainer {
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 
-  frc2::CommandPtr m_simpleAuto = autos::SimpleAuto(m_drive);
-  frc2::CommandPtr m_complexAuto = autos::ComplexAuto(m_drive);
-  frc2::CommandPtr m_CommandAuto = autos::CommandPath(m_drive);
   void ConfigureButtonBindings();
 
   frc2::CommandPtr DriveCrgStnRed1cmd = DriveCrgStnRed1(m_drive);
