@@ -17,6 +17,7 @@ Elevator::Elevator() {
    //frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", resetElevatorFinished);
    re_arm.SetPositionConversionFactor(ElevatorConstants::kArmAnglePerRotation);
    frc::SmartDashboard::PutNumber("Elevator Arm kp", ElevatorConstants::kPModuleArmController);
+   frc::SmartDashboard::PutNumber("Elevator arm max change", armMaxChange);
 }
 
 // This method will be called once per scheduler run
@@ -68,7 +69,7 @@ void Elevator::Periodic() {
 
    } else if (ElevatorState == MANUAL_MODE){
       //double armMeasPos = ElevatorConstants::kArmAnglePerRotation * re_arm.GetPosition();
-      double armOutput = m_armPIDController.Calculate(re_arm.GetPosition(), armPos);
+      armOutput = m_armPIDController.Calculate(re_arm.GetPosition(), armPos);
       frc::SmartDashboard::PutNumber("Elevator armOutput", armOutput);
       //frc::SmartDashboard::PutNumber("Elevator armMeaPos", armMeasPos);
       
@@ -133,9 +134,16 @@ void Elevator::ElevatorArm(double armXboxVal){
    // frc::SmartDashboard::PutNumber("Elevator armPos", armPos);
 
    // frc::SmartDashboard::PutNumber("Elevator armXboxVal", armXboxVal);
+   armMaxChange = frc::SmartDashboard::GetNumber("Elevator arm max change", armMaxChange);
+   static double lastArmPos = 0.0;
 
    if ((fabs(armXboxVal) < ElevatorConstants::armDeadzone) && (enableElevator == true)) {
       armPos = armPos; //the arm stays in the same position
+   } else if (((armPos - lastArmPos) > armMaxChange) && (enableElevator == true)) { 
+      //added maxChange part
+      armPos = lastArmPos + armMaxChange;
+   } else if (((armPos - lastArmPos) < -armMaxChange) && (enableElevator == true)) {
+      armPos = lastArmPos - armMaxChange;
    } else if (enableElevator == true){
       armPos = armPos + (armXboxVal * (2));
    } else {
@@ -147,6 +155,15 @@ void Elevator::ElevatorArm(double armXboxVal){
    } else if (armPos < -180){
       armPos = -180;
    }
+
+   lastArmPos = armPos;
+
+
+   //first attempt at maxChange
+   // else if ((fabs(armPos - lastArmPos) > armMaxChange) && (enableElevator == true)) { 
+   //    //added maxChange part
+   //    armPos = armPos + armMaxChange;
+   // } 
 }
 
 
@@ -181,5 +198,5 @@ frc2::CommandPtr Elevator::SetManualElevatorState(){
 
 frc2::CommandPtr Elevator::SetArmPos(double angle){
    return this->RunOnce(
-      [this, angle] {armPos = angle; });
+      [this, angle] { armOutput = m_armPIDController.Calculate(re_arm.GetPosition(), angle); });
 }
