@@ -54,7 +54,6 @@ void AutoBalance::Execute() {
       frc::SmartDashboard::PutNumber("Auto State", m_state);
       frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
       frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
-      m_drive->Drive(0.0_mps, 0_mps, 0_rad_per_s, false, true);
       if(m_drive->GetPitch() <= 9 && backwardsCheck == false) {
         m_state = 3;
         m_timer.Start();
@@ -85,7 +84,7 @@ void AutoBalance::Execute() {
         frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
         frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
         if(m_timer.Get() <= 0.75_s) {
-          m_drive->Drive(0_mps, 2.0_mps, 0_rad_per_s, false, false);
+          m_drive->Drive(0_mps, -2.0_mps, 0_rad_per_s, false, false);
         }
         else {
           m_state = 4;
