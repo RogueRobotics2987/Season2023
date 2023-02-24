@@ -294,3 +294,22 @@ frc2::CommandPtr DriveSubsystem::ConfigOdometry(){
 
   });
 }
+
+frc2::CommandPtr DriveSubsystem::Twitch(bool direction){
+  return this -> Run(
+    [this, direction]{
+  if(direction == true){
+    //right
+    DriveSubsystem::Drive(0_mps, -0.35_mps, 0_rad_per_s, false, false);
+    
+  }
+  else if(direction == false){
+    //left
+    DriveSubsystem::Drive(0_mps, 0.35_mps, 0_rad_per_s, false, false);
+  }
+  else{
+    //stop
+    DriveSubsystem::Drive(0_mps, 0.0_mps, 0_rad_per_s, false, false);
+  }
+  });
+}

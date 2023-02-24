@@ -140,11 +140,14 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   //needs to be changed to xbox
-  //frc2::JoystickButton(&m_stick1, 7).OnTrue(m_drive.SetDriveSlow(true));
-  //frc2::JoystickButton(&m_stick1, 7).OnFalse(m_drive.SetDriveSlow(false));
+  // frc2::JoystickButton(&m_xbox, 7).OnTrue(m_drive.SetDriveSlow(true));
+  // frc2::JoystickButton(&m_xbox, 7).OnFalse(m_drive.SetDriveSlow(false));
   //frc2::JoystickButton(&m_stick1, 1).OnTrue(m_drive.ButtonZeroHeading());
 
   //frc2::JoystickButton(&m_stick1, 2).OnTrue(m_drive.ConfigOdometry());
+
+  frc2::JoystickButton(&m_newXbox, 2).WhileTrue(m_drive.Twitch(true));
+  frc2::JoystickButton(&m_newXbox, 4).WhileTrue(m_drive.Twitch(false));
 
 
   frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
