@@ -79,6 +79,11 @@ class RobotContainer {
   frc2::CommandPtr DriveCrgStnRed1(DriveSubsystem &m_drive);
   frc2::CommandPtr DriveCrgStnRed2(DriveSubsystem &m_drive);
 
+  frc2::CommandPtr PlaceDriveCrgStnRed1(DriveSubsystem &m_drive);
+  frc2::CommandPtr PlaceDriveCrgStnBlue1(DriveSubsystem &m_drive);
+
+  
+
 
   double GetHeading();
 
@@ -119,5 +124,10 @@ class RobotContainer {
 
   frc2::CommandPtr DriveCrgStnBlue1cmd = DriveCrgStnBlue1(m_drive);
   frc2::CommandPtr DriveCrgStnBlue2cmd = DriveCrgStnBlue2(m_drive);
+
+  frc2::CommandPtr PlaceDriveCrgStnRed1cmd = PlaceDriveCrgStnRed1(m_drive);
+  frc2::CommandPtr PlaceDriveCrgStnBlue1cmd = PlaceDriveCrgStnBlue1(m_drive);  
+
+  frc2::CommandPtr AutoZeroHeading = m_drive.ZeroHeading();
 
 };
