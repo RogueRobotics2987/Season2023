@@ -43,7 +43,8 @@ void Elevator::Periodic() {
    m_armPIDController.SetP(curkPArm);  
    //frc::SmartDashboard::PutNumber("ELevator Arm voltage", m_armMotor.GEt)
    frc::SmartDashboard::PutNumber("Elevator state", ElevatorState);
-
+   frc::SmartDashboard::PutNumber("Elevator vert encoder", re_vertElevator.GetPosition());
+   double curkKpVert = frc::SmartDashboard::GetNumber("Elevator vert kp", ElevatorConstants::kPModuleVertController);
    // frc::SmartDashboard::PutNumber("Elevator vert motor 10 output", m_vertElevatorMotorLeft.GetAppliedOutput());
    if (ElevatorState == FIND_ZERO){
       //limit switch is were the elevator is closest to the ground 
@@ -73,10 +74,13 @@ void Elevator::Periodic() {
       frc::SmartDashboard::PutNumber("Elevator armOutput", armOutput);
       //frc::SmartDashboard::PutNumber("Elevator armMeaPos", armMeasPos);
       
+      vertOutput = m_vertPIDController.Calculate(re_vertElevator.GetPosition(), verticalPos);
+      frc::SmartDashboard::PutNumber("Elevator vertOutput", vertOutput);
+
       //experimentally tested that a positive motor output of 0.037 made the output hold steady at -90 degrees
       m_armMotor.Set(armOutput); 
       m_tiltElevatorMotor.Set(tiltVal);
-      m_vertElevatorMotorLeft.Set(verticalVal);
+      m_vertElevatorMotorLeft.Set(verticalVal); //when use PID loop, change verticalVal to vertOutput
 
       if (ls_arm.Get() == true){
          re_arm.SetPosition(0);
@@ -102,20 +106,25 @@ void Elevator::Periodic() {
 void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) { 
    // frc::SmartDashboard::PutNumber("ElevatorUp Value", elevatorUp);
    // frc::SmartDashboard::PutNumber("ElevatorDown Value", elevatorDown);
-   // frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
+   frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
 
    verticalVal =elevatorUp - elevatorDown;
 
-   if (fabs(verticalVal) < ElevatorConstants::vertDeadzone){
-      verticalVal = 0;
-   }
-   /*if((fabs(elevatorUp) > ElevatorConstants::upDeadzone) && (elevatorDown < ElevatorConstants::downDeadzone) && (enableElevator == true)){
-      verticalVal = -(elevatorUp - ElevatorConstants::upDeadzone);
-   } else if((fabs(elevatorDown) > ElevatorConstants::downDeadzone) && (elevatorUp < ElevatorConstants::upDeadzone) && (enableElevator == true)){
-      verticalVal = (elevatorDown - ElevatorConstants::downDeadzone);
-   } else {
+   /*if (fabs(verticalVal) < ElevatorConstants::vertDeadzone){
       verticalVal = 0;
    }*/
+
+   //for pid loop
+   if (fabs(verticalVal) < ElevatorConstants::vertDeadzone && (enableElevator == true)) {
+      verticalPos = verticalPos; //the arm stays in the same position
+   } else if ((verticalVal > 0) && (enableElevator == true)){
+      verticalPos = verticalPos + verticalVal;
+   } else if ((verticalVal < 0) && (enableElevator == true)) {
+      verticalPos = verticalPos - verticalVal;
+   } else {
+      verticalPos = 0;
+   }
+
 }
 
 void Elevator::ElevatorTilt(double lean){

@@ -76,9 +76,13 @@ class Elevator : public frc2::SubsystemBase {
   bool enableElevator = true; //when false, it turns off elevator for outreach events when kids have the robot
   double armMaxChange = 0.01; //was the maxChange for acceleration ctrl in 2021 but can change
   double armOutput;
+
+  double vertOutput;
+  double verticalPos;
   //claw open and close on pneumatics
   frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(1, frc::PneumaticsModuleType::REVPH, 0, 7); 
 
   frc::PIDController m_armPIDController{ElevatorConstants::kPModuleArmController, 0, 0};
+  frc::PIDController m_vertPIDController{ElevatorConstants::kPModuleVertController, 0, 0};
 
 };

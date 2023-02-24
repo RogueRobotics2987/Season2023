@@ -45,6 +45,8 @@ namespace ElevatorConstants {
 
     constexpr double kPModuleArmController = 0.016;
     constexpr double kArmAnglePerRotation = 16; //approximately 90/5.6
+
+    constexpr double kPModuleVertController = 0.0;
 }
 // namespace DriveConstants {
 // constexpr int kFrontLeftDriveMotorPort = 0;
