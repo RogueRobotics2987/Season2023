@@ -110,6 +110,7 @@ class RobotContainer {
   Elevator m_elevator;
   CompressorObject m_compressor;
   Lights m_lights;
+  
   AutoAlign m_align;
 
   //frc2::Command *AutoCmd;

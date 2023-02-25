@@ -25,7 +25,7 @@ void AutoAlign::Initialize() {
 
     // input user choice for grid & column
     grid = 2;
-    column = 'right';
+    column = "right";
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -48,11 +48,17 @@ void AutoAlign::Execute() {
     // move robot along x-axis
     curPosition = m_drive.GetPose(); 
 
-    frc::SmartDashboard::PutData(curPosition.Y().value());
+    cout << curPosition.Y().value();
 
-    /*if(curret x pose < destinationX + desOffset){
-        m_drive.Drive(0_mps, 3_mps, )
-    }*/
+    if(curPosition.Y().value() < destinationY - offset){
+        //m_drive.Drive(0_mps, 3_mps, )
+        cout << "Drive right";
+    } else if(curPosition.Y().value() > destinationY + offset){
+        cout << "Drive left";
+
+    } else { 
+        cout << "Stop";
+    }
     // if reached destination, then
 
     // move robot in front of wanted column (along x-axis), using + || - set value

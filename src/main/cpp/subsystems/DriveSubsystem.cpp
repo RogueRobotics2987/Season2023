@@ -104,7 +104,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 
   auto [fl, fr, bl, br] = states;
   
-  float currentAngle = fmod((double)(m_frontLeft.GetState().angle.Degrees()),180);
+  //float currentAngle = fmod((double)(m_frontLeft.GetState().angle.Degrees()),180);
   // float desiredAngle = (float)fl.angle.Degrees();
   // TODO curentAngle = currentAngle + 89.65 Radients moduleConstants::Wheelconstants
   //float angleDiffFL = fabs((float)(fl.angle.Degrees()) - currentAngle);

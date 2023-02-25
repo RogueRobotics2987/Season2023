@@ -11,6 +11,8 @@
 #include "subsystems/lights.h"
 #include "subsystems/DriveSubsystem.h"
 
+#include <string.h>
+
 /**
  * An example command.
  *
@@ -42,6 +44,7 @@ class AutoAlign
 
   double destinationX;
   double destinationY;
+  double offset = 0.1; 
 
   frc::Pose2d curPosition;
 };
