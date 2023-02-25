@@ -50,6 +50,7 @@ int m_MotorControllerTurning,
   m_driveMotor->SetOpenLoopRampRate(1);
   m_turningMotor = new rev::CANSparkMax(m_MotorControllerTurning, rev::CANSparkMax::MotorType::kBrushless);
   m_turningMotor->SetInverted(true);
+  m_turningMotor->SetOpenLoopRampRate(0);
   //  samDriveEncoder = new rev::CANEncoder(*samDriveMotor, m_EncoderType, m_counts_per_rev);
   m_driveEncoder = new rev::SparkMaxRelativeEncoder(m_driveMotor->GetEncoder(m_EncoderType, m_counts_per_rev));
   //  samTurningEncoder = new rev::CANEncoder(*samTurningMotor, m_EncoderTypeTurning, m_counts_per_revTurning);

@@ -39,9 +39,8 @@ class Elevator : public frc2::SubsystemBase {
   void ElevatorVert(double elevatorUp, double elevatorDown);
   void ElevatorTilt(double lean);
   void ElevatorArm(double armXboxVal);
+  void SafeArm();
   void Periodic() override;
-  //void Open(int SolenoidNum);
-  //void Close(int SolenoidNum);
 
 
  private:
@@ -53,8 +52,8 @@ class Elevator : public frc2::SubsystemBase {
   rev::SparkMaxLimitSwitch ls_vertElevatorF = m_vertElevatorMotorLeft.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
   rev::SparkMaxRelativeEncoder re_vertElevator= m_vertElevatorMotorLeft.GetEncoder(); 
 
-  enum ElevatorState_t {INIT, FIND_ZERO, MANUAL_MODE, PLACE_HIGH, PLACE_MID, PLACE_LOW}; 
-  ElevatorState_t ElevatorState = FIND_ZERO;
+  enum ElevatorState_t {FIND_ZERO_VERT, FIND_ZERO_TILT, MANUAL_MODE, PLACE_HIGH, PLACE_MID, PLACE_LOW}; 
+  ElevatorState_t ElevatorState = FIND_ZERO_VERT;
 
   rev::CANSparkMax m_tiltElevatorMotor = rev::CANSparkMax(12, rev::CANSparkMax::MotorType::kBrushless);
   //this limit switch is supposed to be normally closed in Rev and noramlly open in code. Why? no idea
@@ -63,7 +62,7 @@ class Elevator : public frc2::SubsystemBase {
   rev::SparkMaxRelativeEncoder re_tiltElevator = m_tiltElevatorMotor.GetEncoder(); 
 
   rev::CANSparkMax m_armMotor = rev::CANSparkMax(11, rev::CANSparkMax::MotorType::kBrushless);//in brake mode and can only go -11 turns
-  //soft limit was -11, now its -180 in rev hardware client
+  //soft limit was -11 revolutions, now its -180 degrees in rev hardware client
   rev::SparkMaxLimitSwitch ls_arm = m_armMotor.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
   rev::SparkMaxLimitSwitch ls_armR = m_armMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen);//forward limit switch
   rev::SparkMaxRelativeEncoder re_arm = m_armMotor.GetEncoder(); 
@@ -74,9 +73,12 @@ class Elevator : public frc2::SubsystemBase {
   double armPos = 0.0;
   bool resetElevatorFinished = false;
   bool enableElevator = true; //when false, it turns off elevator for outreach events when kids have the robot
-  double armMaxChange = 0.01; //was the maxChange for acceleration ctrl in 2021 but can change
+  double armMaxChange = 4; //was the maxChange for acceleration ctrl in 2021 but can change
   double armOutput;
+  double safeArmPos;
+  //double lastArmPos = 0.0; //does this need to be static?
 
+  bool elevatorDisable = false;
   double vertOutput;
   double verticalPos;
   //claw open and close on pneumatics

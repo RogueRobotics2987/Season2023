@@ -51,6 +51,7 @@
 #include "commands/AutoBalance.h"
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/Elevator.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -95,6 +96,8 @@ class RobotContainer {
 
   void ResetOdometry();
 
+  float Deadzone(float x);
+
   frc2::CommandPtr GetPathCommand();
 
  private:
@@ -129,5 +132,9 @@ class RobotContainer {
   frc2::CommandPtr PlaceDriveCrgStnBlue1cmd = PlaceDriveCrgStnBlue1(m_drive);  
 
   frc2::CommandPtr AutoZeroHeading = m_drive.ZeroHeading();
+
+  frc2::CommandPtr OpenClawCmd = m_elevator.ClawOpenCommand();
+  frc2::CommandPtr CloseClawCmd = m_elevator.ClawCloseCommand();
+
 
 };
