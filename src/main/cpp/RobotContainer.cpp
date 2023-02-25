@@ -54,7 +54,7 @@ RobotContainer::RobotContainer() {
                     units::meters_per_second_t(
                     -safeX * AutoConstants::kMaxSpeed),
                     units::radians_per_second_t(
-                    -safeRot * PI),
+                    -safeRot * PI * 1.5),
                     fieldOrientated,
                     noJoystick);
       // m_drive.Drive(units::meters_per_second_t(0),

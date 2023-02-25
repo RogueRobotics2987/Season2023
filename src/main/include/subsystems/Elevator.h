@@ -73,7 +73,7 @@ class Elevator : public frc2::SubsystemBase {
   double armPos = 0.0;
   bool resetElevatorFinished = false;
   bool enableElevator = true; //when false, it turns off elevator for outreach events when kids have the robot
-  double armMaxChange = 2; //was the maxChange for acceleration ctrl in 2021 but can change
+  double armMaxChange = 4; //was the maxChange for acceleration ctrl in 2021 but can change
   double armOutput;
   double safeArmPos;
   //double lastArmPos = 0.0; //does this need to be static?
