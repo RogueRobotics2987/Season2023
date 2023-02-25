@@ -16,7 +16,6 @@ RobotContainer::RobotContainer() {
   
   frc::SmartDashboard::PutString("AllienceSelector", "Blue");
   frc::SmartDashboard::PutNumber("PathSelector", 0);
-  frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
 
 
   ConfigMotorControllers();
@@ -150,10 +149,10 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_newXbox, 4).WhileTrue(m_drive.Twitch(false));
 
 
-  frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
-  frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
-  frc2::JoystickButton(&m_newXbox, 3).OnTrue(m_elevator.ClawOpenCommand()); //Button X
-  frc2::JoystickButton(&m_newXbox, 1).OnFalse(m_elevator.ClawCloseCommand()); //Button A
+  frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawCloseCommand());
+  frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawOpenCommand());
+  frc2::JoystickButton(&m_newXbox, 3).OnTrue(m_elevator.ClawCloseCommand()); //Button X
+  frc2::JoystickButton(&m_newXbox, 1).OnFalse(m_elevator.ClawOpenCommand()); //Button A
 
   //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
   //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
@@ -395,21 +394,34 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 2 && AllienceSelector == "Red"){
     ResetOdometry();
-    commands.emplace_back(DriveCrgStnRed1cmd.get());
+    //move elevator to mid then place
+    commands.emplace_back(PlaceDriveCrgStnRed1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
     commands.emplace_back(DriveCrgStnRed2cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
     commands.emplace_back(AutoCmd);
   }
-  else{
+  else if(pathselector == 2 && AllienceSelector == "Blue"){
     ResetOdometry();
+    //move elevator to mid then place
     commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
     commands.emplace_back(DriveCrgStnBlue2cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
     commands.emplace_back(AutoCmd);
+  }
+  else if(pathselector == 3){
+    commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Claw Open" << std::endl;}));
+  }
+  else if(pathselector == 4){
+    commands.emplace_back(CloseClawCmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Claw Close" << std::endl;}));    
+  }
+  else{
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Do Nothing" << std::endl;}));
   }
   // commands.emplace_back(AutoCmd);
 

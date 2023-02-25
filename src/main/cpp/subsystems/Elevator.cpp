@@ -150,12 +150,12 @@ void Elevator::ElevatorArm(double armXboxVal){
 }
 
 
-frc2::CommandPtr Elevator::ClawOpenCommand() {
+frc2::CommandPtr Elevator::ClawCloseCommand() {
    return this->RunOnce(
       [this] { clawSolenoid.Set(frc::DoubleSolenoid::kReverse); });
 }
 
-frc2::CommandPtr Elevator::ClawCloseCommand() {
+frc2::CommandPtr Elevator::ClawOpenCommand() {
    return this->RunOnce(
       [this] { clawSolenoid.Set(frc::DoubleSolenoid::kForward); });
 }
