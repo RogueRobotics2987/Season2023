@@ -25,7 +25,7 @@ Elevator::Elevator() {
 void Elevator::Periodic() {
    frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
    frc::SmartDashboard::PutNumber("Elevator vertOutput", vertOutput);
-   // frc::SmartDashboard::PutNumber("Elevator tiltVal", tiltVal);
+   frc::SmartDashboard::PutNumber("Elevator tiltVal", tiltVal);
    frc::SmartDashboard::PutNumber("Elevator armPos", armPos);
    // frc::SmartDashboard::PutNumber("Elevator armXboxVal", 10000);
 
@@ -120,11 +120,7 @@ void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) {
    //for pid loop
    if (fabs(verticalVal) < ElevatorConstants::vertDeadzone && (enableElevator == true)) {
       verticalPos = verticalPos; //the arm stays in the same position
-   } /*else if ((verticalVal > 0) && (enableElevator == true)){
-      verticalPos = verticalPos + verticalVal;
-   } else if ((verticalVal < 0) && (enableElevator == true)) {
-      verticalPos = verticalPos - verticalVal;
-   }*/ else if (enableElevator == true) {
+   } else if (enableElevator == true) {
       verticalPos = verticalPos + verticalVal;
    } else {
       verticalPos = 0;
@@ -139,10 +135,10 @@ void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) {
 }
 
 void Elevator::ElevatorTilt(double lean){
-   if (enableElevator == true){
-      tiltVal = -lean;
-   } else if (fabs(tiltVal) < ElevatorConstants::tiltDeadzone){
+   if ((fabs(lean) < ElevatorConstants::tiltDeadzone) && (enableElevator == true)){
       tiltVal = 0;
+   } else if (enableElevator == true){
+      tiltVal = -lean;
    } else {
       tiltVal = 0;
    }
