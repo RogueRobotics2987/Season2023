@@ -16,6 +16,7 @@ Elevator::Elevator() {
    re_arm.SetPositionConversionFactor(ElevatorConstants::kArmAnglePerRotation);
    frc::SmartDashboard::PutNumber("Elevator Arm kp", ElevatorConstants::kPModuleArmController);
    frc::SmartDashboard::PutNumber("Elevator arm max change", armMaxChange);
+   frc::SmartDashboard::PutNumber("Elevator vert max change", vertMaxChange);   
    frc::SmartDashboard::PutNumber("Elevator Vert kp", ElevatorConstants::kPModuleVertController);
 }
 
@@ -28,7 +29,7 @@ void Elevator::Periodic() {
 
    //Elevator height
    //frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
-   //frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
+   frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
 
    //Elevator tilt
    // frc::SmartDashboard::PutBoolean("Elevator Tilt limit switch", ls_tiltElevator.Get());
@@ -62,7 +63,7 @@ void Elevator::Periodic() {
 
    } else if (ElevatorState == FIND_ZERO_TILT) {
       //limit switch is where the elevator is all the way tilted towards the back of the robot
-      m_tiltElevatorMotor.Set(-0.2);//go to reverse limit switch
+      //m_tiltElevatorMotor.Set(-0.2);//go to reverse limit switch
 
       //limit switch is when the arm is all the way up
       m_armMotor.Set(0.05);//go to forward limit switch
@@ -71,12 +72,12 @@ void Elevator::Periodic() {
          re_arm.SetPosition(0);
       }
 
-      if((ls_vertElevator.Get() == true)) { 
+      /*if((ls_tilitElevator.Get() == true)) { 
          re_tiltElevator.SetPosition(0);
          //frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
          ElevatorState = MANUAL_MODE; 
-      } 
-
+      } */
+      ElevatorState = MANUAL_MODE;
 
 
    } else if (ElevatorState == MANUAL_MODE){
@@ -101,6 +102,18 @@ void Elevator::Periodic() {
       armOutput = m_armPIDController.Calculate(re_arm.GetPosition(), armPos);
       frc::SmartDashboard::PutNumber("Elevator armOutput", armOutput);
 
+      static double lastVerticalPos = 0.0;
+      vertMaxChange = frc::SmartDashboard::GetNumber("Elevator vert max change", vertMaxChange);
+
+      //vertical elevator speed limiter
+      if (((verticalPos - lastVerticalPos) > vertMaxChange)) { 
+         verticalPos = lastVerticalPos + vertMaxChange;
+      } else if (((verticalPos - lastVerticalPos) < -vertMaxChange)) {
+         verticalPos = lastVerticalPos - vertMaxChange;
+      } 
+      lastVerticalPos = verticalPos;
+      
+
       //verticalPos safety
       if (verticalPos < 0 ){
          verticalPos = 0;
@@ -113,7 +126,7 @@ void Elevator::Periodic() {
 
       //experimentally tested that a positive motor output of 0.037 made the output hold steady at -90 degrees
       m_armMotor.Set(armOutput); 
-      m_tiltElevatorMotor.Set(tiltVal);
+      //m_tiltElevatorMotor.Set(tiltVal);
       m_vertElevatorMotorLeft.Set(vertOutput); //when use PID loop, change verticalVal to vertOutput
 
       if (ls_arm.Get() == true){
@@ -253,4 +266,9 @@ frc2::CommandPtr Elevator::SetManualElevatorState(){
 frc2::CommandPtr Elevator::SetArmPos(double angle){
    return this->Run(
       [this, angle] { armPos = angle; });
+}
+
+frc2::CommandPtr Elevator::SetVertPos(double revolutions){
+   return this->Run(
+      [this, revolutions] { verticalPos = revolutions; });
 }
