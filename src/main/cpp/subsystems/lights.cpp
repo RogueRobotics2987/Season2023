@@ -30,6 +30,34 @@ void Lights::Periodic() {
         redoutput.Set(0);
         blueoutput.Set(1);
     }
+
+    if(pov == 0){
+        cubeDesired = true;
+        redColor = false;
+        blueColor = false;
+        coneDesired = false;
+    }
+    else if(pov == 90){
+        cubeDesired = true;
+        redColor = true;
+        blueColor = false;
+        coneDesired = false;
+    }
+    else if(pov == 180){
+        cubeDesired = true;
+        redColor = false;
+        blueColor = true;
+        coneDesired = false;
+    }
+    else if(pov == 270){
+        cubeDesired = true;
+        redColor = false;
+        blueColor = false;
+        coneDesired = true;
+    }
+    else if(pov == -1){
+        std::cout <<"DPAD not being pressed" << std::endl;
+    }
 }
 frc2::CommandPtr Lights::CubeDesired() {
     return this->RunOnce(
@@ -64,4 +92,9 @@ frc2::CommandPtr Lights::BlueColor() {
             coneDesired = false;
             redColor = false;
             blueColor = true; });
+}
+
+void Lights::SetLights(int POV){
+    pov = POV;
+    // std::cout << "DPAD POV " + pov << std::endl;
 }

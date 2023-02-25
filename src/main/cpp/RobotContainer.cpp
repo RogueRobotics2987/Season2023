@@ -25,6 +25,7 @@ RobotContainer::RobotContainer() {
   ConfigureButtonBindings();
   m_elevator.SetDefaultCommand(ElevatorCmd(m_elevator, m_xbox, m_newXbox));
   m_compressor.SetDefaultCommand(BeginCompressor(m_compressor));
+  m_lights.SetDefaultCommand(LightsCmd(m_lights, m_xbox, m_newXbox));
 
   // Set up default drive command
   // The left stick controls translation of the robot.
@@ -83,6 +84,24 @@ RobotContainer::RobotContainer() {
       }
       if (m_newXbox.GetRawAxis(3)< 0.15){
         fieldOrientated = true;
+      }
+
+      int POV = m_xbox.GetPOV();
+
+      if(POV == -1){
+        std::cout <<"Dpad not being pressed" << std::endl;
+      }
+      else if(POV == 0){
+        m_lights.CubeDesired();
+      }
+      else if(POV == 90){
+        m_lights.RedColor();
+      }
+      else if(POV == 180){
+        m_lights.BlueColor();
+      }
+      else if(POV == 270){
+        m_lights.ConeDesired();
       }
       
       frc::SmartDashboard::PutNumber("SafeX Value Before", safeX);
@@ -189,11 +208,11 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
   frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
+  // frc2::JoystickButton(&m_xbox, m_xbox.GetPOV()).OnTrue(m_lights.CubeDesired()); //purple
+  // frc2::JoystickButton(&m_xbox, m_xbox.GetPOV()).OnTrue(m_lights.RedColor()); //red
+  // frc2::JoystickButton(&m_xbox, m_xbox.GetPOV()).OnTrue(m_lights.BlueColor()); //blue
+  // frc2::JoystickButton(&m_xbox, m_xbox.GetPOV()).OnTrue(m_lights.ConeDesired()); //yellow
 
-  frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
-  frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
-  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
-  frc2::JoystickButton(&m_xbox, 4).OnTrue(m_lights.BlueColor());
 }
 
 
@@ -388,6 +407,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 2 && AllienceSelector == "Blue"){
     ResetOdometry();
     //TODO move elevator to mid then place
+    // use negative numbers for arm -90 for flat
     commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());

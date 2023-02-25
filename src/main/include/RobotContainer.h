@@ -52,6 +52,7 @@
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
+#include "commands/LightsCmd.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
