@@ -48,11 +48,10 @@
 #include "commands/ElevatorCmd.h"
 #include "commands/AutoBalance.h"
 #include "subsystems/Lights.h"
-#include "commands/Autos.h"
-#include "commands/SequentialAuto.h"
 #include "commands/AutoBalance.h"
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/Elevator.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -81,6 +80,11 @@ class RobotContainer {
   frc2::CommandPtr DriveCrgStnRed1(DriveSubsystem &m_drive);
   frc2::CommandPtr DriveCrgStnRed2(DriveSubsystem &m_drive);
 
+  frc2::CommandPtr PlaceDriveCrgStnRed1(DriveSubsystem &m_drive);
+  frc2::CommandPtr PlaceDriveCrgStnBlue1(DriveSubsystem &m_drive);
+
+  
+
 
   double GetHeading();
 
@@ -91,6 +95,8 @@ class RobotContainer {
   void ConfigMotorControllers();
 
   void ResetOdometry();
+
+  float Deadzone(float x);
 
   frc2::CommandPtr GetPathCommand();
 
@@ -114,9 +120,6 @@ class RobotContainer {
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
 
-  frc2::CommandPtr m_simpleAuto = autos::SimpleAuto(m_drive);
-  frc2::CommandPtr m_complexAuto = autos::ComplexAuto(m_drive);
-  frc2::CommandPtr m_CommandAuto = autos::CommandPath(m_drive);
   void ConfigureButtonBindings();
 
   frc2::CommandPtr DriveCrgStnRed1cmd = DriveCrgStnRed1(m_drive);
@@ -124,5 +127,14 @@ class RobotContainer {
 
   frc2::CommandPtr DriveCrgStnBlue1cmd = DriveCrgStnBlue1(m_drive);
   frc2::CommandPtr DriveCrgStnBlue2cmd = DriveCrgStnBlue2(m_drive);
+
+  frc2::CommandPtr PlaceDriveCrgStnRed1cmd = PlaceDriveCrgStnRed1(m_drive);
+  frc2::CommandPtr PlaceDriveCrgStnBlue1cmd = PlaceDriveCrgStnBlue1(m_drive);  
+
+  frc2::CommandPtr AutoZeroHeading = m_drive.ZeroHeading();
+
+  frc2::CommandPtr OpenClawCmd = m_elevator.ClawOpenCommand();
+  frc2::CommandPtr CloseClawCmd = m_elevator.ClawCloseCommand();
+
 
 };

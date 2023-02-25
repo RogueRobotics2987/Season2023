@@ -101,7 +101,7 @@ void DriveSubsystem::Periodic() {
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 
     // commented out to test, 2/17
-    //frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
+    frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
 
   m_field.SetRobotPose(m_odometry.GetPose());
 }
@@ -292,5 +292,24 @@ frc2::CommandPtr DriveSubsystem::ConfigOdometry(){
     frc::Pose2d pose(units::meter_t(botpose.at(0)), units::meter_t(botpose.at(1)), units::radian_t(botpose.at(5)));
     ResetOdometry(pose);
 
+  });
+}
+
+frc2::CommandPtr DriveSubsystem::Twitch(bool direction){
+  return this -> Run(
+    [this, direction]{
+  if(direction == true){
+    //right
+    DriveSubsystem::Drive(0_mps, -0.35_mps, 0_rad_per_s, false, false);
+    
+  }
+  else if(direction == false){
+    //left
+    DriveSubsystem::Drive(0_mps, 0.35_mps, 0_rad_per_s, false, false);
+  }
+  else{
+    //stop
+    DriveSubsystem::Drive(0_mps, 0.0_mps, 0_rad_per_s, false, false);
+  }
   });
 }
