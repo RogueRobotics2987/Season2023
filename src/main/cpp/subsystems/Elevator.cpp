@@ -18,11 +18,13 @@ Elevator::Elevator() {
    re_arm.SetPositionConversionFactor(ElevatorConstants::kArmAnglePerRotation);
    frc::SmartDashboard::PutNumber("Elevator Arm kp", ElevatorConstants::kPModuleArmController);
    frc::SmartDashboard::PutNumber("Elevator arm max change", armMaxChange);
+   frc::SmartDashboard::PutNumber("Elevator vert kp", ElevatorConstants::kPModuleVertController);
 }
 
 // This method will be called once per scheduler run
 void Elevator::Periodic() {
-   // frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
+   frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
+   frc::SmartDashboard::PutNumber("Elevator vertOutput", vertOutput);
    // frc::SmartDashboard::PutNumber("Elevator tiltVal", tiltVal);
    frc::SmartDashboard::PutNumber("Elevator armPos", armPos);
    // frc::SmartDashboard::PutNumber("Elevator armXboxVal", 10000);
@@ -44,7 +46,8 @@ void Elevator::Periodic() {
    //frc::SmartDashboard::PutNumber("ELevator Arm voltage", m_armMotor.GEt)
    frc::SmartDashboard::PutNumber("Elevator state", ElevatorState);
    frc::SmartDashboard::PutNumber("Elevator vert encoder", re_vertElevator.GetPosition());
-   double curkKpVert = frc::SmartDashboard::GetNumber("Elevator vert kp", ElevatorConstants::kPModuleVertController);
+   double curKpVert = frc::SmartDashboard::GetNumber("Elevator vert kp", ElevatorConstants::kPModuleVertController);
+   m_vertPIDController.SetP(curKpVert);
    // frc::SmartDashboard::PutNumber("Elevator vert motor 10 output", m_vertElevatorMotorLeft.GetAppliedOutput());
    if (ElevatorState == FIND_ZERO){
       //limit switch is were the elevator is closest to the ground 
@@ -80,7 +83,7 @@ void Elevator::Periodic() {
       //experimentally tested that a positive motor output of 0.037 made the output hold steady at -90 degrees
       m_armMotor.Set(armOutput); 
       m_tiltElevatorMotor.Set(tiltVal);
-      m_vertElevatorMotorLeft.Set(verticalVal); //when use PID loop, change verticalVal to vertOutput
+      m_vertElevatorMotorLeft.Set(vertOutput); //when use PID loop, change verticalVal to vertOutput
 
       if (ls_arm.Get() == true){
          re_arm.SetPosition(0);
@@ -104,27 +107,35 @@ void Elevator::Periodic() {
 }
 
 void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) { 
-   // frc::SmartDashboard::PutNumber("ElevatorUp Value", elevatorUp);
-   // frc::SmartDashboard::PutNumber("ElevatorDown Value", elevatorDown);
+   frc::SmartDashboard::PutNumber("ElevatorUp Value", elevatorUp);
+   frc::SmartDashboard::PutNumber("ElevatorDown Value", elevatorDown);
    frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
 
    verticalVal =elevatorUp - elevatorDown;
 
-   /*if (fabs(verticalVal) < ElevatorConstants::vertDeadzone){
+   /*if ((fabs(verticalVal) < ElevatorConstants::vertDeadzone) && (enableElevator == true)){
       verticalVal = 0;
    }*/
 
    //for pid loop
    if (fabs(verticalVal) < ElevatorConstants::vertDeadzone && (enableElevator == true)) {
       verticalPos = verticalPos; //the arm stays in the same position
-   } else if ((verticalVal > 0) && (enableElevator == true)){
+   } /*else if ((verticalVal > 0) && (enableElevator == true)){
       verticalPos = verticalPos + verticalVal;
    } else if ((verticalVal < 0) && (enableElevator == true)) {
       verticalPos = verticalPos - verticalVal;
+   }*/ else if (enableElevator == true) {
+      verticalPos = verticalPos + verticalVal;
    } else {
       verticalPos = 0;
    }
 
+   if (verticalPos < 0 ){
+      verticalPos = 0;
+   } else if (verticalPos > 108){
+      verticalPos = 108;
+   }
+   frc::SmartDashboard::PutNumber("Elevator vertOutput", vertOutput);
 }
 
 void Elevator::ElevatorTilt(double lean){
@@ -148,12 +159,12 @@ void Elevator::ElevatorArm(double armXboxVal){
 
    if ((fabs(armXboxVal) < ElevatorConstants::armDeadzone) && (enableElevator == true)) {
       armPos = armPos; //the arm stays in the same position
-   } else if (((armPos - lastArmPos) > armMaxChange) && (enableElevator == true)) { 
+   } /*else if (((armPos - lastArmPos) > armMaxChange) && (enableElevator == true)) { 
       //added maxChange part
       armPos = lastArmPos + armMaxChange;
    } else if (((armPos - lastArmPos) < -armMaxChange) && (enableElevator == true)) {
       armPos = lastArmPos - armMaxChange;
-   } else if (enableElevator == true){
+   }*/ else if (enableElevator == true){
       armPos = armPos + (armXboxVal * (2));
    } else {
       armPos = 0;
@@ -207,5 +218,5 @@ frc2::CommandPtr Elevator::SetManualElevatorState(){
 
 frc2::CommandPtr Elevator::SetArmPos(double angle){
    return this->RunOnce(
-      [this, angle] { armOutput = m_armPIDController.Calculate(re_arm.GetPosition(), angle); });
+      [this, angle] { /*armOutput = m_armPIDController.Calculate(re_arm.GetPosition(), angle);*/ });
 }
