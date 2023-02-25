@@ -39,6 +39,7 @@ class Elevator : public frc2::SubsystemBase {
   void ElevatorVert(double elevatorUp, double elevatorDown);
   void ElevatorTilt(double lean);
   void ElevatorArm(double armXboxVal);
+  void SafeArm();
   void Periodic() override;
 
 
@@ -72,9 +73,12 @@ class Elevator : public frc2::SubsystemBase {
   double armPos = 0.0;
   bool resetElevatorFinished = false;
   bool enableElevator = true; //when false, it turns off elevator for outreach events when kids have the robot
-  double armMaxChange = 0.01; //was the maxChange for acceleration ctrl in 2021 but can change
+  double armMaxChange = 2; //was the maxChange for acceleration ctrl in 2021 but can change
   double armOutput;
+  double safeArmPos;
+  //double lastArmPos = 0.0; //does this need to be static?
 
+  bool elevatorDisable = false;
   double vertOutput;
   double verticalPos;
   //claw open and close on pneumatics

@@ -42,7 +42,7 @@ namespace ElevatorConstants {
     constexpr double tiltDeadzone = 0.12;
     constexpr double armDeadzone = 0.12;
 
-    constexpr double kPModuleArmController = 0.016;
+    constexpr double kPModuleArmController = 0.009;//was 0.016
     constexpr double kArmAnglePerRotation = 16; //approximately 90/5.6
 
     constexpr double kPModuleVertController = 0.15;
