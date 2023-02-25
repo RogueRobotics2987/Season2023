@@ -101,7 +101,7 @@ void DriveSubsystem::Periodic() {
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 
     // commented out to test, 2/17
-    //frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
+    frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
 
   m_field.SetRobotPose(m_odometry.GetPose());
 }
