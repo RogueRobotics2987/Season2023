@@ -30,6 +30,9 @@ RobotContainer::RobotContainer() {
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
+
+
+
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
       //   std::cout << "sea out in robot container" << std::endl;
@@ -39,27 +42,39 @@ RobotContainer::RobotContainer() {
       // frc::SmartDashboard::PutNumber("Xbox Right X axis", m_xbox.GetRightX());
       
       bool noJoystick = false;
-      bool noJoystickX = false;
-      bool noJoystickY = false;
-      bool noJoystickRot = false;
+      // bool noJoystickX = false;
+      // bool noJoystickY = false;
+      // bool noJoystickRot = false;
       double safeX = m_newXbox.GetLeftX();
-      if(fabs(safeX)<0.2) {
-          safeX=0;
-          noJoystickX = true;
-      }
+      // if((safeX < 0.1) && (safeX > -0.1)) {
+      //     safeX=0;
+      //     noJoystickX = true;
+      // }
+      // else if(safeX >= 0.1) {
+      //   safeX = safeX - 0.1;
+      // }
+      // else if(safeX <= -0.1) {
+      //   safeX = safeX + 0.1;
+      // }
       double safeY =  m_newXbox.GetLeftY();
-      if(fabs(safeY)<0.2) { 
-          safeY=0;
-          noJoystickY = true;
-      }
+      // if((safeY < 0.1) && (safeY > -0.1)) {
+      //     safeY=0;
+      //     noJoystickY = true;
+      // }
+      // else if(safeY >= 0.1) {
+      //   safeY = safeY - 0.1;
+      // }
+      // else if(safeY <= -0.1) {
+      //   safeY = safeY + 0.1;
+      // }
       double safeRot = m_newXbox.GetRightX();
-      if(fabs(safeRot)<0.2) {
-          safeRot=0;
-          noJoystickRot = true;
-      }
-      noJoystick = noJoystickX && noJoystickY && noJoystickRot;
+      // if(fabs(safeRot)<0.2) {
+      //     safeRot=0;
+      //     noJoystickRot = true;
+      // }
+      // noJoystick = noJoystickX && noJoystickY && noJoystickRot;
 
-      frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
+      // frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
       
       // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
       bool fieldOrientated; 
@@ -69,6 +84,15 @@ RobotContainer::RobotContainer() {
       }
       if (m_newXbox.GetRawAxis(3)< 0.15){
         fieldOrientated = true;
+      }
+      
+      frc::SmartDashboard::PutNumber("SafeX Value Before", safeX);
+      safeX = Deadzone(safeX);
+      frc::SmartDashboard::PutNumber("SafeX Value after", safeX);
+      safeY = Deadzone(safeY);
+      safeRot = Deadzone(safeRot);
+      if((safeX == 0) && (safeY == 0) && (safeRot == 0)) {
+        noJoystick = true;
       }
       m_drive.Drive(units::meters_per_second_t(
                         -safeY * AutoConstants::kMaxSpeed),
@@ -480,3 +504,16 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     //   m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg});
     // }
   }
+
+  float RobotContainer::Deadzone(float x) {
+  if((x < 0.1) && (x > -0.1)) {
+    x=0;
+  }
+  else if(x >= 0.1) {
+    x = x - 0.1;
+  }
+  else if(x <= -0.1) {
+    x = x + 0.1;
+  }
+  return(x);
+}
