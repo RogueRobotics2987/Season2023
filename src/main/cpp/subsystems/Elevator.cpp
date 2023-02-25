@@ -89,9 +89,9 @@ void Elevator::Periodic() {
       frc::SmartDashboard::PutNumber("Elevator vertOutput", vertOutput);
 
       //experimentally tested that a positive motor output of 0.037 made the output hold steady at -90 degrees
-      if (re_tiltElevator.GetPosition() < 50){
+      /*if (re_tiltElevator.GetPosition() < 50){
          m_vertElevatorMotorLeft.Set(0);
-      }
+      }*/
 
       m_armMotor.Set(armOutput); 
       m_tiltElevatorMotor.Set(tiltVal);
