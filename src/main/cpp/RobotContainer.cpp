@@ -150,10 +150,10 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_newXbox, 4).WhileTrue(m_drive.Twitch(false));
 
 
-  frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawOpenCommand());
-  frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawCloseCommand());
-  frc2::JoystickButton(&m_newXbox, 3).OnTrue(m_elevator.ClawOpenCommand()); //Button X
-  frc2::JoystickButton(&m_newXbox, 1).OnFalse(m_elevator.ClawCloseCommand()); //Button A
+  frc2::JoystickButton(&m_xbox, 5).OnTrue(m_elevator.ClawCloseCommand());
+  frc2::JoystickButton(&m_xbox, 6).OnFalse(m_elevator.ClawOpenCommand());
+  frc2::JoystickButton(&m_newXbox, 3).OnTrue(m_elevator.ClawCloseCommand()); //Button X
+  frc2::JoystickButton(&m_newXbox, 1).OnFalse(m_elevator.ClawOpenCommand()); //Button A
 
   //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
   //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());

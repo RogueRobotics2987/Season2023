@@ -81,6 +81,10 @@ void Elevator::Periodic() {
       frc::SmartDashboard::PutNumber("Elevator vertOutput", vertOutput);
 
       //experimentally tested that a positive motor output of 0.037 made the output hold steady at -90 degrees
+      if (re_tiltElevator.GetPosition() < 50){
+         m_vertElevatorMotorLeft.Set(0);
+      }
+
       m_armMotor.Set(armOutput); 
       m_tiltElevatorMotor.Set(tiltVal);
       m_vertElevatorMotorLeft.Set(vertOutput); //when use PID loop, change verticalVal to vertOutput
@@ -121,7 +125,7 @@ void Elevator::ElevatorVert(double elevatorUp, double elevatorDown) {
    if (fabs(verticalVal) < ElevatorConstants::vertDeadzone && (enableElevator == true)) {
       verticalPos = verticalPos; //the arm stays in the same position
    } else if (enableElevator == true) {
-      verticalPos = verticalPos + verticalVal;
+      verticalPos = verticalPos + (verticalVal * (1.5));
    } else {
       verticalPos = 0;
    }
@@ -161,7 +165,7 @@ void Elevator::ElevatorArm(double armXboxVal){
    } else if (((armPos - lastArmPos) < -armMaxChange) && (enableElevator == true)) {
       armPos = lastArmPos - armMaxChange;
    }*/ else if (enableElevator == true){
-      armPos = armPos + (armXboxVal * (2));
+      armPos = armPos + (armXboxVal * (2.0));
    } else {
       armPos = 0;
    }
@@ -183,12 +187,12 @@ void Elevator::ElevatorArm(double armXboxVal){
 }
 
 
-frc2::CommandPtr Elevator::ClawOpenCommand() {
+frc2::CommandPtr Elevator::ClawCloseCommand() {
    return this->RunOnce(
       [this] { clawSolenoid.Set(frc::DoubleSolenoid::kReverse); });
 }
 
-frc2::CommandPtr Elevator::ClawCloseCommand() {
+frc2::CommandPtr Elevator::ClawOpenCommand() {
    return this->RunOnce(
       [this] { clawSolenoid.Set(frc::DoubleSolenoid::kForward); });
 }
