@@ -39,7 +39,7 @@ namespace ElevatorConstants {
     constexpr double vertDeadzone = 0.08;
     constexpr double armMaxPositiveSpeed = 0.1;
     constexpr double armMaxNegativeSpeed = -0.05;
-    constexpr double tiltDeadzone = 0.25;
+    constexpr double tiltDeadzone = 0.3;
     constexpr double armDeadzone = 0.12;
 
 
