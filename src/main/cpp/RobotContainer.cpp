@@ -334,6 +334,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 2 && AllienceSelector == "Red"){
     ResetOdometry();
     //TODO move elevator to mid then place
+    //arm must be negative
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(-90);}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.ClawOpenCommand();}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(0);}));    
     commands.emplace_back(PlaceDriveCrgStnRed1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
@@ -344,6 +348,9 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 2 && AllienceSelector == "Blue"){
     ResetOdometry();
     //TODO move elevator to mid then place
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(-90);}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.ClawOpenCommand();}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(0);}));        
     commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
@@ -352,8 +359,11 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(AutoCmd);
   }
   else if(pathselector == 3){
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Claw Open" << std::endl;}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(-90);}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.ClawOpenCommand();}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(0);}));
+    commands.emplace_back(CloseClawCmd.get());
+
   }
   else if(pathselector == 4){
     commands.emplace_back(CloseClawCmd.get());
