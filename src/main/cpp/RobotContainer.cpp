@@ -171,6 +171,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
   frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
   frc2::JoystickButton(&m_xbox, 4).OnTrue(m_lights.BlueColor());
+
+  frc2::JoystickButton(&m_xbox, 7).OnTrue(m_drive.ConfigOdometry());
 }
 /*
 frc2::Command* RobotContainer::GetAutonomousCommand() {
