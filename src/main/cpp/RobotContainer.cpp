@@ -16,7 +16,6 @@ RobotContainer::RobotContainer() {
   
   frc::SmartDashboard::PutString("AllienceSelector", "Blue");
   frc::SmartDashboard::PutNumber("PathSelector", 0);
-  frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
 
 
   ConfigMotorControllers();
@@ -152,47 +151,6 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
   frc2::JoystickButton(&m_xbox, 4).OnTrue(m_lights.BlueColor());
 }
-/*
-frc2::Command* RobotContainer::GetAutonomousCommand() {
-  // Set up config for trajectory
-  frc::TrajectoryConfig config(AutoConstants::kMaxSpeed,
-                               AutoConstants::kMaxAcceleration);
-  // Add kinematics to ensure max speed is actually obeyed
-  config.SetKinematics(m_drive.kDriveKinematics);
-  // An example trajectory to follow.  All units in meters.
-  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      // Start at the origin facing the +X direction
-      //x moves forward backward
-      //y moves left right
-      frc::Pose2d{0_m, 0_m, 0_deg},
-      {frc::Translation2d{0.3_m, 0_m} , frc::Translation2d{0.6_m, 0_m}, frc::Translation2d{1_m, 0_m}},
-      frc::Pose2d{0_m, 0_m, 0_deg},
-      // frc::Pose2d{0_m, 0_m, 0_deg},
-      // {frc::Translation2d{1_m, 1_m} , frc::Translation2d{2_m, 0_m}, frc::Translation2d{3_m, -1_m}},
-      // frc::Pose2d{4_m, 0_m, 0_deg},
-      // Pass the config
-      config);
-  frc::ProfiledPIDController<units::radians> thetaController{
-      AutoConstants::kPThetaController, 0, 0,
-      AutoConstants::kThetaControllerConstraints};
-  thetaController.EnableContinuousInput(units::radian_t{-std::numbers::pi},
-                                        units::radian_t{std::numbers::pi});
-  frc2::SwerveControllerCommand<4> swerveControllerCommand(
-      exampleTrajectory, [this]() {return m_drive.GetPose(); },
-      m_drive.kDriveKinematics,
-       frc2::PIDController{AutoConstants::kPXController, 0, 0},
-      frc2::PIDController{AutoConstants::kPYController, 0, 0}, thetaController,
-      [this](auto moduleStates) { m_drive.SetModuleStates(moduleStates); },
-      {&m_drive});
-  // Reset odometry to the starting pose of the trajectory.
-  m_drive.ResetOdometry(exampleTrajectory.InitialPose());
-  // no auto
-  return new frc2::SequentialCommandGroup(
-      std::move(swerveControllerCommand),
-      frc2::InstantCommand(
-          [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false, false); }, {}));
-}
-*/
 
 
 //Red Paths
@@ -375,21 +333,34 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 2 && AllienceSelector == "Red"){
     ResetOdometry();
-    commands.emplace_back(DriveCrgStnRed1cmd.get());
+    //TODO move elevator to mid then place
+    commands.emplace_back(PlaceDriveCrgStnRed1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
     commands.emplace_back(DriveCrgStnRed2cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
     commands.emplace_back(AutoCmd);
   }
-  else{
+  else if(pathselector == 2 && AllienceSelector == "Blue"){
     ResetOdometry();
+    //TODO move elevator to mid then place
     commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
     commands.emplace_back(DriveCrgStnBlue2cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
     commands.emplace_back(AutoCmd);
+  }
+  else if(pathselector == 3){
+    commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Claw Open" << std::endl;}));
+  }
+  else if(pathselector == 4){
+    commands.emplace_back(CloseClawCmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Claw Close" << std::endl;}));    
+  }
+  else{
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Do Nothing" << std::endl;}));
   }
   // commands.emplace_back(AutoCmd);
 
@@ -444,21 +415,27 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
     // pathselector = 1;
 
-    if(pathselector == 0 && AllienceSelector == "Red"){
+    if((pathselector == 0 || pathselector == 1) && AllienceSelector == "Red"){
       m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 180_deg}); //ChargeStation1Red
       std::cout<<"OdometryRed"<<std::endl;
     }
-    else {
+    else if((pathselector == 0 || pathselector == 1) && AllienceSelector == "Blue"){
     //if(pathselector == 1){
       m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 0_deg}); //ChargeStation1Blue
       std::cout<<"OdometryBlue"<<std::endl;
     }
-    // else if(pathselector ==2){
-    //   m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
-    // }
-    // else{
-    //   m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg});
-    // }
+    else if(pathselector == 2 && AllienceSelector == "Red"){ //Place charge station red
+      m_drive.ResetOdometry(frc::Pose2d{14.6_m, 0.5_m, 0_deg});
+      std::cout<<"OdometryPlaceRed"<<std::endl;
+    }
+    else if(pathselector == 2 && AllienceSelector == "Blue"){ //Place ChargeStation blue
+      m_drive.ResetOdometry(frc::Pose2d{1.9_m, 0.5_m, 180_deg});
+      std::cout<<"OdometryPlaceBlue"<<std::endl;
+
+    }
+    else{
+      std::cout<<"Do Nothing For Odometry, Paramaters incorrect" << std::endl;
+    }
   }
 
   float RobotContainer::Deadzone(float x) {

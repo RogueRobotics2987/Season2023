@@ -25,12 +25,12 @@ class Lights : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  frc::DigitalOutput output1 {1};
-  frc::DigitalOutput output2 {2};
-  frc::DigitalOutput output3 {3};
-  frc::DigitalOutput output4 {4};
+  frc::DigitalOutput cubeoutput {1};
+  frc::DigitalOutput coneoutput {2};
+  frc::DigitalOutput redoutput {3};
+  frc::DigitalOutput blueoutput {4};
   bool cubeDesired = false;
   bool coneDesired = false;
-  bool redColor = false;
+  bool redColor = true;
   bool blueColor = false;
 };

@@ -7,30 +7,30 @@
 Lights::Lights() = default;
 
 // This method will be called once per scheduler run
+// false!
 void Lights::Periodic() {
     if (cubeDesired) {
-        output1.Set(1);
-        output2.Set(0);
-        output3.Set(0);
-        output4.Set(0);
+        cubeoutput.Set(1);
+        coneoutput.Set(0);
+        redoutput.Set(0);
+        blueoutput.Set(0);
     } else if (coneDesired) {
-        output1.Set(0);
-        output2.Set(1);
-        output3.Set(0);
-        output4.Set(0);
+        cubeoutput.Set(0);
+        coneoutput.Set(1);
+        redoutput.Set(0);
+        blueoutput.Set(0);
     } else if (redColor) {
-        output1.Set(0);
-        output2.Set(0);
-        output3.Set(1);
-        output4.Set(0);
+        cubeoutput.Set(0);
+        coneoutput.Set(0);
+        redoutput.Set(1);
+        blueoutput.Set(0);
     } else if (blueColor) {
-        output1.Set(0);
-        output2.Set(0);
-        output3.Set(0);
-        output4.Set(1);
+        cubeoutput.Set(0);
+        coneoutput.Set(0);
+        redoutput.Set(0);
+        blueoutput.Set(1);
     }
 }
-
 frc2::CommandPtr Lights::CubeDesired() {
     return this->RunOnce(
         [this] {
