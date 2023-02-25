@@ -117,6 +117,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // what this does with limelight
   frc2::CommandPtr ConfigOdometry();
 
+  frc2::CommandPtr Twitch(bool direction);
+
 
   units::meter_t kTrackWidth =
       0.4699_m;  // Distance between centers of right and left wheels on robot

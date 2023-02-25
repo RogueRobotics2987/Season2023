@@ -107,7 +107,7 @@ void AutoBalance::Execute() {
           m_drive->Drive(0_mps, -0.35_mps, 0_rad_per_s, false, false);
         }
         else if(m_drive->GetPitch() <= 10) {
-          m_drive->Drive(0_mps, 0.35_mps, 0_rad_per_s, false, false);
+          m_drive->Drive(0_mps, 0.5_mps, 0_rad_per_s, false, false);
         }
       }
       // while(m_state == 5) {
