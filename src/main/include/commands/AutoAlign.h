@@ -7,6 +7,9 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
+#include "subsystems/lights.h"
+#include "subsystems/DriveSubsystem.h"
+
 /**
  * An example command.
  *
@@ -27,11 +30,17 @@ class AutoAlign
 
   bool IsFinished() override;
 
- private:
-  bool RED = true;
-  bool BLUE = false;
 
-  bool sideOfField = RED; 
+ private:
+  Lights m_light; 
+  DriveSubsystem m_drive;
+
+  std::string sideOfField = "red"; // red or blue
   int grid = 2; // 1 is right, 2 middle, 3 left of robot
   std::string column; // left, middle, right 
+
+  double destinationX;
+  double destinationY;
+
+  double 
 };

@@ -18,10 +18,6 @@ using namespace std;
 
 using namespace DriveConstants;
 
-// for limelight, configOdometry (temp?)
-#include <iostream>
-#include <span>
-using namespace std;
 
 DriveSubsystem::DriveSubsystem(): 
   m_frontLeft{
@@ -128,10 +124,9 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   // angleOff = angleOff && fabs((angleDiffBR < 10)) && (!noJoystick);
   // angleOff = angleOff && fabs((angleDiffBL < 10)) && (!noJoystick);
   if(fl.speed > (units::velocity::meters_per_second_t)(0.05)){
-    
-  }
+    // why is this here?
 
-  else if(fabs(angleOff) <= epsilon && noJoystick != true) {
+  } else if(fabs(angleOff) <= epsilon && noJoystick != true) {
     // m_frontLeft.SetDesiredState(fl);
     // m_frontRight.SetDesiredState(fr);
     // m_rearLeft.SetDesiredState(bl);

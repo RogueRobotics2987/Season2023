@@ -11,20 +11,46 @@ AutoAlign::AutoAlign() {
 // Called when the command is initially scheduled.
 void AutoAlign::Initialize() {
     // set sideOfField to red or blue
-    /*if(sideOfField == 'red'){
-        sideOfField = RED;
-    } else if(sideOfField == 'blue'){
-        sideOfField = BLUE;
+    /*if(DriverStation.GetAlliance() == "red"){
+        sideOfField = "red";
+        m_light.RedColor();
+
+    } else if(sideOfField == "blue"){
+        sideOfField = "blue";
+        m_light.BlueColor();
     }*/
 
-    // input user choice for 
+    // input user choice for grid & column
     grid = 2;
     column = 'right';
-
 }
 
 // Called repeatedly when this Command is scheduled to run
-void AutoAlign::Execute() {}
+void AutoAlign::Execute() {
+    if(grid == 1){
+        // set destination to apriltag right of drivers perspective
+        destinationX = 5.41; // tx
+        destinationY = -1.31; // ty
+    } else if(grid == 3){
+        // destination left apriltag
+        destinationX = 5.41; // tx
+        destinationY = -1.31; // ty
+    } else { 
+        // defalut grid 2
+        // destination middle apriltag
+        destinationX = 5.41; // tx
+        destinationY = -1.31; // ty
+    }
+
+    // move robot along x-axis
+    if(/*curret x pose*/ < destinationX + /*desOffset*/){
+        m_drive.Drive(0_mps, 3_mps, )
+    }
+    // if reached destination, then
+
+    // move robot in front of wanted column (along x-axis), using + || - set value
+
+}
 
 // Called once the command ends or is interrupted.
 void AutoAlign::End(bool interrupted) {}

@@ -53,8 +53,10 @@
 #include "commands/AutoBalance.h"
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
+#include "commands/AutoAlign.h"
 
 #include "subsystems/limelight.h"
+
 using namespace DriveConstants;
 using namespace pathplanner;
 using namespace frc2;
@@ -108,6 +110,7 @@ class RobotContainer {
   Elevator m_elevator;
   CompressorObject m_compressor;
   Lights m_lights;
+  AutoAlign m_align;
 
   //frc2::Command *AutoCmd;
 

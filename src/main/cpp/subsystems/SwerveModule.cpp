@@ -39,7 +39,7 @@
 //       units::radian_t{-std::numbers::pi}, units::radian_t{std::numbers::pi});
 // }
 SwerveModule::SwerveModule(int m_MotorController, rev::SparkMaxRelativeEncoder::Type m_EncoderType, int m_counts_per_rev, 
-int m_MotorControllerTurning, 
+ int m_MotorControllerTurning, 
  bool driveEncoderReversed,
  int TurningEncoderNumber,
  bool turningEncoderReversed
@@ -105,23 +105,26 @@ frc::SwerveModulePosition SwerveModule::GetPosition() {
 }
 
 void SwerveModule::SetDesiredState(const frc::SwerveModuleState& referenceState) {
-  double m_wheelOffset = frc::SmartDashboard::GetNumber("Wheel Offset " 
-    + std::to_string(m_turningMotor->GetDeviceId()), ModuleConstants::wheelOffset);
+  double m_wheelOffset = frc::SmartDashboard::GetNumber("Wheel Offset " + 
+    std::to_string(m_turningMotor->GetDeviceId()), ModuleConstants::wheelOffset);
   // Optimize the reference state to avoid spinning further than 90 degrees
 
-  m_drivePIDController.SetP(frc::SmartDashboard::GetNumber("Enter P Value for Drive" + std::to_string(m_driveMotor->GetDeviceId()), 1E-5));
+  m_drivePIDController.SetP(frc::SmartDashboard::GetNumber("Enter P Value for Drive" + 
+    std::to_string(m_driveMotor->GetDeviceId()), 1E-5));
+  
   auto driveOutput = m_drivePIDController.Calculate(
-     m_driveEncoder->GetVelocity(), referenceState.speed.to<double>());
+    m_driveEncoder->GetVelocity(), referenceState.speed.to<double>());
 
-  double KFFInput = frc::SmartDashboard::GetNumber("KFF Input " + std::to_string(m_driveMotor->GetDeviceId()), ModuleConstants::kFFModuleDriveController);
+  double KFFInput = frc::SmartDashboard::GetNumber("KFF Input " + 
+    std::to_string(m_driveMotor->GetDeviceId()), ModuleConstants::kFFModuleDriveController);
 
   driveOutput = driveOutput + referenceState.speed.to<double>() * KFFInput;
 
-  m_turningPIDController.SetP(
-      frc::SmartDashboard::GetNumber("Enter P Value for Turn" + std::to_string(m_turningMotor->GetDeviceId()), 1E-5));
+  m_turningPIDController.SetP(frc::SmartDashboard::GetNumber("Enter P Value for Turn" + 
+    std::to_string(m_turningMotor->GetDeviceId()), 1E-5));
   
-  auto turnOutput = m_turningPIDController.Calculate(
-      units::radian_t( m_turningEncoder->GetPosition() /* * 78.73*/ + m_wheelOffset), referenceState.angle.Radians());
+  auto turnOutput = m_turningPIDController.Calculate(units::radian_t(m_turningEncoder->GetPosition() /**78.73*/ 
+    + m_wheelOffset), referenceState.angle.Radians());
 
   // double errorTest = m_turningEncoder->GetPosition() - referenceState.angle.Radians().value();
 
