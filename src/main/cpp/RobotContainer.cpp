@@ -35,48 +35,10 @@ RobotContainer::RobotContainer() {
 
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
-      //   std::cout << "sea out in robot container" << std::endl;
-      // commented out to test, 2/17
-      // frc::SmartDashboard::PutNumber("Xbox left  X axis", m_xbox.GetLeftX());
-      // frc::SmartDashboard::PutNumber("Xbox Left y axis", m_xbox.GetLeftY());
-      // frc::SmartDashboard::PutNumber("Xbox Right X axis", m_xbox.GetRightX());
-      
       bool noJoystick = false;
-      // bool noJoystickX = false;
-      // bool noJoystickY = false;
-      // bool noJoystickRot = false;
-      double safeX = m_newXbox.GetLeftX();
-      // if((safeX < 0.1) && (safeX > -0.1)) {
-      //     safeX=0;
-      //     noJoystickX = true;
-      // }
-      // else if(safeX >= 0.1) {
-      //   safeX = safeX - 0.1;
-      // }
-      // else if(safeX <= -0.1) {
-      //   safeX = safeX + 0.1;
-      // }
-      double safeY =  m_newXbox.GetLeftY();
-      // if((safeY < 0.1) && (safeY > -0.1)) {
-      //     safeY=0;
-      //     noJoystickY = true;
-      // }
-      // else if(safeY >= 0.1) {
-      //   safeY = safeY - 0.1;
-      // }
-      // else if(safeY <= -0.1) {
-      //   safeY = safeY + 0.1;
-      // }
-      double safeRot = m_newXbox.GetRightX();
-      // if(fabs(safeRot)<0.2) {
-      //     safeRot=0;
-      //     noJoystickRot = true;
-      // }
-      // noJoystick = noJoystickX && noJoystickY && noJoystickRot;
-
-      // frc::SmartDashboard::PutNumber("noJoystick val ", noJoystick);
-      
-      // std::cout << "Sam Debug" << safeX << "," << safeY << "," << safeRot << std::endl;
+      double safeX = Deadzone(m_newXbox.GetLeftX());
+      double safeY =  Deadzone(m_newXbox.GetLeftY());
+      double safeRot = Deadzone(m_newXbox.GetRightX());
       bool fieldOrientated; 
 
       if (m_newXbox.GetRawAxis(3)> 0.15){
@@ -85,21 +47,15 @@ RobotContainer::RobotContainer() {
       if (m_newXbox.GetRawAxis(3)< 0.15){
         fieldOrientated = true;
       }
-      
-      frc::SmartDashboard::PutNumber("SafeX Value Before", safeX);
-      safeX = Deadzone(safeX);
-      frc::SmartDashboard::PutNumber("SafeX Value after", safeX);
-      safeY = Deadzone(safeY);
-      safeRot = Deadzone(safeRot);
       if((safeX == 0) && (safeY == 0) && (safeRot == 0)) {
         noJoystick = true;
       }
       m_drive.Drive(units::meters_per_second_t(
-                        -safeY * AutoConstants::kMaxSpeed),
+                    -safeY * AutoConstants::kMaxSpeed),
                     units::meters_per_second_t(
-                        -safeX * AutoConstants::kMaxSpeed),
+                    -safeX * AutoConstants::kMaxSpeed),
                     units::radians_per_second_t(
-                        -safeRot * PI),
+                    -safeRot * PI),
                     fieldOrientated,
                     noJoystick);
       // m_drive.Drive(units::meters_per_second_t(0),
