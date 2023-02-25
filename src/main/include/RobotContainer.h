@@ -96,6 +96,8 @@ class RobotContainer {
 
   void ResetOdometry();
 
+  float Deadzone(float x);
+
   frc2::CommandPtr GetPathCommand();
 
  private:
