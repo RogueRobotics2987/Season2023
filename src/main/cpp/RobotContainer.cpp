@@ -377,7 +377,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 2 && AllienceSelector == "Red"){
     ResetOdometry();
-    //move elevator to mid then place
+    //TODO move elevator to mid then place
     commands.emplace_back(PlaceDriveCrgStnRed1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
@@ -387,7 +387,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 2 && AllienceSelector == "Blue"){
     ResetOdometry();
-    //move elevator to mid then place
+    //TODO move elevator to mid then place
     commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
@@ -459,21 +459,27 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
     // pathselector = 1;
 
-    if(pathselector == 0 && AllienceSelector == "Red"){
+    if((pathselector == 0 || pathselector == 1) && AllienceSelector == "Red"){
       m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 180_deg}); //ChargeStation1Red
       std::cout<<"OdometryRed"<<std::endl;
     }
-    else {
+    else if((pathselector == 0 || pathselector == 1) && AllienceSelector == "Blue"){
     //if(pathselector == 1){
       m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 0_deg}); //ChargeStation1Blue
       std::cout<<"OdometryBlue"<<std::endl;
     }
-    // else if(pathselector ==2){
-    //   m_drive.ResetOdometry(frc::Pose2d{4.4_m, 0.75_m, 180_deg}); //ChargeStation1Blue
-    // }
-    // else{
-    //   m_drive.ResetOdometry(frc::Pose2d{12.2_m, 0.75_m, 0_deg});
-    // }
+    else if(pathselector == 2 && AllienceSelector == "Red"){ //Place charge station red
+      m_drive.ResetOdometry(frc::Pose2d{14.6_m, 0.5_m, 0_deg});
+      std::cout<<"OdometryPlaceRed"<<std::endl;
+    }
+    else if(pathselector == 2 && AllienceSelector == "Blue"){ //Place ChargeStation blue
+      m_drive.ResetOdometry(frc::Pose2d{1.9_m, 0.5_m, 180_deg});
+      std::cout<<"OdometryPlaceBlue"<<std::endl;
+
+    }
+    else{
+      std::cout<<"Do Nothing For Odometry, Paramaters incorrect" << std::endl;
+    }
   }
 
   float RobotContainer::Deadzone(float x) {
