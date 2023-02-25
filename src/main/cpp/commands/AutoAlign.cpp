@@ -4,6 +4,9 @@
 
 #include "commands/AutoAlign.h"
 
+#include <iostream>
+using namespace std;
+
 AutoAlign::AutoAlign() {
   // Use addRequirements() here to declare subsystem dependencies.
 }
@@ -43,9 +46,13 @@ void AutoAlign::Execute() {
     }
 
     // move robot along x-axis
-    if(/*curret x pose*/ < destinationX + /*desOffset*/){
+    curPosition = m_drive.GetPose(); 
+
+    frc::SmartDashboard::PutData(curPosition.Y().value());
+
+    /*if(curret x pose < destinationX + desOffset){
         m_drive.Drive(0_mps, 3_mps, )
-    }
+    }*/
     // if reached destination, then
 
     // move robot in front of wanted column (along x-axis), using + || - set value

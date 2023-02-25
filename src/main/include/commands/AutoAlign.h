@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/geometry/Pose2d.h>
 
 #include "subsystems/lights.h"
 #include "subsystems/DriveSubsystem.h"
@@ -42,5 +43,5 @@ class AutoAlign
   double destinationX;
   double destinationY;
 
-  double 
+  frc::Pose2d curPosition;
 };
