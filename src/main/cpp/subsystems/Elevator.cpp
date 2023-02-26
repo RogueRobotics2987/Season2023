@@ -77,7 +77,6 @@ void Elevator::Periodic() {
          //frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
          ElevatorState = MANUAL_MODE; 
       }
-      // ElevatorState = MANUAL_MODE;
 
 
    } else if (ElevatorState == MANUAL_MODE){
