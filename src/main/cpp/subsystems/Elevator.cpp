@@ -33,7 +33,7 @@ void Elevator::Periodic() {
 
    //Elevator tilt
    // frc::SmartDashboard::PutBoolean("Elevator Tilt limit switch", ls_tiltElevator.Get());
-   // frc::SmartDashboard::PutNumber("Elevator Tilt Encoder", re_tiltElevator.GetPosition());
+   frc::SmartDashboard::PutNumber("Elevator Tilt Encoder", re_tiltElevator.GetPosition());
 
    // //Elevator arm
    // frc::SmartDashboard::PutBoolean("Elevator Arm limit switch", ls_arm.Get());
@@ -63,7 +63,7 @@ void Elevator::Periodic() {
 
    } else if (ElevatorState == FIND_ZERO_TILT) {
       //limit switch is where the elevator is all the way tilted towards the back of the robot
-      //m_tiltElevatorMotor.Set(-0.2);//go to reverse limit switch
+      m_tiltElevatorMotor.Set(-0.2);//go to reverse limit switch
 
       //limit switch is when the arm is all the way up
       m_armMotor.Set(0.05);//go to forward limit switch
@@ -72,12 +72,12 @@ void Elevator::Periodic() {
          re_arm.SetPosition(0);
       }
 
-      /*if((ls_tilitElevator.Get() == true)) { 
+      if((ls_tiltElevator.Get() == true)) { 
          re_tiltElevator.SetPosition(0);
          //frc::SmartDashboard::PutBoolean("Elevator Reset Elevator Finished", true); //for debugging
          ElevatorState = MANUAL_MODE; 
-      } */
-      ElevatorState = MANUAL_MODE;
+      }
+      // ElevatorState = MANUAL_MODE;
 
 
    } else if (ElevatorState == MANUAL_MODE){
@@ -126,7 +126,7 @@ void Elevator::Periodic() {
 
       //experimentally tested that a positive motor output of 0.037 made the output hold steady at -90 degrees
       m_armMotor.Set(armOutput); 
-      //m_tiltElevatorMotor.Set(tiltVal);
+      m_tiltElevatorMotor.Set(tiltVal);
       m_vertElevatorMotorLeft.Set(vertOutput); //when use PID loop, change verticalVal to vertOutput
 
       if (ls_arm.Get() == true){
