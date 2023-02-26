@@ -272,3 +272,7 @@ frc2::CommandPtr Elevator::SetVertPos(double revolutions){
    return this->Run(
       [this, revolutions] { verticalPos = revolutions; });
 }
+
+frc2::CommandPtr Elevator::SetArmVertPos(double angle, double revolutions){
+   //put code here 
+}

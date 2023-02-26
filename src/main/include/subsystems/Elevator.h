@@ -32,6 +32,7 @@ class Elevator : public frc2::SubsystemBase {
   frc2::CommandPtr SetManualElevatorState();
   frc2::CommandPtr SetArmPos(double angle);
   frc2::CommandPtr SetVertPos(double revoluions);
+  frc2::CommandPtr SetArmVertPos(double angle, double revolutions);
 
 
   /**

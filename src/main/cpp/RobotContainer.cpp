@@ -137,14 +137,15 @@ void RobotContainer::ConfigureButtonBindings() {
   //frc2::JoystickButton(&m_stick1, 14).OnTrue(m_elevator.SetPlaceHighState())
   //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
   //frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
- // frc2::JoystickButton(&m_xbox, 7).OnTrue(m_elevator.SetManualElevatorState());//need to change
+  //frc2::JoystickButton(&m_xbox, 7).OnTrue(m_elevator.SetManualElevatorState());//need to change
 
 
   // std::vector<std::unique_ptr<Command>> commands;
   frc2::CommandPtr djoTempCmd = std::move(VertPosMidCmd);
   frc2::CommandPtr djoTempCmd2 = std::move(ArmPosFlatCmd);
 
-  frc2::JoystickButton(&m_xbox, 7).OnTrue(std::move(djoTempCmd).AndThen(std::move(djoTempCmd2)));
+  // frc2::JoystickButton(&m_xbox, 7).OnTrue(std::move(djoTempCmd).AndThen(std::move(djoTempCmd2)));
+  frc2::JoystickButton(&m_xbox, 7).OnTrue(std::move(djoTempCmd).AlongWith(std::move(djoTempCmd2)));
 
   // commands.emplace_back(VertPosMidCmd.get());
   // commands.emplace_back(ArmPosFlatCmd.get());
