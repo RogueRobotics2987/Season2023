@@ -138,14 +138,35 @@ void RobotContainer::ConfigureButtonBindings() {
   //frc2::JoystickButton(&m_stick1, 15).OnTrue(m_elevator.SetPlaceMidState());
   //frc2::JoystickButton(&m_stick1, 16).OnTrue(m_elevator.SetPlaceLowState());
  // frc2::JoystickButton(&m_xbox, 7).OnTrue(m_elevator.SetManualElevatorState());//need to change
-  frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetArmPos(-90));
+
+
+  // std::vector<std::unique_ptr<Command>> commands;
+  frc2::CommandPtr djoTempCmd = std::move(VertPosMidCmd);
+  frc2::CommandPtr djoTempCmd2 = std::move(ArmPosFlatCmd);
+
+  frc2::JoystickButton(&m_xbox, 7).OnTrue(std::move(djoTempCmd).AndThen(std::move(djoTempCmd2)));
+
+  // commands.emplace_back(VertPosMidCmd.get());
+  // commands.emplace_back(ArmPosFlatCmd.get());
+
+        // frc2::ParallelCommandGroup(
+        //   TimerCMD(0.3),
+        //   frc2::InstantCommand([this] {intake.ConveyorForward();}, {&intake})
+        // ),
+
+  // frc2::SequentialCommandGroup* MidPlace = new frc2::SequentialCommandGroup(
+  //   ParallelCommandGroup(std::move(commands))
+  // );
+
+  // frc2::JoystickButton(&m_xbox, 7).WhileTrue(std::move(MidPlace));
+
   //frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetVertPos(70.4));
   
   frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetArmPos(-45));
   //frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetVertPos(106.6));
 
   frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
-  frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
+  JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
   frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
 

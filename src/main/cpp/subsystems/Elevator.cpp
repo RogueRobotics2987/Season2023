@@ -197,12 +197,12 @@ void Elevator::ElevatorArm(double armXboxVal){
 
    if ((fabs(armXboxVal) < ElevatorConstants::armDeadzone) && (enableElevator == true)) {
       armPos = armPos; //the arm stays in the same position
-   }/* else if (((armPos - lastArmPos) > armMaxChange) && (enableElevator == true)) { 
+   } else if (((armPos - lastArmPos) > armMaxChange) && (enableElevator == true)) { 
       //added maxChange part
       armPos = lastArmPos + armMaxChange;
    } else if (((armPos - lastArmPos) < -armMaxChange) && (enableElevator == true)) {
       armPos = lastArmPos - armMaxChange;
-   } */else if (enableElevator == true){
+   } else if (enableElevator == true){
       armPos = armPos + (armXboxVal * (2.0));
    } else {
       armPos = 0;
