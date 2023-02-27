@@ -18,6 +18,8 @@ Elevator::Elevator() {
    frc::SmartDashboard::PutNumber("Elevator arm max change", armMaxChange);
    frc::SmartDashboard::PutNumber("Elevator vert max change", vertMaxChange);   
    frc::SmartDashboard::PutNumber("Elevator Vert kp", ElevatorConstants::kPModuleVertController);
+   armPos = re_arm.GetPosition();
+   
 }
 
 // This method will be called once per scheduler run
@@ -270,4 +272,12 @@ frc2::CommandPtr Elevator::SetArmPos(double angle){
 frc2::CommandPtr Elevator::SetVertPos(double revolutions){
    return this->Run(
       [this, revolutions] { verticalPos = revolutions; });
+}
+
+frc2::CommandPtr Elevator::SetElevatorPos(double armAngle, double vertRevolutions){
+   return this->Run(
+      [this, armAngle, vertRevolutions] {
+         armPos = armAngle; 
+         verticalPos = vertRevolutions; }
+   );
 }
