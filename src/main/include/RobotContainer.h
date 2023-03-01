@@ -136,5 +136,12 @@ class RobotContainer {
   frc2::CommandPtr OpenClawCmd = m_elevator.ClawOpenCommand();
   frc2::CommandPtr CloseClawCmd = m_elevator.ClawCloseCommand();
 
+  frc2::CommandPtr SetHighCmd = m_elevator.SetPlaceHighState();
+  frc2::CommandPtr SetMidCmd = m_elevator.SetPlaceMidState();
+  frc2::CommandPtr SetLowCmd = m_elevator.SetPlaceLowState();
+
+
+
+
 
 };

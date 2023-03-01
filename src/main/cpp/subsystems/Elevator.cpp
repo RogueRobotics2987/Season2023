@@ -39,7 +39,7 @@ void Elevator::Periodic() {
 
    // //Elevator arm
    // frc::SmartDashboard::PutBoolean("Elevator Arm limit switch", ls_arm.Get());
-   //frc::SmartDashboard::PutNumber("Elevator Arm encoder", re_arm.GetPosition());
+   frc::SmartDashboard::PutNumber("Elevator Arm encoder", re_arm.GetPosition());
    double curkPArm = frc::SmartDashboard::GetNumber("Elevator Arm kp", ElevatorConstants::kPModuleArmController);
    m_armPIDController.SetP(curkPArm);  
    double curKpVert = frc::SmartDashboard::GetNumber("Elevator Vert kp", ElevatorConstants::kPModuleVertController);
@@ -143,7 +143,37 @@ void Elevator::Periodic() {
       }
 
    } else if (ElevatorState == PLACE_HIGH){
+      verticalPos = 104;
+      armPos = -60;
+      
+      static double lastArmPos = 0.0;
+      armMaxChange = frc::SmartDashboard::GetNumber("Elevator arm max change", armMaxChange);
 
+      //arm speed limiter
+      if (((armPos - lastArmPos) > armMaxChange)) { 
+         armPos = lastArmPos + armMaxChange;
+      } else if (((armPos - lastArmPos) < -armMaxChange)) {
+         armPos = lastArmPos - armMaxChange;
+      } 
+      lastArmPos = armPos;
+
+      //armPos safety
+      if (armPos > 10){
+         armPos = 10;
+      } else if (armPos < -180){
+         armPos = -180;
+      }
+
+      armOutput = m_armPIDController.Calculate(re_arm.GetPosition(), armPos);
+      frc::SmartDashboard::PutNumber("Elevator armOutput", armOutput);
+      m_armMotor.Set(armOutput); 
+
+
+      m_tiltElevatorMotor.Set(0.25);
+
+      if(re_tiltElevator.GetPosition() >= 260){
+         ElevatorState = MANUAL_MODE;
+      }
    } else if (ElevatorState == PLACE_MID){
 
    } else if (ElevatorState == PLACE_LOW){
@@ -280,4 +310,9 @@ frc2::CommandPtr Elevator::SetElevatorPos(double armAngle, double vertRevolution
          armPos = armAngle; 
          verticalPos = vertRevolutions; }
    );
+}
+
+frc2::CommandPtr Elevator::SetTiltElevator(double velocity){
+   return this->Run(
+      [this, velocity] { m_tiltElevatorMotor.Set(velocity); });
 }

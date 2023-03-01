@@ -365,15 +365,20 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(AutoCmd);
   }
   else if(pathselector == 3){
-    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(-90);}));
-    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.ClawOpenCommand();}));
-    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(0);}));
-    commands.emplace_back(CloseClawCmd.get());
-
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Elevator Move" << std::endl;}));  
+    // commands.emplace_back(new frc2::InstantCommand([this] {TimerCMD(0.5);}));    
+    commands.emplace_back(OpenClawCmd.get());
+    // commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(0);}));
+    // commands.emplace_back(CloseClawCmd.get());
   }
   else if(pathselector == 4){
-    commands.emplace_back(CloseClawCmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Claw Close" << std::endl;}));    
+    commands.emplace_back(OpenClawCmd.get());    
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Claw Open" << std::endl;}));
+    commands.emplace_back(SetHighCmd.get());            
+    // commands.emplace_back(TiltSpeedCmd.get());    
+    // commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished" << std::endl;}));    
+    // tilt to end then after 2 seconds open claw to drop
   }
   else{
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Do Nothing" << std::endl;}));
