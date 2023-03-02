@@ -420,6 +420,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 4 && AllienceSelector == "Blue"){
     ResetOdometry();
     commands.emplace_back(ConeBalanceBlueCmd.get());
+    commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    
   }
 
