@@ -147,19 +147,21 @@ void RobotContainer::ConfigureButtonBindings() {
   //frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetVertPos(106.6));
   //currently 104 because I am worried about hitting the limit swtich too fast
   // frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetElevatorPos(-45, 104));//was 106.6
-  frc2::JoystickButton(&m_xbox, 7).WhileTrue(PlaceHighCmd);
-  frc2::JoystickButton(&m_xbox, 8).WhileTrue(PickupCmd);
-  frc2::JoystickButton(&m_newXbox, 7).WhileTrue(RetractCmd);
+  frc2::JoystickButton(&m_xbox, 4).WhileTrue(PlaceHighCmd); //Button Y
+  frc2::JoystickButton(&m_xbox, 2).WhileTrue(PickupCmd); //Button B
+  frc2::JoystickButton(&m_xbox, 1).WhileTrue(RetractCmd); //Button A
+  // frc2::JoystickButton(&m_newXbox, 3).WhileTrue(PlaceMidCmd); //Button X
+  // frc2::JoystickButton(&m_newXbox, 8).WhileTrue(PlaceLowCmd); //Small button right
 
   //frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
   frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
 
-  frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
-  frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
-  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
-  frc2::JoystickButton(&m_xbox, 4).OnTrue(m_lights.BlueColor());
+  // frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
+  frc2::JoystickButton(&m_xbox, 7).OnTrue(m_lights.CubeDesired()); //Actually cube, now left center
+  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor()); //X-is actually blue
+  frc2::JoystickButton(&m_xbox, 8).OnTrue(m_lights.BlueColor()); //Cone-was 4, now right center
 }
 
 
