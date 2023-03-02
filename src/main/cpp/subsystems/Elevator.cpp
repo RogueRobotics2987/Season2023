@@ -242,7 +242,7 @@ void Elevator::ElevatorArm(double armXboxVal){
 }
 
 void Elevator::SafeArm(){
-   if (elevatorDisable = true){
+   if (elevatorDisable == true){
       safeArmPos = 0;
    } else {
       static double lastArmPos = 0.0;
@@ -315,4 +315,16 @@ frc2::CommandPtr Elevator::SetElevatorPos(double armAngle, double vertRevolution
 frc2::CommandPtr Elevator::SetTiltElevator(double velocity){
    return this->Run(
       [this, velocity] { m_tiltElevatorMotor.Set(velocity); });
+}
+
+double Elevator::TiltEncoderValues(){
+   return re_tiltElevator.GetPosition();
+}
+
+double Elevator::HeightEncoderValues(){
+   return re_vertElevator.GetPosition();
+}
+
+double Elevator::ArmEncoderValues(){
+   return re_arm.GetPosition();
 }

@@ -52,6 +52,7 @@
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
+#include "commands/PlaceAutoCmd.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -116,6 +117,8 @@ class RobotContainer {
   //frc2::Command *AutoCmd;
 
   frc2::Command* AutoCmd = new AutoBalance(m_drive, m_newXbox);
+
+  frc2::Command* PlaceHighCmd = new PlaceAutoCmd(m_elevator, 104, -60, 260);
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;

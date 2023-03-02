@@ -44,7 +44,11 @@ class Elevator : public frc2::SubsystemBase {
   void ElevatorArm(double armXboxVal);
   void SafeArm();
   void Periodic() override;
+  double ArmEncoderValues();
+  double TiltEncoderValues();
+  double HeightEncoderValues();
 
+  rev::CANSparkMax m_tiltElevatorMotor = rev::CANSparkMax(12, rev::CANSparkMax::MotorType::kBrushless);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -58,7 +62,6 @@ class Elevator : public frc2::SubsystemBase {
   enum ElevatorState_t {FIND_ZERO_VERT, FIND_ZERO_TILT, MANUAL_MODE, PLACE_HIGH, PLACE_MID, PLACE_LOW}; 
   ElevatorState_t ElevatorState = FIND_ZERO_VERT;
 
-  rev::CANSparkMax m_tiltElevatorMotor = rev::CANSparkMax(12, rev::CANSparkMax::MotorType::kBrushless);
   //this limit switch is supposed to be normally closed in Rev and noramlly open in code. Why? no idea
   rev::SparkMaxLimitSwitch ls_tiltElevator = m_tiltElevatorMotor.GetReverseLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen); //reverse limit switch
   rev::SparkMaxLimitSwitch ls_tiltElevatorF = m_tiltElevatorMotor.GetForwardLimitSwitch(rev::SparkMaxLimitSwitch::Type::kNormallyOpen); //reverse limit switch
