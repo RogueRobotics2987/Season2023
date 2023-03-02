@@ -52,6 +52,7 @@
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
+#include "commands/PlaceAutoCmd.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -120,7 +121,11 @@ class RobotContainer {
 
   frc2::Command* AutoCmd = new AutoBalance(m_drive, m_newXbox);
 
-  // The chooser for the autonomous routines
+  frc2::Command* PlaceHighCmd = new PlaceAutoCmd(m_elevator, 50, -60, 260); // 104 for height
+  frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 108);
+  frc2::Command* RetractCmd = new PlaceAutoCmd(m_elevator, 5, 0, 0);
+
+  // The chooser for the autonomous routines 
   frc::SendableChooser<frc2::Command*> m_chooser;
 
   void ConfigureButtonBindings();
@@ -142,6 +147,13 @@ class RobotContainer {
 
   frc2::CommandPtr OpenClawCmd = m_elevator.ClawOpenCommand();
   frc2::CommandPtr CloseClawCmd = m_elevator.ClawCloseCommand();
+
+  frc2::CommandPtr SetHighCmd = m_elevator.SetPlaceHighState();
+  frc2::CommandPtr SetMidCmd = m_elevator.SetPlaceMidState();
+  frc2::CommandPtr SetLowCmd = m_elevator.SetPlaceLowState();
+
+
+
 
 
 };

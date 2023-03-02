@@ -17,6 +17,7 @@ RobotContainer::RobotContainer() {
   frc::SmartDashboard::PutString("AllienceSelector", "Blue");
   frc::SmartDashboard::PutNumber("PathSelector", 0);
 
+  frc::SmartDashboard::PutData(&m_elevator);
 
   ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
@@ -145,7 +146,10 @@ void RobotContainer::ConfigureButtonBindings() {
   //frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetArmPos(-45));
   //frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetVertPos(106.6));
   //currently 104 because I am worried about hitting the limit swtich too fast
-  frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetElevatorPos(-45, 104));//was 106.6
+  // frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetElevatorPos(-45, 104));//was 106.6
+  frc2::JoystickButton(&m_xbox, 8).WhileTrue(PlaceHighCmd);
+  frc2::JoystickButton(&m_xbox, 2).WhileTrue(PickupCmd);
+  frc2::JoystickButton(&m_xbox, 3).WhileTrue(RetractCmd);
 
   frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
@@ -153,8 +157,8 @@ void RobotContainer::ConfigureButtonBindings() {
   
 
   frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
-  frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
-  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
+  // frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
+  // frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
   frc2::JoystickButton(&m_xbox, 4).OnTrue(m_lights.BlueColor());
 }
 
@@ -382,6 +386,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 2 && AllienceSelector == "Red"){
     ResetOdometry();
     //TODO move elevator to mid then place
+    //arm must be negative
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(-90);}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.ClawOpenCommand();}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(0);}));    
     commands.emplace_back(PlaceDriveCrgStnRed1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
@@ -392,6 +400,9 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 2 && AllienceSelector == "Blue"){
     ResetOdometry();
     //TODO move elevator to mid then place
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(-90);}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.ClawOpenCommand();}));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(0);}));        
     commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
@@ -400,8 +411,11 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(AutoCmd);
   }
   else if(pathselector == 3){
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Elevator Move" << std::endl;}));  
+    // commands.emplace_back(new frc2::InstantCommand([this] {TimerCMD(0.5);}));    
     commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Claw Open" << std::endl;}));
+    // commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.SetArmPos(0);}));
+    // commands.emplace_back(CloseClawCmd.get());
   }
   else if(pathselector == 4 && AllienceSelector == "Blue"){
     ResetOdometry();
