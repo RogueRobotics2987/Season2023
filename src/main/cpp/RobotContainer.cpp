@@ -421,6 +421,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 4 && AllienceSelector == "Blue"){
     ResetOdometry();
+    m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
     commands.emplace_back(OpenClawCmd.get());

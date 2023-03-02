@@ -26,16 +26,23 @@ PlaceAutoCmd::PlaceAutoCmd(Elevator &elevator, double heightRevolutions, double 
 void PlaceAutoCmd::Initialize() {
   frc::SmartDashboard::PutString("PlaceCmdState", "Initialize");
   if(m_tiltRevolutions - m_elevator->TiltEncoderValues() < 0){
-    m_tiltVelocity = -0.4;
+    m_tiltVelocity = -0.8;
   }
   else{
-    m_tiltVelocity = 0.4;
+    m_tiltVelocity = 0.8;
   }
 }
 
 // Called repeatedly when this Command is scheduled to run
 void PlaceAutoCmd::Execute() {
-  m_elevator->m_tiltElevatorMotor.Set(m_tiltVelocity);
+  double m_actualTiltVelocity;
+  if(m_tiltRevolutions - m_elevator->TiltEncoderValues() > 15){
+    m_actualTiltVelocity = m_tiltVelocity;
+  }
+  else{
+    m_actualTiltVelocity = m_tiltVelocity/2;
+  }
+  m_elevator->m_tiltElevatorMotor.Set(m_actualTiltVelocity);
   m_elevator->AutoPlace(m_armAngle, m_heightRevolutions);
   frc::SmartDashboard::PutString("PlaceCmdState", "Execute");
 
