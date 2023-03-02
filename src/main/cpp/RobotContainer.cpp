@@ -141,17 +141,17 @@ void RobotContainer::ConfigureButtonBindings() {
  // frc2::JoystickButton(&m_xbox, 7).OnTrue(m_elevator.SetManualElevatorState());//need to change
   //frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetArmPos(-90));
   //frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetVertPos(70.4)); //or 52
-  frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetElevatorPos(-90, 70.4));
+  //frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetElevatorPos(-90, 70.4));
 
   //frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetArmPos(-45));
   //frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetVertPos(106.6));
   //currently 104 because I am worried about hitting the limit swtich too fast
   // frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetElevatorPos(-45, 104));//was 106.6
   frc2::JoystickButton(&m_xbox, 8).WhileTrue(PlaceHighCmd);
-  frc2::JoystickButton(&m_xbox, 2).WhileTrue(PickupCmd);
-  frc2::JoystickButton(&m_xbox, 3).WhileTrue(RetractCmd);
+  frc2::JoystickButton(&m_xbox, 7).WhileTrue(PickupCmd);
+  frc2::JoystickButton(&m_newXbox, 7).WhileTrue(RetractCmd);
 
-  frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
+  //frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
   frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
