@@ -88,6 +88,9 @@ class RobotContainer {
   frc2::CommandPtr ConeBalanceBlue(DriveSubsystem &m_drive);
   frc2::CommandPtr ConeBalanceRed(DriveSubsystem &m_drive);
 
+  frc2::CommandPtr PickUp2ndCone(DriveSubsystem &m_drive);
+  frc2::CommandPtr Drop2ndCone(DriveSubsystem &m_drive);
+
   
 
 
@@ -142,6 +145,9 @@ class RobotContainer {
 
   frc2::CommandPtr ConeBalanceBlueCmd = ConeBalanceBlue(m_drive); 
   frc2::CommandPtr ConeBalanceRedCmd = ConeBalanceRed(m_drive);  
+
+  frc2::CommandPtr PickUp2ndConeCmd = PickUp2ndCone(m_drive); 
+  frc2::CommandPtr Drop2ndConeCmd = Drop2ndCone(m_drive);
 
 
   frc2::CommandPtr AutoZeroHeading = m_drive.ZeroHeading();

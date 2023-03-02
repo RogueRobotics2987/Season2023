@@ -335,6 +335,48 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
   };
 
+  frc2::CommandPtr RobotContainer::PickUp2ndCone(DriveSubsystem &m_drive){
+
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("PickUp2ndCone", PathConstraints(3_mps, 1_mps_sq), true);
+  std::cout<<"2ConesAndBalance"<<std::endl;
+
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+
+  SwerveAutoBuilder autoBuilder(
+      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      eventMap, // Our event map
+      { &m_drive }, // Drive requirements, usually just a single drive subsystem
+      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  );
+
+  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  };
+
+  frc2::CommandPtr RobotContainer::Drop2ndCone(DriveSubsystem &m_drive){
+
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Drop2ndCone", PathConstraints(3_mps, 1_mps_sq), true);
+  std::cout<<"Drop2ndCone"<<std::endl;
+
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+
+  SwerveAutoBuilder autoBuilder(
+      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      eventMap, // Our event map
+      { &m_drive }, // Drive requirements, usually just a single drive subsystem
+      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  );
+
+  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  };
+
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // Runs the chosen command in autonomous
@@ -446,6 +488,26 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    
   }
+
+  else if(pathselector == 5 && AllienceSelector == "Blue"){
+    ResetOdometry();
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -30, 260));//was 104 not 50
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -60, 260));
+    commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(RetractCmd);
+    commands.emplace_back(PickUp2ndConeCmd.get());
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 0, -60, 260));// need to find the right values
+    commands.emplace_back(CloseClawCmd.get());
+    commands.emplace_back(Drop2ndConeCmd.get());
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -30, 260));//was 104 not 50
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -60, 260));
+    commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(RetractCmd);
+    commands.emplace_back(ConeBalanceBlueCmd.get());
+    commands.emplace_back(AutoCmd);
+
+  }
+
   else{
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Do Nothing" << std::endl;}));
   }
