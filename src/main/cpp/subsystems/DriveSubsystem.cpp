@@ -88,9 +88,9 @@ frc2::CommandPtr DriveSubsystem::SetDriveSlow(bool m_bool){
 
 void DriveSubsystem::Periodic() {
   // commented out to test, 2/17
-  // frc::SmartDashboard::PutNumber("Gyro Yaw: ", m_gyro.GetYaw());
-  // frc::SmartDashboard::PutNumber("Gyro Pitch: ", m_gyro.GetPitch());
-  // frc::SmartDashboard::PutNumber("Gyro Roll: ", m_gyro.GetRoll());
+  frc::SmartDashboard::PutNumber("Gyro Yaw: ", m_gyro.GetYaw());
+  frc::SmartDashboard::PutNumber("Gyro Pitch: ", m_gyro.GetPitch());
+  frc::SmartDashboard::PutNumber("Gyro Roll: ", m_gyro.GetRoll());
   // frc::SmartDashboard::PutNumber("Gyro Angle X: ", m_gyro.GetRawGyroX());
   // frc::SmartDashboard::PutNumber("Gyro Angle Y: ", m_gyro.GetRawGyroY());
   // frc::SmartDashboard::PutNumber("Gyro Angle Z: ", m_gyro.GetRawGyroZ());
@@ -223,11 +223,18 @@ float DriveSubsystem::GetRoll(){
   return m_gyro.GetRoll();
 }
 
+
 frc2::CommandPtr DriveSubsystem::ZeroHeading() {
   return this->RunOnce(
     [this] {
-      //m_gyro.SetAngleAdjustment(90);
-    m_gyro.Reset();
+      m_gyro.Reset();
+    });
+}
+
+frc2::CommandPtr DriveSubsystem::SetAngleAdjustment(double angle){
+  return this->RunOnce(
+    [this, angle] {
+      m_gyro.SetAngleAdjustment(angle);
     });
 }
 

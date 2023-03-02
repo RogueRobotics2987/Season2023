@@ -141,25 +141,27 @@ void RobotContainer::ConfigureButtonBindings() {
  // frc2::JoystickButton(&m_xbox, 7).OnTrue(m_elevator.SetManualElevatorState());//need to change
   //frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetArmPos(-90));
   //frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetVertPos(70.4)); //or 52
-  frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetElevatorPos(-90, 70.4));
+  //frc2::JoystickButton(&m_xbox, 7).WhileTrue(m_elevator.SetElevatorPos(-90, 70.4));
 
   //frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetArmPos(-45));
   //frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetVertPos(106.6));
   //currently 104 because I am worried about hitting the limit swtich too fast
   // frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetElevatorPos(-45, 104));//was 106.6
-  frc2::JoystickButton(&m_xbox, 8).WhileTrue(PlaceHighCmd);
-  frc2::JoystickButton(&m_xbox, 2).WhileTrue(PickupCmd);
-  frc2::JoystickButton(&m_xbox, 3).WhileTrue(RetractCmd);
+  frc2::JoystickButton(&m_xbox, 4).WhileTrue(PlaceHighCmd); //Button Y
+  frc2::JoystickButton(&m_xbox, 2).WhileTrue(PickupCmd); //Button B
+  frc2::JoystickButton(&m_xbox, 1).WhileTrue(RetractCmd); //Button A
+  // frc2::JoystickButton(&m_newXbox, 3).WhileTrue(PlaceMidCmd); //Button X
+  // frc2::JoystickButton(&m_newXbox, 8).WhileTrue(PlaceLowCmd); //Small button right
 
-  frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
+  //frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
   frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
 
-  frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
-  // frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
-  // frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
-  frc2::JoystickButton(&m_xbox, 4).OnTrue(m_lights.BlueColor());
+  frc2::JoystickButton(&m_xbox, 7).OnTrue(m_lights.ConeDesired());
+  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.CubeDesired()); //Actually red, now left center
+  // frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor()); //X-is actually blue
+  frc2::JoystickButton(&m_xbox, 8).OnTrue(m_lights.BlueColor()); //Cone-was 4, now right center
 }
 
 
@@ -461,12 +463,13 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 4 && AllienceSelector == "Blue"){
     ResetOdometry();
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -30, 260));//was 104 not 50
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -60, 260));
+    m_drive.SetAngleAdjustment(180);
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
     commands.emplace_back(RetractCmd);
-    commands.emplace_back(ConeBalanceRedCmd.get());
+    commands.emplace_back(ConeBalanceBlueCmd.get());
     commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));  
   }
@@ -479,8 +482,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       move the path
       auto ballance
     */ 
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -30, 260));//was 104 not 50
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -60, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
     commands.emplace_back(RetractCmd);

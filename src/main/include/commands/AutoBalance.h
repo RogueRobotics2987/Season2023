@@ -44,6 +44,6 @@ class AutoBalance
     double m_angle;
     frc::Timer m_timer;
     bool backwardsCheck;
-    bool autoCheck;
+    // bool autoCheck;
     frc::XboxController* m_Joystick;
 };
