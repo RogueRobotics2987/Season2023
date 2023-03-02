@@ -26,7 +26,9 @@ void AutoBalance::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void AutoBalance::Execute() {
-  
+  frc::SmartDashboard::PutNumber("Auto State", m_state);
+  // frc::SmartDashboard::PutNumber("Auto Pitch", m_drive->GetPitch());
+  frc::SmartDashboard::PutNumber("Auto Timer", m_timer.Get().value());
   if(m_state == 0) { //Rams charge station
     // m_angle = frc::SmartDashboard::GetNumber("m_angle value: ", m_angle);
       m_drive->Drive(0_mps, 2.0_mps, 0_rad_per_s, false, false);
@@ -70,7 +72,7 @@ void AutoBalance::Execute() {
     // }
       else if(m_state == 3) { //Run backwards
         if(m_timer.Get() <= 0.75_s) {
-          m_drive->Drive(0_mps, -2.0_mps, 0_rad_per_s, false, false);
+          m_drive->Drive(0_mps, -0.5_mps, 0_rad_per_s, false, false);
         }
         else {
           m_state = 5;
