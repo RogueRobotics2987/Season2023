@@ -102,7 +102,7 @@ class RobotContainer {
 
   void ResetOdometry();
 
-  float Deadzone(float x);
+  float Deadzone(float x, bool rotation);
 
   frc2::CommandPtr GetPathCommand();
 
@@ -128,6 +128,7 @@ class RobotContainer {
   frc2::Command* PlaceLowCmd = new PlaceAutoCmd(m_elevator, 104, -45, 260); // 104 for height
   frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 108);
   frc2::Command* RetractCmd = new PlaceAutoCmd(m_elevator, 5, 0, 0);
+  frc2::Command* PickupTipCmd = new PlaceAutoCmd(m_elevator, 30, -130, 108); 
 
   // The chooser for the autonomous routines 
   frc::SendableChooser<frc2::Command*> m_chooser;

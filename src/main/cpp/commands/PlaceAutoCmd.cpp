@@ -56,17 +56,21 @@ void PlaceAutoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool PlaceAutoCmd::IsFinished() {
-  if(IsClose(m_elevator->TiltEncoderValues(), m_tiltRevolutions) && IsClose(m_elevator->ArmEncoderValues(), m_armAngle) && IsClose(m_elevator->HeightEncoderValues(), m_heightRevolutions)){
+  if(IsClose(m_elevator->TiltEncoderValues(), m_tiltRevolutions, 5) && 
+    IsClose(m_elevator->ArmEncoderValues(), m_armAngle, 5) && 
+    IsClose(m_elevator->HeightEncoderValues(), m_heightRevolutions, 10))
+    {
     return true;
-  }else{
+  }
+  else{
     return false;
   }
   frc::SmartDashboard::PutString("PlaceCmdState", "Finished");
 
 }
 
-bool PlaceAutoCmd::IsClose(double check1, double check2){
-  if(fabs(check1 - check2) < 5){
+bool PlaceAutoCmd::IsClose(double check1, double check2, double thresh){
+  if(fabs(check1 - check2) < thresh){
     return true;
   }
   else{

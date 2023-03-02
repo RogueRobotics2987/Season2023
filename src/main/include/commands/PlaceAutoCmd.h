@@ -21,7 +21,7 @@ class PlaceAutoCmd
  public:
   PlaceAutoCmd();
   PlaceAutoCmd(Elevator &elevator, double heightRevolutions, double armAngle, double tiltRevolutions);
-  bool IsClose(double check1, double check2);
+  bool IsClose(double check1, double check2, double thresh);
   
 
 
