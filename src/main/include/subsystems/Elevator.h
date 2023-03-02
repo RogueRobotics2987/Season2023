@@ -31,6 +31,8 @@ class Elevator : public frc2::SubsystemBase {
   frc2::CommandPtr SetPlaceLowState();
   frc2::CommandPtr SetManualElevatorState();
   frc2::CommandPtr SetArmPos(double angle);
+  frc2::CommandPtr SetVertPos(double revoluions);
+  frc2::CommandPtr SetElevatorPos(double armAngle, double vertRevolutions);
 
 
   /**
@@ -77,10 +79,11 @@ class Elevator : public frc2::SubsystemBase {
   double armOutput;
   double safeArmPos;
   //double lastArmPos = 0.0; //does this need to be static?
-
+  //bool safeForVertElevator = true;
   bool elevatorDisable = false;
   double vertOutput;
   double verticalPos;
+  double vertMaxChange = 1.5;
   //claw open and close on pneumatics
   frc::DoubleSolenoid clawSolenoid = frc::DoubleSolenoid(1, frc::PneumaticsModuleType::REVPH, 0, 7); 
 
