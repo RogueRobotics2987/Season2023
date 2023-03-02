@@ -24,21 +24,23 @@ Elevator::Elevator() {
 
 // This method will be called once per scheduler run
 void Elevator::Periodic() {
+
+   // frc::SmartDashboard::PutData(frc2::CommandScheduler::GetInstance());
    frc::SmartDashboard::PutNumber("Elevator verticalVal", verticalVal);
    frc::SmartDashboard::PutNumber("Elevator vertOutput", vertOutput);
    frc::SmartDashboard::PutNumber("Elevator tiltVal", tiltVal);
    frc::SmartDashboard::PutNumber("Elevator armPos", armPos);
 
    //Elevator height
-   //frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
+   frc::SmartDashboard::PutBoolean("ELevator Height limit switch", ls_vertElevator.Get());
    frc::SmartDashboard::PutNumber("Elevator Height Encoder", re_vertElevator.GetPosition());
 
    //Elevator tilt
-   // frc::SmartDashboard::PutBoolean("Elevator Tilt limit switch", ls_tiltElevator.Get());
+   frc::SmartDashboard::PutBoolean("Elevator Tilt limit switch", ls_tiltElevator.Get());
    frc::SmartDashboard::PutNumber("Elevator Tilt Encoder", re_tiltElevator.GetPosition());
 
    // //Elevator arm
-   // frc::SmartDashboard::PutBoolean("Elevator Arm limit switch", ls_arm.Get());
+   frc::SmartDashboard::PutBoolean("Elevator Arm limit switch", ls_arm.Get());
    frc::SmartDashboard::PutNumber("Elevator Arm encoder", re_arm.GetPosition());
    double curkPArm = frc::SmartDashboard::GetNumber("Elevator Arm kp", ElevatorConstants::kPModuleArmController);
    m_armPIDController.SetP(curkPArm);  
@@ -327,4 +329,9 @@ double Elevator::HeightEncoderValues(){
 
 double Elevator::ArmEncoderValues(){
    return re_arm.GetPosition();
+}
+
+void Elevator::AutoPlace(double armAngle, double vertRevolutions){
+   armPos = armAngle; 
+   verticalPos = vertRevolutions;
 }

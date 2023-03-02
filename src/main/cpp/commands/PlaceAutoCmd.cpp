@@ -11,26 +11,41 @@ PlaceAutoCmd::PlaceAutoCmd(Elevator &elevator, double heightRevolutions, double 
   m_armAngle = armAngle; //goes 0 -180
   m_heightRevolutions = heightRevolutions; 
   m_tiltRevolutions = tiltRevolutions;
-  if(m_tiltRevolutions - m_elevator->TiltEncoderValues() < 0){
-    m_tiltVelocity = -0.3;
-  }
-  else{
-    m_tiltVelocity = 0.3;
-  }
+  // if(m_tiltRevolutions - m_elevator->TiltEncoderValues() < 0){
+  //   m_tiltVelocity = -0.4;
+  // }
+  // else{
+  //   m_tiltVelocity = 0.4;
+  // }
+  double PlaceCmdState;
+  frc::SmartDashboard::PutString("PlaceCmdState", "Contrtuctor");
 }
 
 
 // Called when the command is initially scheduled.
 void PlaceAutoCmd::Initialize() {
-  m_elevator->m_tiltElevatorMotor.Set(m_tiltVelocity);
-  m_elevator->SetElevatorPos(m_armAngle, m_heightRevolutions);
+  frc::SmartDashboard::PutString("PlaceCmdState", "Initialize");
+  if(m_tiltRevolutions - m_elevator->TiltEncoderValues() < 0){
+    m_tiltVelocity = -0.4;
+  }
+  else{
+    m_tiltVelocity = 0.4;
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
-void PlaceAutoCmd::Execute() {}
+void PlaceAutoCmd::Execute() {
+  m_elevator->m_tiltElevatorMotor.Set(m_tiltVelocity);
+  m_elevator->AutoPlace(m_armAngle, m_heightRevolutions);
+  frc::SmartDashboard::PutString("PlaceCmdState", "Execute");
+
+}
 
 // Called once the command ends or is interrupted.
-void PlaceAutoCmd::End(bool interrupted) {}
+void PlaceAutoCmd::End(bool interrupted) {
+  m_elevator->m_tiltElevatorMotor.Set(0.0);
+  frc::SmartDashboard::PutString("PlaceCmdState", "End");
+}
 
 // Returns true when the command should end.
 bool PlaceAutoCmd::IsFinished() {
@@ -39,10 +54,12 @@ bool PlaceAutoCmd::IsFinished() {
   }else{
     return false;
   }
+  frc::SmartDashboard::PutString("PlaceCmdState", "Finished");
+
 }
 
 bool PlaceAutoCmd::IsClose(double check1, double check2){
-  if(fabs(check1 - check2) < 1){
+  if(fabs(check1 - check2) < 5){
     return true;
   }
   else{

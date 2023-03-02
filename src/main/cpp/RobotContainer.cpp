@@ -17,6 +17,7 @@ RobotContainer::RobotContainer() {
   frc::SmartDashboard::PutString("AllienceSelector", "Blue");
   frc::SmartDashboard::PutNumber("PathSelector", 0);
 
+  frc::SmartDashboard::PutData(&m_elevator);
 
   ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
@@ -147,6 +148,8 @@ void RobotContainer::ConfigureButtonBindings() {
   //currently 104 because I am worried about hitting the limit swtich too fast
   // frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetElevatorPos(-45, 104));//was 106.6
   frc2::JoystickButton(&m_xbox, 8).WhileTrue(PlaceHighCmd);
+  frc2::JoystickButton(&m_xbox, 2).WhileTrue(PickupCmd);
+  frc2::JoystickButton(&m_xbox, 3).WhileTrue(RetractCmd);
 
   frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
   frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
@@ -154,8 +157,8 @@ void RobotContainer::ConfigureButtonBindings() {
   
 
   frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
-  frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
-  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
+  // frc2::JoystickButton(&m_xbox, 2).OnTrue(m_lights.CubeDesired());
+  // frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor());
   frc2::JoystickButton(&m_xbox, 4).OnTrue(m_lights.BlueColor());
 }
 
