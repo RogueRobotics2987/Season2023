@@ -53,6 +53,7 @@
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
 #include "commands/PlaceAutoCmd.h"
+#include "commands/TimerCMD.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
