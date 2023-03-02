@@ -419,9 +419,14 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 4 && AllienceSelector == "Blue"){
     ResetOdometry();
-    commands.emplace_back(ConeBalanceBlueCmd.get());
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -30, 260));//was 104 not 50
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -60, 260));
+    commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(new TimerCMD(.5));
+    commands.emplace_back(RetractCmd);
+    commands.emplace_back(ConeBalanceRedCmd.get());
     commands.emplace_back(AutoCmd);
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));  
   }
 
   else if(pathselector == 4 && AllienceSelector == "Red"){
@@ -432,10 +437,11 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       move the path
       auto ballance
     */ 
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
-    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.ClawOpenCommand();}));
-    commands.emplace_back(new TimerCMD(.25));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -30, 260));//was 104 not 50
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 50, -60, 260));
+    commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(new TimerCMD(.5));
+    commands.emplace_back(RetractCmd);
     commands.emplace_back(ConeBalanceRedCmd.get());
     commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    
