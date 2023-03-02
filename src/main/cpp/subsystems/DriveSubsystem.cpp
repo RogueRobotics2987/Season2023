@@ -91,6 +91,7 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("Gyro Yaw: ", m_gyro.GetYaw());
   frc::SmartDashboard::PutNumber("Gyro Pitch: ", m_gyro.GetPitch());
   frc::SmartDashboard::PutNumber("Gyro Roll: ", m_gyro.GetRoll());
+  frc::SmartDashboard::PutNumber("Gyro Velocity X", m_gyro.GetRawGyroX());
   // frc::SmartDashboard::PutNumber("Gyro Angle X: ", m_gyro.GetRawGyroX());
   // frc::SmartDashboard::PutNumber("Gyro Angle Y: ", m_gyro.GetRawGyroY());
   // frc::SmartDashboard::PutNumber("Gyro Angle Z: ", m_gyro.GetRawGyroZ());
@@ -221,6 +222,10 @@ float DriveSubsystem::GetPitch() {
 
 float DriveSubsystem::GetRoll(){
   return m_gyro.GetRoll();
+}
+
+float DriveSubsystem::GetRawGyroX(){
+  return m_gyro.GetRawGyroX();
 }
 
 
