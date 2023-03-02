@@ -16,8 +16,8 @@ AutoBalance::AutoBalance(){}
 void AutoBalance::Initialize() {
   m_state = 0;
   backwardsCheck = false;
-  m_timer.Reset();
   m_timer.Stop();
+  m_timer.Reset();
   // autoCheck = m_Joystick->GetRawButton(11);
 // Called repea  
   // m_angle = 9;
@@ -41,6 +41,7 @@ void AutoBalance::Execute() {
       m_drive->Drive(0_mps, 0.45_mps, 0_rad_per_s, false, false);
       if(m_drive->GetPitch() <= 4.5 && m_drive->GetPitch() >= -4.5) {
         m_state = 3;
+        m_timer.Start();
       }
       
     }
