@@ -231,6 +231,13 @@ frc2::CommandPtr DriveSubsystem::ZeroHeading() {
     });
 }
 
+frc2::CommandPtr DriveSubsystem::SetAngleAdjustment(double angle){
+  return this->RunOnce(
+    [this, angle] {
+      m_gyro.SetAngleAdjustment(angle);
+    });
+}
+
 frc2::CommandPtr DriveSubsystem::FieldOrientatedTrue() { //idk
    return this->RunOnce(
       [this] { fieldOrientated = true;

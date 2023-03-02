@@ -26,10 +26,10 @@ PlaceAutoCmd::PlaceAutoCmd(Elevator &elevator, double heightRevolutions, double 
 void PlaceAutoCmd::Initialize() {
   frc::SmartDashboard::PutString("PlaceCmdState", "Initialize");
   if(m_tiltRevolutions - m_elevator->TiltEncoderValues() < 0){
-    m_tiltVelocity = -0.4;
+    m_tiltVelocity = -0.8;
   }
   else{
-    m_tiltVelocity = 0.4;
+    m_tiltVelocity = 0.8;
   }
 }
 
