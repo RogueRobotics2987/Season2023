@@ -36,7 +36,7 @@ void PlaceAutoCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void PlaceAutoCmd::Execute() {
   double m_actualTiltVelocity;
-  if(m_tiltRevolutions - m_elevator->TiltEncoderValues() > 15){
+  if(fabs(m_tiltRevolutions - m_elevator->TiltEncoderValues()) > 15){
     m_actualTiltVelocity = m_tiltVelocity;
   }
   else{
