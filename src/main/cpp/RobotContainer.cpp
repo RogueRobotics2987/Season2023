@@ -158,9 +158,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
 
-  // frc2::JoystickButton(&m_xbox, 1).OnTrue(m_lights.ConeDesired());
-  frc2::JoystickButton(&m_xbox, 7).OnTrue(m_lights.CubeDesired()); //Actually cube, now left center
-  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor()); //X-is actually blue
+  frc2::JoystickButton(&m_xbox, 7).OnTrue(m_lights.ConeDesired());
+  frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.CubeDesired()); //Actually red, now left center
+  // frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.RedColor()); //X-is actually blue
   frc2::JoystickButton(&m_xbox, 8).OnTrue(m_lights.BlueColor()); //Cone-was 4, now right center
 }
 
@@ -420,6 +420,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     // commands.emplace_back(CloseClawCmd.get());
   }
   else if(pathselector == 4 && AllienceSelector == "Blue"){
+    ResetOdometry();
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
     commands.emplace_back(OpenClawCmd.get());
