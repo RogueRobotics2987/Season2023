@@ -431,6 +431,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       move the path
       auto ballance
     */ 
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
+    commands.emplace_back(new frc2::InstantCommand([this] {m_elevator.ClawOpenCommand();}));
+    commands.emplace_back(new TimerCMD(.25));
     commands.emplace_back(ConeBalanceRedCmd.get());
     commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    

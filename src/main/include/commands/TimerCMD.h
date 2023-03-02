@@ -6,8 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/timer.h>
-
+#include <frc/Timer.h>
 
 /**
  * An example command.
@@ -29,8 +28,7 @@ class TimerCMD
 
   bool IsFinished() override;
 
-  private:
-    double m_time = 0.0;
-    frc::Timer m_timer;
-
-};
+ private:
+ double m_time = 0.0;
+ frc::Timer m_timer;
+ };
