@@ -84,7 +84,7 @@ class Elevator : public frc2::SubsystemBase {
   double armOutput;
   double safeArmPos;
   //double lastArmPos = 0.0; //does this need to be static?
-
+  //bool safeForVertElevator = true;
   bool elevatorDisable = false;
   double vertOutput;
   double verticalPos;
