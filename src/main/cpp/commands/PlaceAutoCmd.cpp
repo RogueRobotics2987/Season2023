@@ -36,12 +36,16 @@ void PlaceAutoCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void PlaceAutoCmd::Execute() {
   double m_actualTiltVelocity;
-  if(fabs(m_tiltRevolutions - m_elevator->TiltEncoderValues()) > 15){
+  if(IsClose(m_tiltRevolutions, m_elevator->TiltEncoderValues(), 5.0)){
+    m_actualTiltVelocity = 0;
+  }
+  else if(fabs(m_tiltRevolutions - m_elevator->TiltEncoderValues()) > 15){
     m_actualTiltVelocity = m_tiltVelocity;
   }
   else{
     m_actualTiltVelocity = m_tiltVelocity/2;
   }
+  frc::SmartDashboard::PutNumber("Tilt Velocity", m_actualTiltVelocity);
   m_elevator->m_tiltElevatorMotor.Set(m_actualTiltVelocity);
   m_elevator->AutoPlace(m_armAngle, m_heightRevolutions);
   frc::SmartDashboard::PutString("PlaceCmdState", "Execute");
@@ -50,6 +54,7 @@ void PlaceAutoCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void PlaceAutoCmd::End(bool interrupted) {
+  frc::SmartDashboard::PutNumber("Tilt Velocity", 0);
   m_elevator->m_tiltElevatorMotor.Set(0.0);
   frc::SmartDashboard::PutString("PlaceCmdState", "End");
 }
