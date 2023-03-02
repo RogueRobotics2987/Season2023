@@ -8,6 +8,7 @@
 #include <frc/DigitalOutput.h>
 #include <frc/XboxController.h>
 #include <frc2/command/CommandPtr.h>
+#include <frc/DriverStation.h>
 
 class Lights : public frc2::SubsystemBase {
  public:
@@ -21,14 +22,18 @@ class Lights : public frc2::SubsystemBase {
   frc2::CommandPtr CubeDesired();
   frc2::CommandPtr RedColor();
   frc2::CommandPtr BlueColor();
+  frc2::CommandPtr AllianceColorCmdPtr();
+
+  frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
+
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  frc::DigitalOutput cubeoutput {1};
-  frc::DigitalOutput coneoutput {2};
-  frc::DigitalOutput redoutput {3};
-  frc::DigitalOutput blueoutput {4};
+  frc::DigitalOutput cubeoutput {2}; //3
+  frc::DigitalOutput coneoutput {4}; //1
+  frc::DigitalOutput redoutput {1}; //4
+  frc::DigitalOutput blueoutput {3}; //2
   bool cubeDesired = false;
   bool coneDesired = false;
   bool redColor = true;

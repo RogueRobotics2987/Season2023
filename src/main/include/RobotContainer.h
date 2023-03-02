@@ -89,8 +89,7 @@ class RobotContainer {
   frc2::CommandPtr ConeBalanceBlue(DriveSubsystem &m_drive);
   frc2::CommandPtr ConeBalanceRed(DriveSubsystem &m_drive);
 
-  
-
+  frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
 
   double GetHeading();
 
