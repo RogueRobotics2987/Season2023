@@ -65,3 +65,27 @@ frc2::CommandPtr Lights::BlueColor() {
             redColor = false;
             blueColor = true; });
 }
+
+frc2::CommandPtr Lights::AllianceColorCmdPtr(){
+    return this->RunOnce(
+        [this] {
+        if(AllianceColor == frc::DriverStation::Alliance::kRed){
+            cubeDesired = false; 
+            coneDesired = false;
+            redColor = true;
+            blueColor = false;  
+        }
+        else if(AllianceColor == frc::DriverStation::Alliance::kBlue){
+            cubeDesired = false; 
+            coneDesired = false;
+            redColor = false;
+            blueColor = true;
+        }
+        else{
+            cubeDesired = false; 
+            coneDesired = false;
+            redColor = true;
+            blueColor = false;
+        }
+    });
+}
