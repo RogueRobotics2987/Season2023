@@ -36,9 +36,9 @@ RobotContainer::RobotContainer() {
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
       bool noJoystick = false;
-      double safeX = Deadzone(m_newXbox.GetLeftX());
-      double safeY =  Deadzone(m_newXbox.GetLeftY());
-      double safeRot = Deadzone(m_newXbox.GetRightX());
+      double safeX = Deadzone(m_newXbox.GetLeftX(), false);
+      double safeY =  Deadzone(m_newXbox.GetLeftY(), false);
+      double safeRot = Deadzone(m_newXbox.GetRightX(), true);
       bool fieldOrientated; 
 
       if (m_newXbox.GetRawAxis(3)> 0.15){
@@ -539,15 +539,17 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     }
   }
 
-  float RobotContainer::Deadzone(float x) {
+  float RobotContainer::Deadzone(float x, bool rotation) {
   if((x < 0.1) && (x > -0.1)) {
     x=0;
   }
-  else if(x >= 0.1) {
-    x = x - 0.1;
-  }
-  else if(x <= -0.1) {
-    x = x + 0.1;
+  if(rotation == true){
+    if(x >= 0.1) {
+      x = x - 0.1;
+    }
+    else if(x <= -0.1) {
+      x = x + 0.1;
+   }
   }
   return(x);
 }
