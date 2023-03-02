@@ -227,8 +227,7 @@ float DriveSubsystem::GetRoll(){
 frc2::CommandPtr DriveSubsystem::ZeroHeading() {
   return this->RunOnce(
     [this] {
-      //m_gyro.SetAngleAdjustment(90);
-    m_gyro.Reset();
+      m_gyro.Reset();
     });
 }
 
