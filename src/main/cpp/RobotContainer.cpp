@@ -451,7 +451,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
     // commands.emplace_back(new frc2::ParallelCommandGroup(
-    //   RetractCmd, ConeBalanceRedCmd.get()
+    //   RetractCmd, (Command*)ConeBalanceRedCmd.get()
     // ));
     commands.emplace_back(RetractCmd);
     commands.emplace_back(ConeBalanceRedCmd.get());

@@ -130,6 +130,7 @@ class RobotContainer {
   frc2::Command* PickupTipCmd = new PlaceAutoCmd(m_elevator, 30, -130, 108); 
 
   frc2::ParallelRaceGroup* PlaceHighRace = new ParallelRaceGroup(TimerCMD(1), PlaceAutoCmd(m_elevator, 104, -60, 260));
+  // frc2::ParallelCommandGroup* RetractMove = new ParallelCommandGroup(RetractCmd, TimerCMD(0.5));
   // The chooser for the autonomous routines 
   frc::SendableChooser<frc2::Command*> m_chooser;
 
