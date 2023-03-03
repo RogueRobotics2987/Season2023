@@ -46,6 +46,12 @@ void PlaceAutoCmd::Execute() {
     m_actualTiltVelocity = m_tiltVelocity/2;
   }
   frc::SmartDashboard::PutNumber("Tilt Velocity", m_actualTiltVelocity);
+  frc::SmartDashboard::PutNumber("Arm desired", m_armAngle);
+  frc::SmartDashboard::PutNumber("Arm actual", m_elevator->ArmEncoderValues());
+  frc::SmartDashboard::PutNumber("height desired", m_heightRevolutions);
+  frc::SmartDashboard::PutNumber("height Actual", m_elevator->HeightEncoderValues());
+  frc::SmartDashboard::PutNumber("Tilt Desired", m_tiltRevolutions);
+  frc::SmartDashboard::PutNumber("Tilt Actual", m_elevator->TiltEncoderValues());
   m_elevator->m_tiltElevatorMotor.Set(m_actualTiltVelocity);
   m_elevator->AutoPlace(m_armAngle, m_heightRevolutions);
   frc::SmartDashboard::PutString("PlaceCmdState", "Execute");

@@ -525,7 +525,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 4 && AllienceSelector == "Blue"){
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmd);
+    p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(ConeBalanceBlueCmd.get());
     // m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
@@ -542,7 +542,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 4 && AllienceSelector == "Red"){
     ResetOdometry();
      std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmd);
+    p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(ConeBalanceRedCmd.get());
     // m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
@@ -566,7 +566,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(RetractCmd);  
+    commands.emplace_back(RetractCmdAuto);  
     commands.emplace_back(PlaceDriveCrgStnRed1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
@@ -581,7 +581,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(RetractCmd);
+    commands.emplace_back(RetractCmdAuto);
     commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(AutoZeroHeading.get());
