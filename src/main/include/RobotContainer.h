@@ -47,7 +47,7 @@
 #include "commands/BeginCompressor.h"
 #include "commands/ElevatorCmd.h"
 #include "commands/AutoBalance.h"
-#include "subsystems/Lights.h"
+#include "subsystems/lights.h"
 #include "commands/AutoBalance.h"
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
@@ -131,6 +131,10 @@ class RobotContainer {
   frc2::Command* PlaceLowCmd = new PlaceAutoCmd(m_elevator, 104, -45, 260); // 104 for height
   frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 108);
   frc2::Command* RetractCmd = new PlaceAutoCmd(m_elevator, 5, 0, 0);
+
+
+  // frc2::ParallelCommandGroup* m_parallelGroup = new frc2::ParallelCommandGroup(std::move(PlaceHighCmd), TimerCMD(.5));
+  // frc2::ParallelCommandGroup* m_parallelGroup = new frc2::ParallelCommandGroup(TimerCMD(.5), TimerCMD(.5));
 
   // The chooser for the autonomous routines 
   frc::SendableChooser<frc2::Command*> m_chooser;
