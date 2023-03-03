@@ -428,7 +428,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     ResetOdometry();
     m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
+    commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
     commands.emplace_back(RetractCmd);
@@ -446,9 +446,13 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       auto ballance
     */ 
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
+    // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
+    commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
+    // commands.emplace_back(new frc2::ParallelCommandGroup(
+    //   RetractCmd, ConeBalanceRedCmd.get()
+    // ));
     commands.emplace_back(RetractCmd);
     commands.emplace_back(ConeBalanceRedCmd.get());
     commands.emplace_back(AutoCmd);
