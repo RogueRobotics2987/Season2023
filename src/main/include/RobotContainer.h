@@ -52,6 +52,8 @@
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
+#include "commands/PlaceAutoCmd.h"
+#include "commands/TimerCMD.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -74,6 +76,7 @@ class RobotContainer {
   // void ConfigureBindings();
   frc2::Command* GetAutonomousCommand();
 
+
   frc2::CommandPtr DriveCrgStnBlue1(DriveSubsystem &m_drive);
   frc2::CommandPtr DriveCrgStnBlue2(DriveSubsystem &m_drive);
 
@@ -83,8 +86,17 @@ class RobotContainer {
   frc2::CommandPtr PlaceDriveCrgStnRed1(DriveSubsystem &m_drive);
   frc2::CommandPtr PlaceDriveCrgStnBlue1(DriveSubsystem &m_drive);
 
-  
+  frc2::CommandPtr ConeBalanceBlue(DriveSubsystem &m_drive);
+  frc2::CommandPtr ConeBalanceRed(DriveSubsystem &m_drive);
 
+  frc2::CommandPtr RedLeave1(DriveSubsystem &m_drive);
+  frc2::CommandPtr RedLeave2(DriveSubsystem &m_drive);
+  frc2::CommandPtr BlueLeave1(DriveSubsystem &m_drive);
+  frc2::CommandPtr BlueLeave2(DriveSubsystem &m_drive);
+
+  frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
+
+  
 
   double GetHeading();
 
@@ -96,7 +108,7 @@ class RobotContainer {
 
   void ResetOdometry();
 
-  float Deadzone(float x);
+  float Deadzone(float x, bool rotation);
 
   frc2::CommandPtr GetPathCommand();
 
@@ -115,9 +127,18 @@ class RobotContainer {
 
   //frc2::Command *AutoCmd;
 
-  frc2::Command* AutoCmd = new AutoBalance(m_drive, m_newXbox);
+  frc2::Command* AutoCmd = new AutoBalance(m_drive);
 
-  // The chooser for the autonomous routines
+  frc2::Command* PlaceHighCmd = new PlaceAutoCmd(m_elevator, 104, -30, 260); // 104 for height
+  frc2::Command* PlaceMidCmd = new PlaceAutoCmd(m_elevator, 104, -45, 260); // 104 for height
+  frc2::Command* PlaceLowCmd = new PlaceAutoCmd(m_elevator, 104, -45, 260); // 104 for height
+  frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 108);
+  frc2::Command* RetractCmd = new PlaceAutoCmd(m_elevator, 5, 0, 0);
+  frc2::Command* PickupTipCmd = new PlaceAutoCmd(m_elevator, 30, -130, 108); 
+
+  frc2::ParallelRaceGroup* PlaceHighRace = new ParallelRaceGroup(TimerCMD(1), PlaceAutoCmd(m_elevator, 104, -60, 260));
+  // frc2::ParallelCommandGroup* RetractMove = new ParallelCommandGroup(RetractCmd, TimerCMD(0.5));
+  // The chooser for the autonomous routines 
   frc::SendableChooser<frc2::Command*> m_chooser;
 
   void ConfigureButtonBindings();
@@ -129,12 +150,29 @@ class RobotContainer {
   frc2::CommandPtr DriveCrgStnBlue2cmd = DriveCrgStnBlue2(m_drive);
 
   frc2::CommandPtr PlaceDriveCrgStnRed1cmd = PlaceDriveCrgStnRed1(m_drive);
-  frc2::CommandPtr PlaceDriveCrgStnBlue1cmd = PlaceDriveCrgStnBlue1(m_drive);  
+  frc2::CommandPtr PlaceDriveCrgStnBlue1cmd = PlaceDriveCrgStnBlue1(m_drive); 
+
+  frc2::CommandPtr Leave1Blue = BlueLeave1(m_drive); 
+  frc2::CommandPtr Leave2Blue = BlueLeave2(m_drive); 
+
+  frc2::CommandPtr Leave1Red = RedLeave1(m_drive); 
+  frc2::CommandPtr Leave2Red = RedLeave2(m_drive); 
+
+  frc2::CommandPtr ConeBalanceBlueCmd = ConeBalanceBlue(m_drive); 
+  frc2::CommandPtr ConeBalanceRedCmd = ConeBalanceRed(m_drive);  
+
 
   frc2::CommandPtr AutoZeroHeading = m_drive.ZeroHeading();
 
   frc2::CommandPtr OpenClawCmd = m_elevator.ClawOpenCommand();
   frc2::CommandPtr CloseClawCmd = m_elevator.ClawCloseCommand();
+
+  frc2::CommandPtr SetHighCmd = m_elevator.SetPlaceHighState();
+  frc2::CommandPtr SetMidCmd = m_elevator.SetPlaceMidState();
+  frc2::CommandPtr SetLowCmd = m_elevator.SetPlaceLowState();
+
+
+
 
 
 };

@@ -4,13 +4,11 @@
 
 #pragma once
 
-#include <frc/Timer.h>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/Joystick.h>
-#include <frc/XboxController.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
-#include "subsystems/DriveSubsystem.h"
+#include "subsystems/Elevator.h"
 
 /**
  * An example command.
@@ -19,16 +17,16 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class AutoBalance
-    : public frc2::CommandHelper<frc2::CommandBase, AutoBalance> {
+class PlaceAutoCmd
+    : public frc2::CommandHelper<frc2::CommandBase, PlaceAutoCmd> {
  public:
-  AutoBalance(DriveSubsystem& l_drive);
+  PlaceAutoCmd();
+  PlaceAutoCmd(Elevator &elevator, double heightRevolutions, double armAngle, double tiltRevolutions);
+  bool IsClose(double check1, double check2, double thresh);
+  
 
-  AutoBalance();
 
   void Initialize() override;
-
-  void Periodic();
 
   void Execute() override;
 
@@ -36,13 +34,13 @@ class AutoBalance
 
   bool IsFinished() override;
 
-  frc2::CommandPtr runCmd(bool run);
-
   private:
-    DriveSubsystem* m_drive;
-    int m_state;
-    double m_angle;
-    frc::Timer m_timer;
-    bool backwardsCheck;
-    // bool autoCheck;
+  Elevator* m_elevator = nullptr;
+  double m_armAngle;
+  double m_heightRevolutions;
+  double m_tiltRevolutions;
+  double m_tiltVelocity;
+  
+
+
 };

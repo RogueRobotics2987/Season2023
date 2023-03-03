@@ -81,10 +81,12 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   float GetRoll();
 
+  float GetRawGyroX();
 
   frc2::CommandPtr ZeroHeading();
   frc2::CommandPtr FieldOrientatedTrue(); //field orientated driving
   frc2::CommandPtr FieldOrientatedFalse(); //field centric driving
+  frc2::CommandPtr SetAngleAdjustment(double angle);
 
   /**
    * Returns the turn rate of the robot.
