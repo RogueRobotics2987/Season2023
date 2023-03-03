@@ -22,7 +22,7 @@
 class AutoBalance
     : public frc2::CommandHelper<frc2::CommandBase, AutoBalance> {
  public:
-  AutoBalance(DriveSubsystem& l_drive, frc::XboxController &l_Joystick);
+  AutoBalance(DriveSubsystem& l_drive);
 
   AutoBalance();
 
@@ -45,5 +45,4 @@ class AutoBalance
     frc::Timer m_timer;
     bool backwardsCheck;
     // bool autoCheck;
-    frc::XboxController* m_Joystick;
 };
