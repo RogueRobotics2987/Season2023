@@ -496,26 +496,26 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 4 && AllienceSelector == "Blue"){
     ResetOdometry();
+    std::vector<std::unique_ptr<Command>> p1_commands;
+    p1_commands.emplace_back(RetractCmd);
+    p1_commands.emplace_back(ConeBalanceBlueCmd.get());
     // m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(RetractCmd);
-    commands.emplace_back(ConeBalanceBlueCmd.get());
+    // commands.emplace_back(RetractCmd);
+    // commands.emplace_back(ConeBalanceBlueCmd.get());
+    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
     commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));  
   }
 
   else if(pathselector == 4 && AllienceSelector == "Red"){
     ResetOdometry();
-    /*TODO
-      Elevator Goes up and ready
-      claw open
-      move the path
-      auto ballance
-    */ 
-
+     std::vector<std::unique_ptr<Command>> p1_commands;
+    p1_commands.emplace_back(RetractCmd);
+    p1_commands.emplace_back(ConeBalanceRedCmd.get());
     // m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
     // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
@@ -525,8 +525,9 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     // commands.emplace_back(new frc2::ParallelCommandGroup(
     //   RetractCmd, (Command*)ConeBalanceRedCmd.get()
     // ));
-    commands.emplace_back(RetractCmd);
-    commands.emplace_back(ConeBalanceRedCmd.get());
+    // commands.emplace_back(RetractCmd);
+    // commands.emplace_back(ConeBalanceRedCmd.get());
+    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
     commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    
   }
