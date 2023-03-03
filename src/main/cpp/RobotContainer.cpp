@@ -174,7 +174,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::CommandPtr RobotContainer::DriveCrgStnRed1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathPlanner::getConstraintsFromPath("ChargeStation1Red"), true);
   std::cout<<"ChargeStation1Red"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -195,7 +195,7 @@ frc2::CommandPtr RobotContainer::DriveCrgStnRed1(DriveSubsystem &m_drive){
 
 frc2::CommandPtr RobotContainer::DriveCrgStnRed2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Red", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Red", PathPlanner::getConstraintsFromPath("ChargeStation2Red"), true);
   std::cout<<"ChargeStation2Red"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -218,7 +218,7 @@ frc2::CommandPtr RobotContainer::DriveCrgStnRed2(DriveSubsystem &m_drive){
 
 frc2::CommandPtr RobotContainer::DriveCrgStnBlue1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathPlanner::getConstraintsFromPath("ChargeStation1Blue"), true);
   std::cout<<"ChargeStation1Blue"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -239,7 +239,7 @@ frc2::CommandPtr RobotContainer::DriveCrgStnBlue1(DriveSubsystem &m_drive){
 
 frc2::CommandPtr RobotContainer::DriveCrgStnBlue2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathPlanner::getConstraintsFromPath("ChargeStation2Blue"), true);
   std::cout<<"ChargeStation2Blue"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -260,7 +260,7 @@ frc2::CommandPtr RobotContainer::DriveCrgStnBlue2(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::PlaceDriveCrgStnBlue1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Blue", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Blue", PathPlanner::getConstraintsFromPath("PlaceChargeStation1Blue"), true);
   std::cout<<"PlaceChargeStation1Blue"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -281,7 +281,7 @@ frc2::CommandPtr RobotContainer::DriveCrgStnBlue2(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::PlaceDriveCrgStnRed1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Red", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Red", PathPlanner::getConstraintsFromPath("PlaceChargeStation1Red"), true);
   std::cout<<"PlaceChargeStation1Red"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -302,7 +302,7 @@ frc2::CommandPtr RobotContainer::DriveCrgStnBlue2(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::ConeBalanceBlue(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceBlue", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceBlue", PathPlanner::getConstraintsFromPath("ConeAndBalanceBlue"), true);
   std::cout<<"ConeAndBalanceBLue"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -323,7 +323,7 @@ frc2::CommandPtr RobotContainer::DriveCrgStnBlue2(DriveSubsystem &m_drive){
 
 frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceRed", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceRed", PathPlanner::getConstraintsFromPath("ConeAndBalanceRed"), true);
   std::cout<<"ConeAndBalanceRed"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -344,7 +344,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
   
   frc2::CommandPtr RobotContainer::RedLeave1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave1", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave1", PathPlanner::getConstraintsFromPath("RedLeave1"), true);
   std::cout<<"RedLeave1"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -365,7 +365,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
   
   frc2::CommandPtr RobotContainer::RedLeave2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave2", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave2", PathPlanner::getConstraintsFromPath("RedLeave2"), true);
   std::cout<<"RedLeave2"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -386,7 +386,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::BlueLeave1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave1", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave1", PathPlanner::getConstraintsFromPath("BlueLeave1"), true);
   std::cout<<"BlueLeave1"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -407,7 +407,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::BlueLeave2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave2", PathConstraints(4.2_mps, 1_mps_sq), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave2", PathPlanner::getConstraintsFromPath("BlueLeave2"), true);
   std::cout<<"BlueLeave2"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -541,7 +541,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
   else if(pathselector == 4 && AllienceSelector == "Red"){
     ResetOdometry();
-     std::vector<std::unique_ptr<Command>> p1_commands;
+    std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(RetractCmd);
     p1_commands.emplace_back(ConeBalanceRedCmd.get());
     // m_drive.SetAngleAdjustment(180);
