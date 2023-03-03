@@ -477,8 +477,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 2 && AllienceSelector == "Red"){
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmd);
-    commands.emplace_back(Leave1Red.get());
+    p1_commands.emplace_back(RetractCmdAuto);
+    p1_commands.emplace_back(Leave1Red.get());
     m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
     commands.emplace_back(PlaceHighRace);
@@ -489,8 +489,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 2 && AllienceSelector == "Blue"){
     ResetOdometry();
       std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmd);
-    commands.emplace_back(Leave1Blue.get());
+    p1_commands.emplace_back(RetractCmdAuto);
+    p1_commands.emplace_back(Leave1Blue.get());
     m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
     commands.emplace_back(PlaceHighRace);
@@ -501,7 +501,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 3 && AllienceSelector == "Red"){
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmd);
+    p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave2Red.get());
     m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
@@ -513,7 +513,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 3 && AllienceSelector == "Blue"){
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmd);
+    p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave2Blue.get());
     // m_drive.SetAngleAdjustment(180);
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
