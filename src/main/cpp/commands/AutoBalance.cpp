@@ -4,10 +4,9 @@
 
 #include "commands/AutoBalance.h"
 
-AutoBalance::AutoBalance(DriveSubsystem& l_drive, frc::XboxController &l_Joystick) {
+AutoBalance::AutoBalance(DriveSubsystem& l_drive) {
   // Use addRequirements() here to declare subsystem dependencies.
   m_drive = &l_drive;
-  m_Joystick = &l_Joystick;
   AddRequirements({m_drive});
 }
 
@@ -39,8 +38,8 @@ void AutoBalance::Execute() {
     }
     else if(m_state == 1){ //Slower climb
       m_drive->Drive(0_mps, 0.45_mps, 0_rad_per_s, false, false);
-      // if(m_drive->GetPitch() <= 4.5 && m_drive->GetPitch() >= -4.5) {
-      if(m_drive->GetRawGyroX() <-3) { //Degrees per second, clock hand is 6 degrees per second
+      if(m_drive->GetPitch() <= 9 && m_drive->GetPitch() >= -9) {
+      // if(m_drive->GetRawGyroX() <-3) { //Degrees per second, clock hand is 6 degrees per second
         m_state = 3;
         m_timer.Start();
       }
@@ -73,8 +72,8 @@ void AutoBalance::Execute() {
       
     // }
       else if(m_state == 3) { //Run backwards
-        if(m_timer.Get() <= 0.75_s) {
-          m_drive->Drive(0_mps, -0.75_mps, 0_rad_per_s, false, false);
+        if(m_timer.Get() <= 1.35_s) {
+          m_drive->Drive(0_mps, -0.5_mps, 0_rad_per_s, false, false);
         }
         else {
           m_state = 5;

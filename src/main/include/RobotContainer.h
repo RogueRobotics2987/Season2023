@@ -120,7 +120,7 @@ class RobotContainer {
 
   //frc2::Command *AutoCmd;
 
-  frc2::Command* AutoCmd = new AutoBalance(m_drive, m_newXbox);
+  frc2::Command* AutoCmd = new AutoBalance(m_drive);
 
   frc2::Command* PlaceHighCmd = new PlaceAutoCmd(m_elevator, 104, -30, 260); // 104 for height
   frc2::Command* PlaceMidCmd = new PlaceAutoCmd(m_elevator, 104, -45, 260); // 104 for height
