@@ -141,8 +141,8 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& referenceState)
   // commented out to test, 2/17
   // frc::SmartDashboard::PutNumber("Drive Output " + std::to_string(m_driveMotor->GetDeviceId()), driveOutput);
 
-  // frc::SmartDashboard::PutNumber("Get Velocity output" + std::to_string(m_driveMotor->GetDeviceId()), 
-  //                               m_driveEncoder->GetVelocity());
+  frc::SmartDashboard::PutNumber("SwerveModule Drive Velocity " + std::to_string(m_driveMotor->GetDeviceId()), 
+                                m_driveEncoder->GetVelocity());
   // frc::SmartDashboard::PutNumber("Velocity Command " + std::to_string(m_driveMotor->GetDeviceId()),
   //                               referenceState.speed.to<double>());
   // frc::SmartDashboard::PutNumber("Get Drive Positon" + std::to_string(m_driveMotor->GetDeviceId()), 
