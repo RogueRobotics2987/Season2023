@@ -89,7 +89,14 @@ class RobotContainer {
   frc2::CommandPtr ConeBalanceBlue(DriveSubsystem &m_drive);
   frc2::CommandPtr ConeBalanceRed(DriveSubsystem &m_drive);
 
+  frc2::CommandPtr RedLeave1(DriveSubsystem &m_drive);
+  frc2::CommandPtr RedLeave2(DriveSubsystem &m_drive);
+  frc2::CommandPtr BlueLeave1(DriveSubsystem &m_drive);
+  frc2::CommandPtr BlueLeave2(DriveSubsystem &m_drive);
+
   frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
+
+  
 
   double GetHeading();
 
@@ -144,6 +151,12 @@ class RobotContainer {
 
   frc2::CommandPtr PlaceDriveCrgStnRed1cmd = PlaceDriveCrgStnRed1(m_drive);
   frc2::CommandPtr PlaceDriveCrgStnBlue1cmd = PlaceDriveCrgStnBlue1(m_drive); 
+
+  frc2::CommandPtr Leave1Blue = BlueLeave1(m_drive); 
+  frc2::CommandPtr Leave2Blue = BlueLeave2(m_drive); 
+
+  frc2::CommandPtr Leave1Red = RedLeave1(m_drive); 
+  frc2::CommandPtr Leave2Red = RedLeave2(m_drive); 
 
   frc2::CommandPtr ConeBalanceBlueCmd = ConeBalanceBlue(m_drive); 
   frc2::CommandPtr ConeBalanceRedCmd = ConeBalanceRed(m_drive);  
