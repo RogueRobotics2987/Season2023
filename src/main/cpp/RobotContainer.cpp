@@ -149,7 +149,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // frc2::JoystickButton(&m_xbox, 8).WhileTrue(m_elevator.SetElevatorPos(-45, 104));//was 106.6
   frc2::JoystickButton(&m_xbox, 4).WhileTrue(PlaceHighCmd); //Button Y
   frc2::JoystickButton(&m_xbox, 2).WhileTrue(PickupCmd); //Button B
-  frc2::JoystickButton(&m_xbox, 1).WhileTrue(RetractCmd); //Button A
+  frc2::JoystickButton(&m_xbox, 1).WhileTrue(PickupTipCmd); //Button A
   // frc2::JoystickButton(&m_newXbox, 3).WhileTrue(PlaceMidCmd); //Button X
   // frc2::JoystickButton(&m_newXbox, 8).WhileTrue(PlaceLowCmd); //Small button right
 
