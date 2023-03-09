@@ -127,8 +127,8 @@ void Elevator::Periodic() {
       //verticalPos safety
       if (verticalPos < 0){
          verticalPos = 0;
-      } else if (verticalPos > 108){
-         verticalPos = 108;
+      } else if (verticalPos > 106){
+         verticalPos = 106;
       }
       
       vertOutput = m_vertPIDController.Calculate(re_vertElevator.GetPosition(), verticalPos);
