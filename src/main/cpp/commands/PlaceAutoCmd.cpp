@@ -45,13 +45,13 @@ void PlaceAutoCmd::Execute() {
   else{
     m_actualTiltVelocity = m_tiltVelocity/2;
   }
-  frc::SmartDashboard::PutNumber("Tilt Velocity", m_actualTiltVelocity);
-  frc::SmartDashboard::PutNumber("Arm desired", m_armAngle);
-  frc::SmartDashboard::PutNumber("Arm actual", m_elevator->ArmEncoderValues());
-  frc::SmartDashboard::PutNumber("height desired", m_heightRevolutions);
-  frc::SmartDashboard::PutNumber("height Actual", m_elevator->HeightEncoderValues());
-  frc::SmartDashboard::PutNumber("Tilt Desired", m_tiltRevolutions);
-  frc::SmartDashboard::PutNumber("Tilt Actual", m_elevator->TiltEncoderValues());
+  frc::SmartDashboard::PutNumber("Elevator auto place Tilt Velocity", m_actualTiltVelocity);
+  frc::SmartDashboard::PutNumber("Elevator auto place Arm desired", m_armAngle);
+  frc::SmartDashboard::PutNumber("Elevator auto place Arm actual", m_elevator->ArmEncoderValues());
+  frc::SmartDashboard::PutNumber("Elevator auto place height desired", m_heightRevolutions);
+  frc::SmartDashboard::PutNumber("Elevator auto place height Actual", m_elevator->HeightEncoderValues());
+  frc::SmartDashboard::PutNumber("Elevator auto place Tilt Desired", m_tiltRevolutions);
+  frc::SmartDashboard::PutNumber("Elevator auto place Tilt Actual", m_elevator->TiltEncoderValues());
   m_elevator->m_tiltElevatorMotor.Set(m_actualTiltVelocity);
   m_elevator->AutoPlace(m_armAngle, m_heightRevolutions);
   frc::SmartDashboard::PutString("PlaceCmdState", "Execute");
@@ -60,14 +60,14 @@ void PlaceAutoCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void PlaceAutoCmd::End(bool interrupted) {
-  frc::SmartDashboard::PutNumber("Tilt Velocity", 0);
+  frc::SmartDashboard::PutNumber("Elevator auto place Tilt Velocity", 0);
   m_elevator->m_tiltElevatorMotor.Set(0.0);
   frc::SmartDashboard::PutString("PlaceCmdState", "End");
 }
 
 // Returns true when the command should end.
 bool PlaceAutoCmd::IsFinished() {
-  if(IsClose(m_elevator->TiltEncoderValues(), m_tiltRevolutions, 20) && 
+  if(IsClose(m_elevator->TiltEncoderValues(), m_tiltRevolutions, 15) && 
     IsClose(m_elevator->ArmEncoderValues(), m_armAngle, 5) && 
     IsClose(m_elevator->HeightEncoderValues(), m_heightRevolutions, 10))
     {

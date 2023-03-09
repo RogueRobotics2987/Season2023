@@ -180,7 +180,7 @@ void Elevator::Periodic() {
 
       m_tiltElevatorMotor.Set(0.25);
 
-      if(re_tiltElevator.GetPosition() >= 260){
+      if(re_tiltElevator.GetPosition() >= 160){
          ElevatorState = MANUAL_MODE;
       }
    } else if (ElevatorState == PLACE_MID){
