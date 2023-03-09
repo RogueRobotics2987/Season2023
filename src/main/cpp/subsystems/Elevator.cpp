@@ -37,6 +37,7 @@ void Elevator::Periodic() {
    //Elevator tilt
    frc::SmartDashboard::PutBoolean("Elevator Tilt limit switch", ls_tiltElevator.Get());
    frc::SmartDashboard::PutNumber("Elevator Tilt Encoder", re_tiltElevator.GetPosition());
+   frc::SmartDashboard::PutNumber("Elevator Tilt Output",  m_tiltElevatorMotor.Get());
 
    // //Elevator arm
    frc::SmartDashboard::PutBoolean("Elevator Arm limit switch", ls_arm.Get());
