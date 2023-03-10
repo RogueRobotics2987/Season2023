@@ -67,7 +67,7 @@ void PlaceAutoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool PlaceAutoCmd::IsFinished() {
-  if(IsClose(m_elevator->TiltEncoderValues(), m_tiltRevolutions, 10) && 
+  if(IsClose(m_elevator->TiltEncoderValues(), m_tiltRevolutions, 15) && 
     IsClose(m_elevator->ArmEncoderValues(), m_armAngle, 5) && 
     IsClose(m_elevator->HeightEncoderValues(), m_heightRevolutions, 10))
     {

@@ -426,7 +426,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::Red2Place1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2Place1", PathPlanner::getConstraintsFromPath("Red2Place1"), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place1", PathPlanner::getConstraintsFromPath("Red2place1"), true);
   std::cout<<"Red2Place1"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -434,8 +434,8 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
   SwerveAutoBuilder autoBuilder(
       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
@@ -447,7 +447,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::Red2Place2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2Place2", PathPlanner::getConstraintsFromPath("Red2Place2"), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place2", PathPlanner::getConstraintsFromPath("Red2place2"), true);
   std::cout<<"Red2Place2"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -455,8 +455,8 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
   SwerveAutoBuilder autoBuilder(
       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
@@ -468,7 +468,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::Red2Place3(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2Place3", PathPlanner::getConstraintsFromPath("Red2Place3"), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place3", PathPlanner::getConstraintsFromPath("Red2place3"), true);
   std::cout<<"Red2Place3"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -476,8 +476,8 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
   SwerveAutoBuilder autoBuilder(
       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
@@ -541,7 +541,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave1Red.get());
     m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -553,7 +553,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave1Blue.get());
     m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -565,7 +565,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave2Red.get());
     m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -577,7 +577,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave2Blue.get());
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -589,7 +589,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(ConeBalanceBlueCmd.get());
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -606,8 +606,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(ConeBalanceRedCmd.get());
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
-    // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -623,7 +623,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 5 && AllienceSelector == "Red"){
     ResetOdometry();
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -638,7 +638,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 5 && AllienceSelector == "Blue"){
     ResetOdometry();
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -652,23 +652,44 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 6 && AllienceSelector == "Red"){
     ResetOdometry();
+    std::vector<std::unique_ptr<Command>> s1_commands;
+    s1_commands.emplace_back(RetractPickupCmdAuto);
+    s1_commands.emplace_back(new TimerCMD(.75));    
+    s1_commands.emplace_back(PickupFlatAuto);
+    //s1 Retracts Arm back then lowers to pickup cube
+    std::vector<std::unique_ptr<Command>> p1_commands;
+    p1_commands.emplace_back(new frc2::SequentialCommandGroup(std::move(s1_commands)));
+    p1_commands.emplace_back(Red2Place1Cmd.get());   
+    //p1 moves away from place and does s1 at the same time
+    std::vector<std::unique_ptr<Command>> p2_commands;
+    p2_commands.emplace_back(RetractCmdAuto);
+    p2_commands.emplace_back(Red2Place3Cmd.get());
+    //p2 retracts and moves to charge at same time
+
+    // std::vector<std::unique_ptr<Command>> p3_commands;
+    // p3_commands.emplace_back(PickupFlatAuto);
+    // p3_commands.emplace_back(Red2Place2Cmd.get());          
+
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(RetractCmdAuto);  //change to a elevator vertical with claw up
-    commands.emplace_back(Red2Place1Cmd.get());
+    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
+    // commands.emplace_back(RetractPickupCmdAuto);  //change to a elevator vertical with claw up
+    // commands.emplace_back(Red2Place1Cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(CloseClawCmd.get());
+    commands.emplace_back(RetractPickupCmdAuto2);
     // commands.emplace_back(AutoZeroHeading.get());
     commands.emplace_back(Red2Place2Cmd.get());
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 260));
-    commands.emplace_back(PlaceHighRace);
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    // commands.emplace_back(PlaceHighRace2);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(RetractCmdAuto); 
-    commands.emplace_back(Red2Place3Cmd.get());
+    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p2_commands)));
+    // commands.emplace_back(RetractCmdAuto); 
+    // commands.emplace_back(Red2Place3Cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
     commands.emplace_back(AutoCmd);
   }
@@ -772,7 +793,14 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       m_drive.ResetOdometry(frc::Pose2d{14.6_m, 0.5_m, 0_deg});
       std::cout<<"OdometryCone"<<std::endl;
     }
-
+    else if(pathselector == 6 && AllienceSelector == "Red"){ //Place ChargeStation blue
+      m_drive.ResetOdometry(frc::Pose2d{14.65_m, 5_m, 0_deg});
+      std::cout<<"Red6"<<std::endl;
+    }
+    // else if(pathselector == 5 && AllienceSelector == "Red"){ //Place ChargeStation blue
+    //   m_drive.ResetOdometry(frc::Pose2d{14.6_m, 0.5_m, 0_deg});
+    //   std::cout<<"OdometryCone"<<std::endl;
+    // }
     else{
       std::cout<<"Do Nothing For Odometry, Paramaters incorrect" << std::endl;
     }

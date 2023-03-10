@@ -138,12 +138,16 @@ class RobotContainer {
   frc2::Command* PlaceLowCmd = new PlaceAutoCmd(m_elevator, 106, -45, 160); // 104 for height
   frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 54);// was 108 before new gear ratio
   frc2::Command* RetractCmdAuto = new PlaceAutoCmd(m_elevator, 5, 0, 0);
+  frc2::Command* RetractPickupCmdAuto = new PlaceAutoCmd(m_elevator, 5, -10, 90);
+  frc2::Command* RetractPickupCmdAuto2 = new PlaceAutoCmd(m_elevator, 5, -10, 90);
   frc2::Command* RetractCmd = new PlaceAutoCmd(m_elevator, 5, 0, 0);
   frc2::Command* PickupTipCmd = new PlaceAutoCmd(m_elevator, 29, -171.5, 132);  //30, -171.5, 242 //was 30 fro height
   frc2::Command* PickupWithBumpersIntoSubstation = new PlaceAutoCmd(m_elevator, 61.5, -103, 0);//69, -110, 0
+  frc2::Command* PickupFlatAuto = new PlaceAutoCmd(m_elevator, 0, -81, 160);//69, -110, 0
   
 
-  frc2::ParallelRaceGroup* PlaceHighRace = new ParallelRaceGroup(TimerCMD(1), PlaceAutoCmd(m_elevator, 104, -60, 260));
+  frc2::ParallelRaceGroup* PlaceHighRace = new ParallelRaceGroup(TimerCMD(0.5), PlaceAutoCmd(m_elevator, 104, -60, 160));
+  frc2::ParallelRaceGroup* PlaceHighRace2 = new ParallelRaceGroup(TimerCMD(0.5), PlaceAutoCmd(m_elevator, 104, -60, 160));
   // frc2::ParallelCommandGroup* RetractMove = new ParallelCommandGroup(RetractCmd, TimerCMD(0.5));
   // The chooser for the autonomous routines 
   frc::SendableChooser<frc2::Command*> m_chooser;
