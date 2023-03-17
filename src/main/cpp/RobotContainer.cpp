@@ -492,7 +492,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // Runs the chosen command in autonomous
   // SequentialAuto test = SequentialAuto(m_drive);
 
-    std::vector<std::unique_ptr<Command>> commands;
 
   int pathselector = frc::SmartDashboard::GetNumber("PathSelector", 0);
   std::string AllienceSelector = frc::SmartDashboard::GetString("AllienceSelector", "Red");
@@ -537,7 +536,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 2 && AllienceSelector == "Red"){
     ResetOdometry();
-    std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave1Red.get());
     m_drive.SetAngleAdjustment(180);
@@ -549,7 +547,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 2 && AllienceSelector == "Blue"){
     ResetOdometry();
-      std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave1Blue.get());
     m_drive.SetAngleAdjustment(180);
@@ -561,7 +558,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 3 && AllienceSelector == "Red"){
     ResetOdometry();
-    std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave2Red.get());
     m_drive.SetAngleAdjustment(180);
@@ -573,7 +569,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 3 && AllienceSelector == "Blue"){
     ResetOdometry();
-    std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave2Blue.get());
     // m_drive.SetAngleAdjustment(180);
@@ -585,7 +580,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 4 && AllienceSelector == "Blue"){
     ResetOdometry();
-    std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(ConeBalanceBlueCmd.get());
     // m_drive.SetAngleAdjustment(180);
@@ -652,16 +646,13 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 6 && AllienceSelector == "Red"){
     ResetOdometry();
-    std::vector<std::unique_ptr<Command>> s1_commands;
     s1_commands.emplace_back(RetractPickupCmdAuto);
     s1_commands.emplace_back(new TimerCMD(.75));    
     s1_commands.emplace_back(PickupFlatAuto);
     //s1 Retracts Arm back then lowers to pickup cube
-    std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(new frc2::SequentialCommandGroup(std::move(s1_commands)));
     p1_commands.emplace_back(Red2Place1Cmd.get());   
     //p1 moves away from place and does s1 at the same time
-    std::vector<std::unique_ptr<Command>> p2_commands;
     p2_commands.emplace_back(RetractCmdAuto);
     p2_commands.emplace_back(Red2Place3Cmd.get());
     //p2 retracts and moves to charge at same time
@@ -819,4 +810,46 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
    }
   }
   return(x);
+}
+
+RobotContainer::~RobotContainer(){
+  if(PlaceHighCmd != nullptr){
+  delete PlaceHighCmd;
+  }
+  if(PlaceMidCmd != nullptr){
+  delete PlaceMidCmd;
+  }
+  if(PlaceLowCmd != nullptr){
+  delete PlaceLowCmd;
+  }
+  if(PickupCmd != nullptr){
+  delete PickupCmd; 
+  }
+  if(RetractCmdAuto != nullptr){
+  delete RetractCmdAuto;
+  }
+  if(RetractPickupCmdAuto != nullptr){
+  delete RetractPickupCmdAuto;
+  }
+  if(RetractPickupCmdAuto2 != nullptr){
+  delete RetractPickupCmdAuto2;
+  }
+  if(RetractCmd != nullptr){
+  delete RetractCmd;
+  }
+  if(PickupTipCmd != nullptr){
+  delete PickupTipCmd;
+  }
+  if(PickupWithBumpersIntoSubstation != nullptr){
+  delete PickupWithBumpersIntoSubstation;
+  }
+  if(PickupFlatAuto != nullptr){
+  delete PickupFlatAuto;
+  }
+  if(PlaceHighRace != nullptr){
+  delete PlaceHighRace;
+  }
+  if(PlaceHighRace2 != nullptr){
+  delete PlaceHighRace2; 
+  }
 }

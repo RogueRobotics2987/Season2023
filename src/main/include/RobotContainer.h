@@ -71,6 +71,7 @@ using namespace frc2;
 class RobotContainer {
  public:
   RobotContainer();
+  ~RobotContainer();
 
 
   // void ConfigureBindings();
@@ -185,7 +186,12 @@ class RobotContainer {
   frc2::CommandPtr SetHighCmd = m_elevator.SetPlaceHighState();
   frc2::CommandPtr SetMidCmd = m_elevator.SetPlaceMidState();
   frc2::CommandPtr SetLowCmd = m_elevator.SetPlaceLowState();
-
+  
+  
+  std::vector<std::unique_ptr<Command>> commands;
+  std::vector<std::unique_ptr<Command>> s1_commands;
+  std::vector<std::unique_ptr<Command>> p1_commands;
+  std::vector<std::unique_ptr<Command>> p2_commands;
 
 
 

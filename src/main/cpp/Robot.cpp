@@ -49,6 +49,8 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
+  //frc2::CommandScheduler test = CommandScheduler::GetInstance();
+  frc::SmartDashboard::PutData(&CommandScheduler::GetInstance());
 
 }
 
