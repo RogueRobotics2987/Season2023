@@ -18,6 +18,18 @@ RobotContainer::RobotContainer() {
   frc::SmartDashboard::PutNumber("PathSelector", 0);
 
   frc::SmartDashboard::PutData(&m_elevator);
+  frc::SmartDashboard::PutData(&m_drive);
+
+  m_autoBuilder = SwerveAutoBuilder(
+      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      eventMap, // Our event map
+      { &m_drive }, // Drive requirements, usually just a single drive subsystem
+      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  );
 
   ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
@@ -176,17 +188,6 @@ frc2::CommandPtr RobotContainer::DriveCrgStnRed1(DriveSubsystem &m_drive){
   std::cout<<"ChargeStation1Red"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
-
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
 
   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
 };
@@ -611,11 +612,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
-    // commands.emplace_back(new frc2::ParallelCommandGroup(
-    //   RetractCmd, (Command*)ConeBalanceRedCmd.get()
-    // ));
-    // commands.emplace_back(RetractCmd);
-    // commands.emplace_back(ConeBalanceRedCmd.get());
     commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
     commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    
@@ -652,46 +648,45 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 6 && AllienceSelector == "Red"){
     ResetOdometry();
-    std::vector<std::unique_ptr<Command>> s1_commands;
-    s1_commands.emplace_back(RetractPickupCmdAuto);
-    s1_commands.emplace_back(new TimerCMD(.75));    
-    s1_commands.emplace_back(PickupFlatAuto);
-    //s1 Retracts Arm back then lowers to pickup cube
-    std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(new frc2::SequentialCommandGroup(std::move(s1_commands)));
-    p1_commands.emplace_back(Red2Place1Cmd.get());   
-    //p1 moves away from place and does s1 at the same time
-    std::vector<std::unique_ptr<Command>> p2_commands;
-    p2_commands.emplace_back(RetractCmdAuto);
-    p2_commands.emplace_back(Red2Place3Cmd.get());
-    //p2 retracts and moves to charge at same time
+    // std::vector<std::unique_ptr<Command>> s1_commands;
+    // // s1_commands.emplace_back(RetractPickupCmdAuto);
+    // s1_commands.emplace_back(new TimerCMD(.75));    
+    // s1_commands.emplace_back(PickupFlatAuto);
+    // //s1 Retracts Arm back then lowers to pickup cube
+    // std::vector<std::unique_ptr<Command>> p1_commands;
+    // p1_commands.emplace_back(new frc2::SequentialCommandGroup(std::move(s1_commands)));
+    // p1_commands.emplace_back(Red2Place1Cmd.get());   
+    // //p1 moves away from place and does s1 at the same time
+    // std::vector<std::unique_ptr<Command>> p2_commands;
+    // p2_commands.emplace_back(RetractCmdAuto);
+    // // p2_commands.emplace_back(Red2Place3Cmd.get());
+
+    // //p2 retracts and moves to charge at same time  
 
     // std::vector<std::unique_ptr<Command>> p3_commands;
-    // p3_commands.emplace_back(PickupFlatAuto);
-    // p3_commands.emplace_back(Red2Place2Cmd.get());          
+    // p3_commands.emplace_back(new TimerCMD(3));    
+    // p3_commands.emplace_back(new frc2::InstantCommand([this] {m_drive.Drive(units::meters_per_second_t(0), units::meters_per_second_t(0), units::radians_per_second_t(0), false, false);}));
 
-    // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
-    // commands.emplace_back(RetractPickupCmdAuto);  //change to a elevator vertical with claw up
-    // commands.emplace_back(Red2Place1Cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-    commands.emplace_back(CloseClawCmd.get());
-    commands.emplace_back(RetractPickupCmdAuto2);
-    // commands.emplace_back(AutoZeroHeading.get());
+    // // // m_drive.SetAngleAdjustment(180);
+    // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    // // commands.emplace_back(PlaceHighRace);
+    // commands.emplace_back(OpenClawCmd.get());
+    // commands.emplace_back(new TimerCMD(.5));
+    // commands.emplace_back(RetractPickupCmdAuto);
+    // commands.emplace_back(Red2Place1Cmd.get());   
+    // // commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
+    // commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+    // // commands.emplace_back(CloseClawCmd.get());
+    // commands.emplace_back(RetractPickupCmdAuto2);
     commands.emplace_back(Red2Place2Cmd.get());
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    // commands.emplace_back(PlaceHighRace2);
+    commands.emplace_back(new TimerCMD(3));
+    // commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p3_commands)));    
+    // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p2_commands)));
-    // commands.emplace_back(RetractCmdAuto); 
-    // commands.emplace_back(Red2Place3Cmd.get());
+    // commands.emplace_back(new TimerCMD(.5));
+    // commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p2_commands)));
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
-    commands.emplace_back(AutoCmd);
+    // commands.emplace_back(AutoCmd);
   }
   else{
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Do Nothing" << std::endl;}));

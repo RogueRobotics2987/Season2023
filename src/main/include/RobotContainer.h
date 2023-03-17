@@ -186,7 +186,7 @@ class RobotContainer {
   frc2::CommandPtr SetMidCmd = m_elevator.SetPlaceMidState();
   frc2::CommandPtr SetLowCmd = m_elevator.SetPlaceLowState();
 
-
+  SwerveAutoBuilder m_autoBuilder;
 
 
 

@@ -23,6 +23,7 @@ void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   frc::SmartDashboard::PutNumber("GyroPosition", m_container.GetHeading());
   frc::SmartDashboard::PutNumber("OdometryPosition", m_container.GetOdometry());
+  frc::SmartDashboard::PutData(&CommandScheduler::GetInstance());
 }
 
 /**
@@ -41,6 +42,12 @@ void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit() {
   m_container.ZeroHeading();
   // m_container.ResetOdometry();
+  if (m_autonomousCommand != nullptr) {
+    m_autonomousCommand->Cancel();
+    delete m_autonomousCommand;
+    m_autonomousCommand = nullptr;
+  }
+
   m_autonomousCommand = m_container.GetAutonomousCommand();
   
   if (m_autonomousCommand != nullptr) {
@@ -61,6 +68,7 @@ void Robot::TeleopInit() {
   // this line or comment it out.
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Cancel();
+    delete m_autonomousCommand;
     m_autonomousCommand = nullptr;
   }
 }
