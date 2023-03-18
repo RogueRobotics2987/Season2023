@@ -654,16 +654,16 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> s1_commands;
     s1_commands.emplace_back(RetractPickupCmdAuto);
-    s1_commands.emplace_back(new TimerCMD(.75));    
+    s1_commands.emplace_back(new TimerCMD(.55));    
     s1_commands.emplace_back(PickupFlatAuto);
     //s1 Retracts Arm back then lowers to pickup cube
     std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(new frc2::SequentialCommandGroup(std::move(s1_commands)));
     p1_commands.emplace_back(Red2Place1Cmd.get());   
     //p1 moves away from place and does s1 at the same time
-    std::vector<std::unique_ptr<Command>> p2_commands;
-    p2_commands.emplace_back(RetractCmdAuto);
-    p2_commands.emplace_back(Red2Place3Cmd.get());
+    // std::vector<std::unique_ptr<Command>> p2_commands;
+    // p2_commands.emplace_back(RetractCmdAuto);
+    // p2_commands.emplace_back(Red2Place3Cmd.get());
     //p2 retracts and moves to charge at same time
 
     // std::vector<std::unique_ptr<Command>> p3_commands;
@@ -674,7 +674,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
+    commands.emplace_back(new TimerCMD(.2));
     commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
     // commands.emplace_back(RetractPickupCmdAuto);  //change to a elevator vertical with claw up
     // commands.emplace_back(Red2Place1Cmd.get());
@@ -683,15 +683,16 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(RetractPickupCmdAuto2);
     // commands.emplace_back(AutoZeroHeading.get());
     commands.emplace_back(Red2Place2Cmd.get());
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    // commands.emplace_back(PlaceHighRace2);
+    commands.emplace_back(PlaceHighRace2);
+    commands.emplace_back(PlaceHighRace3);
+    commands.emplace_back(new TimerCMD(.25));
     commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p2_commands)));
-    // commands.emplace_back(RetractCmdAuto); 
+    commands.emplace_back(new TimerCMD(.25));
+    // commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p2_commands)));
+    commands.emplace_back(RetractCmdAuto); 
     // commands.emplace_back(Red2Place3Cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
-    commands.emplace_back(AutoCmd);
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"EndRed2" << std::endl;}));  
+    // commands.emplace_back(AutoCmd);
   }
   else{
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Do Nothing" << std::endl;}));

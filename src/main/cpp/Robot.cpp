@@ -41,6 +41,12 @@ void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit() {
   m_container.ZeroHeading();
   // m_container.ResetOdometry();
+  if (m_autonomousCommand != nullptr) {
+    m_autonomousCommand->Cancel();
+    delete m_autonomousCommand;
+    m_autonomousCommand = nullptr;
+  }
+  
   m_autonomousCommand = m_container.GetAutonomousCommand();
   
   if (m_autonomousCommand != nullptr) {
@@ -61,6 +67,7 @@ void Robot::TeleopInit() {
   // this line or comment it out.
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Cancel();
+    delete m_autonomousCommand;    
     m_autonomousCommand = nullptr;
   }
 }
