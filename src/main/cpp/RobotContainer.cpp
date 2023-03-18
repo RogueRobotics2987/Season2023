@@ -20,16 +20,8 @@ RobotContainer::RobotContainer() {
   frc::SmartDashboard::PutData(&m_elevator);
   frc::SmartDashboard::PutData(&m_drive);
 
-  m_autoBuilder = SwerveAutoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+  // std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+
 
   ConfigMotorControllers();
   // Initialize all of your commands and subsystems here
@@ -180,258 +172,257 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 
-//Red Paths
+// //Red Paths
 
-frc2::CommandPtr RobotContainer::DriveCrgStnRed1(DriveSubsystem &m_drive){
+// frc2::CommandPtr RobotContainer::DriveCrgStnRed1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathPlanner::getConstraintsFromPath("ChargeStation1Red"), true);
-  std::cout<<"ChargeStation1Red"<<std::endl;
+//   // PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathPlanner::getConstraintsFromPath("ChargeStation1Red"), true);
+//   // std::cout<<"ChargeStation1Red"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   // std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-};
+//   // return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+// };
 
-frc2::CommandPtr RobotContainer::DriveCrgStnRed2(DriveSubsystem &m_drive){
+// frc2::CommandPtr RobotContainer::DriveCrgStnRed2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Red", PathPlanner::getConstraintsFromPath("ChargeStation2Red"), true);
-  std::cout<<"ChargeStation2Red"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Red", PathPlanner::getConstraintsFromPath("ChargeStation2Red"), true);
+//   std::cout<<"ChargeStation2Red"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-};
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+// };
 
-//Blue paths
+// //Blue paths
 
-frc2::CommandPtr RobotContainer::DriveCrgStnBlue1(DriveSubsystem &m_drive){
+// frc2::CommandPtr RobotContainer::DriveCrgStnBlue1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathPlanner::getConstraintsFromPath("ChargeStation1Blue"), true);
-  std::cout<<"ChargeStation1Blue"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathPlanner::getConstraintsFromPath("ChargeStation1Blue"), true);
+//   std::cout<<"ChargeStation1Blue"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-};
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+// };
 
-frc2::CommandPtr RobotContainer::DriveCrgStnBlue2(DriveSubsystem &m_drive){
+// frc2::CommandPtr RobotContainer::DriveCrgStnBlue2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathPlanner::getConstraintsFromPath("ChargeStation2Blue"), true);
-  std::cout<<"ChargeStation2Blue"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation2Blue", PathPlanner::getConstraintsFromPath("ChargeStation2Blue"), true);
+//   std::cout<<"ChargeStation2Blue"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
 
-  frc2::CommandPtr RobotContainer::PlaceDriveCrgStnBlue1(DriveSubsystem &m_drive){
+//   frc2::CommandPtr RobotContainer::PlaceDriveCrgStnBlue1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Blue", PathPlanner::getConstraintsFromPath("PlaceChargeStation1Blue"), true);
-  std::cout<<"PlaceChargeStation1Blue"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Blue", PathPlanner::getConstraintsFromPath("PlaceChargeStation1Blue"), true);
+//   std::cout<<"PlaceChargeStation1Blue"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
 
-  frc2::CommandPtr RobotContainer::PlaceDriveCrgStnRed1(DriveSubsystem &m_drive){
+//   frc2::CommandPtr RobotContainer::PlaceDriveCrgStnRed1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Red", PathPlanner::getConstraintsFromPath("PlaceChargeStation1Red"), true);
-  std::cout<<"PlaceChargeStation1Red"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Red", PathPlanner::getConstraintsFromPath("PlaceChargeStation1Red"), true);
+//   std::cout<<"PlaceChargeStation1Red"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };      
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };      
 
-  frc2::CommandPtr RobotContainer::ConeBalanceBlue(DriveSubsystem &m_drive){
+//   frc2::CommandPtr RobotContainer::ConeBalanceBlue(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceBlue", PathPlanner::getConstraintsFromPath("ConeAndBalanceBlue"), true);
-  std::cout<<"ConeAndBalanceBLue"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceBlue", PathPlanner::getConstraintsFromPath("ConeAndBalanceBlue"), true);
+//   std::cout<<"ConeAndBalanceBLue"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
 
-frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
+// frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceRed", PathPlanner::getConstraintsFromPath("ConeAndBalanceRed"), true);
-  std::cout<<"ConeAndBalanceRed"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceRed", PathPlanner::getConstraintsFromPath("ConeAndBalanceRed"), true);
+//   std::cout<<"ConeAndBalanceRed"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
   
-  frc2::CommandPtr RobotContainer::RedLeave1(DriveSubsystem &m_drive){
+//   frc2::CommandPtr RobotContainer::RedLeave1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave1", PathPlanner::getConstraintsFromPath("RedLeave1"), true);
-  std::cout<<"RedLeave1"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave1", PathPlanner::getConstraintsFromPath("RedLeave1"), true);
+//   std::cout<<"RedLeave1"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
   
-  frc2::CommandPtr RobotContainer::RedLeave2(DriveSubsystem &m_drive){
+//   frc2::CommandPtr RobotContainer::RedLeave2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave2", PathPlanner::getConstraintsFromPath("RedLeave2"), true);
-  std::cout<<"RedLeave2"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave2", PathPlanner::getConstraintsFromPath("RedLeave2"), true);
+//   std::cout<<"RedLeave2"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
 
-  frc2::CommandPtr RobotContainer::BlueLeave1(DriveSubsystem &m_drive){
+//   frc2::CommandPtr RobotContainer::BlueLeave1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave1", PathPlanner::getConstraintsFromPath("BlueLeave1"), true);
-  std::cout<<"BlueLeave1"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave1", PathPlanner::getConstraintsFromPath("BlueLeave1"), true);
+//   std::cout<<"BlueLeave1"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
 
-  frc2::CommandPtr RobotContainer::BlueLeave2(DriveSubsystem &m_drive){
+//   frc2::CommandPtr RobotContainer::BlueLeave2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave2", PathPlanner::getConstraintsFromPath("BlueLeave2"), true);
-  std::cout<<"BlueLeave2"<<std::endl;
+//   PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave2", PathPlanner::getConstraintsFromPath("BlueLeave2"), true);
+//   std::cout<<"BlueLeave2"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   SwerveAutoBuilder autoBuilder(
+//       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//       PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//       PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//       [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//       eventMap, // Our event map
+//       { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
 
   frc2::CommandPtr RobotContainer::Red2Place1(DriveSubsystem &m_drive){
-
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place1", PathPlanner::getConstraintsFromPath("Red2place1"), true);
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place1", {PathPlanner::getConstraintsFromPath("Red2place1")}, true);
   std::cout<<"Red2Place1"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
-
+  
   SwerveAutoBuilder autoBuilder(
       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
@@ -448,7 +439,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
   frc2::CommandPtr RobotContainer::Red2Place2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place2", PathPlanner::getConstraintsFromPath("Red2place2"), true);
+  std::vector<PathPlannerTrajectory> examplePath = PathPlanner::loadPathGroup("Red2place2", {PathPlanner::getConstraintsFromPath("Red2place2")}, true);
   std::cout<<"Red2Place2"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -464,32 +455,47 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
   );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  // return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  return autoBuilder.fullAuto(examplePath); //examplePathCmdPtr
   };
 
-  frc2::CommandPtr RobotContainer::Red2Place3(DriveSubsystem &m_drive){
+//   frc2::CommandPtr RobotContainer::Red2Place3(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place3", PathPlanner::getConstraintsFromPath("Red2place3"), true);
-  std::cout<<"Red2Place3"<<std::endl;
+//   // PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place3", PathPlanner::getConstraintsFromPath("Red2place3"), true);
+//   // std::cout<<"Red2Place3"<<std::endl;
 
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+//   // std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
-      [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
-      [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-      PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-      PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
-      eventMap, // Our event map
-      { &m_drive }, // Drive requirements, usually just a single drive subsystem
-      false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+//   // SwerveAutoBuilder autoBuilder(
+//   //     [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+//   //     [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+//   //     PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+//   //     PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+//   //     [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+//   //     eventMap, // Our event map
+//   //     { &m_drive }, // Drive requirements, usually just a single drive subsystem
+//   //     false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+//   // );
 
-  return autoBuilder.followPath(examplePath); //examplePathCmdPtr
-  };
+//   // return autoBuilder.followPath(examplePath); //examplePathCmdPtr
+//   };
 
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
+
+  // std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+
+  // SwerveAutoBuilder autoBuilder(
+  //     [this]() { return m_drive.GetPose(); }, // Function to supply current robot pose
+  //     [this](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
+  //     PIDConstants(ModuleConstants::kPModuleDriveController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+  //     PIDConstants(ModuleConstants::kPModuleTurningController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+  //     [this](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+  //     eventMap, // Our event map
+  //     { &m_drive }, // Drive requirements, usually just a single drive subsystem
+  //     false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+  // );
+
   // Runs the chosen command in autonomous
   // SequentialAuto test = SequentialAuto(m_drive);
 
@@ -499,155 +505,211 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   std::string AllienceSelector = frc::SmartDashboard::GetString("AllienceSelector", "Red");
 
   //Red Path
-  if(pathselector == 0 && AllienceSelector == "Red"){
-    ResetOdometry();
-    commands.emplace_back(DriveCrgStnRed1cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-    commands.emplace_back(AutoZeroHeading.get());
-    commands.emplace_back(DriveCrgStnRed2cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
-  }
-  //Blue Path
-  else if(pathselector == 0 && AllienceSelector == "Blue"){
-    ResetOdometry();
-    commands.emplace_back(DriveCrgStnBlue1cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-    commands.emplace_back(AutoZeroHeading.get());
-    commands.emplace_back(DriveCrgStnBlue2cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));    
-  }
-  //Red Charge Station
-  else if(pathselector == 1 && AllienceSelector == "Red"){
-    ResetOdometry();
-    commands.emplace_back(DriveCrgStnRed1cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-    commands.emplace_back(AutoZeroHeading.get());
-    commands.emplace_back(DriveCrgStnRed2cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
-    commands.emplace_back(AutoCmd);
-  }
-  //Blue Charge station
-  else if(pathselector == 1 && AllienceSelector ==  "Blue"){
-    ResetOdometry();
-    commands.emplace_back(DriveCrgStnBlue1cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-    commands.emplace_back(AutoZeroHeading.get());
-    commands.emplace_back(DriveCrgStnBlue2cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
-    commands.emplace_back(AutoCmd);
-  }
-  else if(pathselector == 2 && AllienceSelector == "Red"){
-    ResetOdometry();
-    std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmdAuto);
-    p1_commands.emplace_back(Leave1Red.get());
-    m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));    
-  }
-  else if(pathselector == 2 && AllienceSelector == "Blue"){
-    ResetOdometry();
-      std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmdAuto);
-    p1_commands.emplace_back(Leave1Blue.get());
-    m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));      
-  }
-  else if(pathselector == 3 && AllienceSelector == "Red"){
-    ResetOdometry();
-    std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmdAuto);
-    p1_commands.emplace_back(Leave2Red.get());
-    m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));        
-  }
-  else if(pathselector == 3 && AllienceSelector == "Blue"){
-    ResetOdometry();
-    std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmdAuto);
-    p1_commands.emplace_back(Leave2Blue.get());
-    // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));        
-  }
-  else if(pathselector == 4 && AllienceSelector == "Blue"){
-    ResetOdometry();
-    std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmdAuto);
-    p1_commands.emplace_back(ConeBalanceBlueCmd.get());
-    // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    // commands.emplace_back(RetractCmd);
-    // commands.emplace_back(ConeBalanceBlueCmd.get());
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
-    commands.emplace_back(AutoCmd);
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));  
-  }
+  // if(pathselector == 0 && AllienceSelector == "Red"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathPlanner::getConstraintsFromPath("ChargeStation1Red"), true);
+  //   CommandPtr DriveCrgStnRed1cmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  //   PathPlannerTrajectory examplePath2 = PathPlanner::loadPath("ChargeStation2Red", PathPlanner::getConstraintsFromPath("ChargeStation2Red"), true);
+  //   CommandPtr DriveCrgStnRed2cmd = autoBuilder.followPath(examplePath2); //examplePathCmdPtr
 
-  else if(pathselector == 4 && AllienceSelector == "Red"){
-    ResetOdometry();
-     std::vector<std::unique_ptr<Command>> p1_commands;
-    p1_commands.emplace_back(RetractCmdAuto);
-    p1_commands.emplace_back(ConeBalanceRedCmd.get());
-    // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
-    commands.emplace_back(AutoCmd);
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    
-  }
-  else if(pathselector == 5 && AllienceSelector == "Red"){
-    ResetOdometry();
-    // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(RetractCmdAuto);  
-    commands.emplace_back(PlaceDriveCrgStnRed1cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-    commands.emplace_back(AutoZeroHeading.get());
-    commands.emplace_back(DriveCrgStnRed2cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
-    commands.emplace_back(AutoCmd);
-  }
-  else if(pathselector == 5 && AllienceSelector == "Blue"){
-    ResetOdometry();
-    // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
-    commands.emplace_back(PlaceHighRace);
-    commands.emplace_back(OpenClawCmd.get());
-    commands.emplace_back(new TimerCMD(.5));
-    commands.emplace_back(RetractCmdAuto);
-    commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
-    commands.emplace_back(AutoZeroHeading.get());
-    commands.emplace_back(DriveCrgStnBlue2cmd.get());
-    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
-    commands.emplace_back(AutoCmd);
-  }
-  else if(pathselector == 6 && AllienceSelector == "Red"){
-    ResetOdometry();
+  //   ResetOdometry();
+  //   commands.emplace_back(DriveCrgStnRed1cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+  //   commands.emplace_back(AutoZeroHeading.get());
+  //   commands.emplace_back(DriveCrgStnRed2cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
+  // }
+  // //Blue Path
+  // else if(pathselector == 0 && AllienceSelector == "Blue"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathPlanner::getConstraintsFromPath("ChargeStation1Blue"), true);
+  //   CommandPtr DriveCrgStnBlue1cmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  //   PathPlannerTrajectory examplePath2 = PathPlanner::loadPath("ChargeStation2Blue", PathPlanner::getConstraintsFromPath("ChargeStation2Blue"), true);
+  //   CommandPtr DriveCrgStnBlue2cmd = autoBuilder.followPath(examplePath2); //examplePathCmdPtr
+
+  //   ResetOdometry();
+  //   commands.emplace_back(DriveCrgStnBlue1cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+  //   commands.emplace_back(AutoZeroHeading.get());
+  //   commands.emplace_back(DriveCrgStnBlue2cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));    
+  // }
+  // //Red Charge Station
+  // else if(pathselector == 1 && AllienceSelector == "Red"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Red", PathPlanner::getConstraintsFromPath("ChargeStation1Red"), true);
+  //   CommandPtr DriveCrgStnRed1cmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  //   PathPlannerTrajectory examplePath2 = PathPlanner::loadPath("ChargeStation2Red", PathPlanner::getConstraintsFromPath("ChargeStation2Red"), true);
+  //   CommandPtr DriveCrgStnRed2cmd = autoBuilder.followPath(examplePath2); //examplePathCmdPtr
+
+  //   ResetOdometry();
+  //   commands.emplace_back(DriveCrgStnRed1cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+  //   commands.emplace_back(AutoZeroHeading.get());
+  //   commands.emplace_back(DriveCrgStnRed2cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
+  //   commands.emplace_back(AutoCmd);
+  // }
+  // //Blue Charge station
+  // else if(pathselector == 1 && AllienceSelector ==  "Blue"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ChargeStation1Blue", PathPlanner::getConstraintsFromPath("ChargeStation1Blue"), true);
+  //   CommandPtr DriveCrgStnBlue1cmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  //   PathPlannerTrajectory examplePath2 = PathPlanner::loadPath("ChargeStation2Blue", PathPlanner::getConstraintsFromPath("ChargeStation2Blue"), true);
+  //   CommandPtr DriveCrgStnBlue2cmd = autoBuilder.followPath(examplePath2); //examplePathCmdPtr
+
+  //   ResetOdometry();
+  //   commands.emplace_back(DriveCrgStnBlue1cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+  //   commands.emplace_back(AutoZeroHeading.get());
+  //   commands.emplace_back(DriveCrgStnBlue2cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
+  //   commands.emplace_back(AutoCmd);
+  // }
+  // else if(pathselector == 2 && AllienceSelector == "Red"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave1", PathPlanner::getConstraintsFromPath("RedLeave1"), true);
+  //   CommandPtr Leave1Red = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+
+  //   ResetOdometry();
+  //   std::vector<std::unique_ptr<Command>> p1_commands;
+  //   p1_commands.emplace_back(RetractCmdAuto);
+  //   p1_commands.emplace_back(Leave1Red.get());
+  //   m_drive.SetAngleAdjustment(180);
+  //   commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+  //   commands.emplace_back(PlaceHighRace);
+  //   commands.emplace_back(OpenClawCmd.get());
+  //   commands.emplace_back(new TimerCMD(.5));
+  //   commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));    
+  // }
+  // else if(pathselector == 2 && AllienceSelector == "Blue"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave1", PathPlanner::getConstraintsFromPath("BlueLeave1"), true);
+  //   CommandPtr Leave1Blue = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+
+  //   ResetOdometry();
+  //     std::vector<std::unique_ptr<Command>> p1_commands;
+  //   p1_commands.emplace_back(RetractCmdAuto);
+  //   p1_commands.emplace_back(Leave1Blue.get());
+  //   m_drive.SetAngleAdjustment(180);
+  //   commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+  //   commands.emplace_back(PlaceHighRace);
+  //   commands.emplace_back(OpenClawCmd.get());
+  //   commands.emplace_back(new TimerCMD(.5));
+  //   commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));      
+  // }
+  // else if(pathselector == 3 && AllienceSelector == "Red"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("RedLeave2", PathPlanner::getConstraintsFromPath("RedLeave2"), true);
+  //   CommandPtr Leave2Red = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+
+  //   ResetOdometry();
+  //   std::vector<std::unique_ptr<Command>> p1_commands;
+  //   p1_commands.emplace_back(RetractCmdAuto);
+  //   p1_commands.emplace_back(Leave2Red.get());
+  //   m_drive.SetAngleAdjustment(180);
+  //   commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+  //   commands.emplace_back(PlaceHighRace);
+  //   commands.emplace_back(OpenClawCmd.get());
+  //   commands.emplace_back(new TimerCMD(.5));
+  //   commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));        
+  // }
+  // else if(pathselector == 3 && AllienceSelector == "Blue"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("BlueLeave2", PathPlanner::getConstraintsFromPath("BlueLeave2"), true);
+  //   CommandPtr Leave2Blue = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+            
+  //   ResetOdometry();
+  //   std::vector<std::unique_ptr<Command>> p1_commands;
+  //   p1_commands.emplace_back(RetractCmdAuto);
+  //   p1_commands.emplace_back(Leave2Blue.get());
+  //   // m_drive.SetAngleAdjustment(180);
+  //   commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+  //   commands.emplace_back(PlaceHighRace);
+  //   commands.emplace_back(OpenClawCmd.get());
+  //   commands.emplace_back(new TimerCMD(.5));
+  //   commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));        
+  // }
+  // else if(pathselector == 4 && AllienceSelector == "Blue"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceBlue", PathPlanner::getConstraintsFromPath("ConeAndBalanceBlue"), true);
+  //   CommandPtr ConeBalanceBlueCmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+            
+  //   ResetOdometry();
+  //   std::vector<std::unique_ptr<Command>> p1_commands;
+  //   p1_commands.emplace_back(RetractCmdAuto);
+  //   p1_commands.emplace_back(ConeBalanceBlueCmd.get());
+  //   // m_drive.SetAngleAdjustment(180);
+  //   commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+  //   commands.emplace_back(PlaceHighRace);
+  //   commands.emplace_back(OpenClawCmd.get());
+  //   commands.emplace_back(new TimerCMD(.5));
+  //   // commands.emplace_back(RetractCmd);
+  //   // commands.emplace_back(ConeBalanceBlueCmd.get());
+  //   commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
+  //   commands.emplace_back(AutoCmd);
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));  
+  // }
+
+  // else if(pathselector == 4 && AllienceSelector == "Red"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("ConeAndBalanceRed", PathPlanner::getConstraintsFromPath("ConeAndBalanceRed"), true);
+  //   CommandPtr ConeBalanceRedCmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+            
+  //   ResetOdometry();
+  //    std::vector<std::unique_ptr<Command>> p1_commands;
+  //   p1_commands.emplace_back(RetractCmdAuto);
+  //   p1_commands.emplace_back(ConeBalanceRedCmd.get());
+  //   // m_drive.SetAngleAdjustment(180);
+  //   commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+  //   // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 160));
+  //   commands.emplace_back(PlaceHighRace);
+  //   commands.emplace_back(OpenClawCmd.get());
+  //   commands.emplace_back(new TimerCMD(.5));
+  //   commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
+  //   commands.emplace_back(AutoCmd);
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"cone" << std::endl;}));    
+  // }
+  // else if(pathselector == 5 && AllienceSelector == "Red"){
+  //   //
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Red", PathPlanner::getConstraintsFromPath("PlaceChargeStation1Red"), true);
+  //   CommandPtr PlaceDriveCrgStnRed1cmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  //   PathPlannerTrajectory examplePath2 = PathPlanner::loadPath("ChargeStation2Red", PathPlanner::getConstraintsFromPath("ChargeStation2Red"), true);
+  //   CommandPtr DriveCrgStnRed2cmd = autoBuilder.followPath(examplePath2); //examplePathCmdPtr
+            
+  //   ResetOdometry();
+  //   // m_drive.SetAngleAdjustment(180);
+  //   commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+  //   commands.emplace_back(PlaceHighRace);
+  //   commands.emplace_back(OpenClawCmd.get());
+  //   commands.emplace_back(new TimerCMD(.5));
+  //   commands.emplace_back(RetractCmdAuto);  
+  //   commands.emplace_back(PlaceDriveCrgStnRed1cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+  //   commands.emplace_back(AutoZeroHeading.get());
+  //   commands.emplace_back(DriveCrgStnRed2cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));
+  //   commands.emplace_back(AutoCmd);
+  // }
+  // else if(pathselector == 5 && AllienceSelector == "Blue"){
+  //   PathPlannerTrajectory examplePath = PathPlanner::loadPath("PlaceChargeStation1Blue", PathPlanner::getConstraintsFromPath("PlaceChargeStation1Blue"), true);
+  //   CommandPtr PlaceDriveCrgStnBlue1cmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+  //   PathPlannerTrajectory examplePath2 = PathPlanner::loadPath("ChargeStation2Blue", PathPlanner::getConstraintsFromPath("ChargeStation2Blue"), true);
+  //   CommandPtr DriveCrgStnBlue2cmd = autoBuilder.followPath(examplePath2); //examplePathCmdPtr
+            
+  //   ResetOdometry();
+  //   // m_drive.SetAngleAdjustment(180);
+  //   commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+  //   commands.emplace_back(PlaceHighRace);
+  //   commands.emplace_back(OpenClawCmd.get());
+  //   commands.emplace_back(new TimerCMD(.5));
+  //   commands.emplace_back(RetractCmdAuto);
+  //   commands.emplace_back(PlaceDriveCrgStnBlue1cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
+  //   commands.emplace_back(AutoZeroHeading.get());
+  //   commands.emplace_back(DriveCrgStnBlue2cmd.get());
+  //   commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"In Position for charging station" << std::endl;}));  
+  //   commands.emplace_back(AutoCmd);
+  // }
+  if(pathselector == 6 && AllienceSelector == "Red"){
+    // PathPlannerTrajectory examplePath = PathPlanner::loadPath("Red2place1", PathPlanner::getConstraintsFromPath("Red2place1"), true);
+    // CommandPtr Red2Place1Cmd = autoBuilder.followPath(examplePath); //examplePathCmdPtr
+    // PathPlannerTrajectory examplePath2 = PathPlanner::loadPath("Red2place2", PathPlanner::getConstraintsFromPath("Red2place2"), true);
+    // CommandPtr Red2Place2Cmd = autoBuilder.followPath(examplePath2); //examplePathCmdPtr
+    // PathPlannerTrajectory examplePath3 = PathPlanner::loadPath("Red2place3", PathPlanner::getConstraintsFromPath("Red2place3"), true);
+    // CommandPtr Red2Place3Cmd = autoBuilder.followPath(examplePath3); //examplePathCmdPtr
+            
+    // ResetOdometry();
     // std::vector<std::unique_ptr<Command>> s1_commands;
     // // s1_commands.emplace_back(RetractPickupCmdAuto);
     // s1_commands.emplace_back(new TimerCMD(.75));    
@@ -671,14 +733,17 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
     // // commands.emplace_back(PlaceHighRace);
     // commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"StartRed6" << std::endl;}));   
     // commands.emplace_back(new TimerCMD(.5));
     // commands.emplace_back(RetractPickupCmdAuto);
-    // commands.emplace_back(Red2Place1Cmd.get());   
+    // commands.emplace_back(new frc2::InstantCommand([this] {m_drive.ResetOdometry(frc::Pose2d{14.65_m, 5_m, 0_deg});}, {&m_drive}));
+    commands.emplace_back(Red2Place1Cmd.get());   
     // // commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
     // commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     // // commands.emplace_back(CloseClawCmd.get());
     // commands.emplace_back(RetractPickupCmdAuto2);
-    commands.emplace_back(Red2Place2Cmd.get());
+    // commands.emplace_back(Red2Place2Cmd.get());
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"CompletedRed6" << std::endl;}));   
     commands.emplace_back(new TimerCMD(3));
     // commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p3_commands)));    
     // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));

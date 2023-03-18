@@ -154,27 +154,27 @@ class RobotContainer {
 
   void ConfigureButtonBindings();
 
-  frc2::CommandPtr DriveCrgStnRed1cmd = DriveCrgStnRed1(m_drive);
-  frc2::CommandPtr DriveCrgStnRed2cmd = DriveCrgStnRed2(m_drive);
+  // frc2::CommandPtr DriveCrgStnRed1cmd = DriveCrgStnRed1(m_drive);
+  // frc2::CommandPtr DriveCrgStnRed2cmd = DriveCrgStnRed2(m_drive);
 
-  frc2::CommandPtr DriveCrgStnBlue1cmd = DriveCrgStnBlue1(m_drive);
-  frc2::CommandPtr DriveCrgStnBlue2cmd = DriveCrgStnBlue2(m_drive);
+  // frc2::CommandPtr DriveCrgStnBlue1cmd = DriveCrgStnBlue1(m_drive);
+  // frc2::CommandPtr DriveCrgStnBlue2cmd = DriveCrgStnBlue2(m_drive);
 
-  frc2::CommandPtr PlaceDriveCrgStnRed1cmd = PlaceDriveCrgStnRed1(m_drive);
-  frc2::CommandPtr PlaceDriveCrgStnBlue1cmd = PlaceDriveCrgStnBlue1(m_drive); 
+  // frc2::CommandPtr PlaceDriveCrgStnRed1cmd = PlaceDriveCrgStnRed1(m_drive);
+  // frc2::CommandPtr PlaceDriveCrgStnBlue1cmd = PlaceDriveCrgStnBlue1(m_drive); 
 
-  frc2::CommandPtr Leave1Blue = BlueLeave1(m_drive); 
-  frc2::CommandPtr Leave2Blue = BlueLeave2(m_drive); 
+  // frc2::CommandPtr Leave1Blue = BlueLeave1(m_drive); 
+  // frc2::CommandPtr Leave2Blue = BlueLeave2(m_drive); 
 
-  frc2::CommandPtr Leave1Red = RedLeave1(m_drive); 
-  frc2::CommandPtr Leave2Red = RedLeave2(m_drive); 
+  // frc2::CommandPtr Leave1Red = RedLeave1(m_drive); 
+  // frc2::CommandPtr Leave2Red = RedLeave2(m_drive); 
 
-  frc2::CommandPtr ConeBalanceBlueCmd = ConeBalanceBlue(m_drive); 
-  frc2::CommandPtr ConeBalanceRedCmd = ConeBalanceRed(m_drive);  
+  // frc2::CommandPtr ConeBalanceBlueCmd = ConeBalanceBlue(m_drive); 
+  // frc2::CommandPtr ConeBalanceRedCmd = ConeBalanceRed(m_drive);  
 
   frc2::CommandPtr Red2Place1Cmd = Red2Place1(m_drive);  
   frc2::CommandPtr Red2Place2Cmd = Red2Place2(m_drive);  
-  frc2::CommandPtr Red2Place3Cmd = Red2Place3(m_drive);  
+  // frc2::CommandPtr Red2Place3Cmd = Red2Place3(m_drive);  
 
 
   frc2::CommandPtr AutoZeroHeading = m_drive.ZeroHeading();
@@ -186,7 +186,7 @@ class RobotContainer {
   frc2::CommandPtr SetMidCmd = m_elevator.SetPlaceMidState();
   frc2::CommandPtr SetLowCmd = m_elevator.SetPlaceLowState();
 
-  SwerveAutoBuilder m_autoBuilder;
+  // SwerveAutoBuilder m_autoBuilder;
 
 
 
