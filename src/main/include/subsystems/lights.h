@@ -9,7 +9,7 @@
 #include <frc/XboxController.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc/DriverStation.h>
-
+#include <frc/smartdashboard/SmartDashboard.h>
 class Lights : public frc2::SubsystemBase {
  public:
   Lights();
@@ -25,6 +25,7 @@ class Lights : public frc2::SubsystemBase {
   frc2::CommandPtr AllianceColorCmdPtr();
 
   frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
+  void SetPOV(int xboxPOV);
 
 
  private:
@@ -38,4 +39,6 @@ class Lights : public frc2::SubsystemBase {
   bool coneDesired = false;
   bool redColor = true;
   bool blueColor = false;
+  bool allianceColorRed = true;
+  int cur_xboxPOV = 0;
 };

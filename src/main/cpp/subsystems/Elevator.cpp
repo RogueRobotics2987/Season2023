@@ -125,8 +125,8 @@ void Elevator::Periodic() {
       
 
       //verticalPos safety
-      if (verticalPos < 0){
-         verticalPos = 0;
+      if (verticalPos < -1){
+         verticalPos = -1;
       } else if (verticalPos > 106){
          verticalPos = 106;
       }
