@@ -138,10 +138,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_xbox, 1).WhileTrue(PickupTipCmd); //Button A
   frc2::JoystickButton(&m_xbox, 2).WhileTrue(PickupWithBumpersIntoSubstation); //button B
   frc2::JoystickButton(&m_xbox, 3).WhileTrue(PlaceMidCmd);
-  // frc2::JoystickButton(&m_newXbox, 3).WhileTrue(PlaceMidCmd); //Button X
   // frc2::JoystickButton(&m_newXbox, 8).WhileTrue(PlaceLowCmd); //Small button right
 
-  //frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());
+  //frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());  
   //frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
   frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
