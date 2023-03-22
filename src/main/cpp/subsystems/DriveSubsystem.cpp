@@ -96,11 +96,17 @@ void DriveSubsystem::Periodic() {
   // frc::SmartDashboard::PutNumber("Gyro Angle Y: ", m_gyro.GetRawGyroY());
   // frc::SmartDashboard::PutNumber("Gyro Angle Z: ", m_gyro.GetRawGyroZ());
 
+  frc::SmartDashboard::PutNumber("Odometry Rotation", m_odometry.GetPose().Rotation().Degrees().value());
+  frc::SmartDashboard::PutNumber("Odometry X", m_odometry.GetPose().X().value());
+  frc::SmartDashboard::PutNumber("Odometry Y", m_odometry.GetPose().Y().value());
+
+
+
+
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(m_gyro.GetRotation2d(),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
-
     // commented out to test, 2/17
     frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
 
