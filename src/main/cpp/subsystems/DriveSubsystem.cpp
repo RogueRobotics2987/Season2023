@@ -196,6 +196,97 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   m_rearRight.SetDesiredState(br);
 }
 
+void DriveSubsystem::DriveAutonomous(units::meters_per_second_t xSpeed,
+                           units::meters_per_second_t ySpeed,
+                           units::radians_per_second_t rot,
+                           bool fieldRelative,
+                           bool noJoystick) {
+                      
+  // commented out to test, 2/17
+  //frc::SmartDashboard::PutNumber("ROT value: ", rot.value());
+  auto states = kDriveKinematics.ToSwerveModuleStates(
+      fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+                          xSpeed, ySpeed, rot, m_gyro.GetRotation2d())
+                    : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
+
+  // for(int i = 0; i<4; i++){
+  //   states[i].speed * ModuleConstants::kFFModuleDriveController;
+  // }
+
+  kDriveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
+
+  auto [fl, fr, bl, br] = states;
+  
+  float currentAngle = fmod((double)(m_frontLeft.GetState().angle.Degrees()),180);
+  // float desiredAngle = (float)fl.angle.Degrees();
+  // TODO curentAngle = currentAngle + 89.65 Radients moduleConstants::Wheelconstants
+  //float angleDiffFL = fabs((float)(fl.angle.Degrees()) - currentAngle);
+  //float angleOff = fabs(currentAngle - desiredAngle);
+  float angleOff = (float)m_frontLeft.GetTurnPID().GetPositionError();
+  
+  // commented out to test, 2/17
+  // frc::SmartDashboard::PutNumber("Fl Current angle", currentAngle);
+  // frc::SmartDashboard::PutNumber("Fl Angle Diff",angleOff);
+  // // frc::SmartDashboard::PutNumber("m_frontLeft State Angle", m_frontLeft.GetState().angle.Degrees().value());
+  // frc::SmartDashboard::PutNumber("Fl Desired angle",(float)fl.angle.Degrees());
+  // frc::SmartDashboard::PutNumber("Fr Desired angle",(float)fr.angle.Degrees());
+  // frc::SmartDashboard::PutNumber("Bl Desired angle",(float)bl.angle.Degrees());
+  // frc::SmartDashboard::PutNumber("Br Desired angle",(float)br.angle.Degrees());
+  float epsilon = 1.0/10.0;
+  // angleOff = angleOff && fabs((angleDiffFR < 10)) && (!noJoystick);
+  // angleOff = angleOff && fabs((angleDiffBR < 10)) && (!noJoystick);
+  // angleOff = angleOff && fabs((angleDiffBL < 10)) && (!noJoystick);
+
+  // if(fl.speed > (units::velocity::meters_per_second_t)(0.05)){
+    
+  // }
+
+  // else if(fabs(angleOff) <= epsilon && noJoystick != true) {
+  //   // m_frontLeft.SetDesiredState(fl);
+  //   // m_frontRight.SetDesiredState(fr);
+  //   // m_rearLeft.SetDesiredState(bl);
+  //   // m_rearRight.SetDesiredState(br);    
+  // }
+  // else if(noJoystick){
+  //   fl.speed = (units::velocity::meters_per_second_t)(0);
+  //   fr.speed = (units::velocity::meters_per_second_t)(0);
+  //   bl.speed = (units::velocity::meters_per_second_t)(0);
+  //   br.speed = (units::velocity::meters_per_second_t)(0);
+  //  fl.angle = (units::angle::degree_t)(45);
+  //   fr.angle = (units::angle::degree_t)(135);
+  //   bl.angle = (units::angle::degree_t)(-45);
+  //   br.angle = (units::angle::degree_t)(-135); 
+  //   // m_frontLeft.SetDesiredState(fl);
+  //   // m_frontRight.SetDesiredState(fr);
+  //   // m_rearLeft.SetDesiredState(bl);
+  //   // m_rearRight.SetDesiredState(br);
+  // }
+  // else{
+  //   fl.speed = (units::velocity::meters_per_second_t)(0);
+  //   fr.speed = (units::velocity::meters_per_second_t)(0);
+  //   bl.speed = (units::velocity::meters_per_second_t)(0);
+  //   br.speed = (units::velocity::meters_per_second_t)(0);
+  // }
+
+  // if(driveSlow == true){
+  //   fl.speed = (units::velocity::meters_per_second_t)(0.5 * fl.speed);
+  //   fr.speed = (units::velocity::meters_per_second_t)(0.5 * fr.speed);
+  //   bl.speed = (units::velocity::meters_per_second_t)(0.5 * bl.speed);
+  //   br.speed = (units::velocity::meters_per_second_t)(0.5 * br.speed);
+  // }
+  // if(WheelsStraight == true){
+  //   fl.angle = (units::angle::degree_t)(0);
+  //   fr.angle = (units::angle::degree_t)(0);
+  //   bl.angle = (units::angle::degree_t)(0);
+  //   br.angle = (units::angle::degree_t)(0);
+  // }
+  
+  m_frontLeft.SetDesiredState(fl);
+  m_frontRight.SetDesiredState(fr);
+  m_rearLeft.SetDesiredState(bl);
+  m_rearRight.SetDesiredState(br);
+}
+
 void DriveSubsystem::SetModuleStates(wpi::array<frc::SwerveModuleState, 4> desiredStates) {
   kDriveKinematics.DesaturateWheelSpeeds(&desiredStates, AutoConstants::kMaxSpeed);
   
