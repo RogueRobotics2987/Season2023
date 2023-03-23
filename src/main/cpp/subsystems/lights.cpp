@@ -4,11 +4,44 @@
 
 #include "subsystems/lights.h"
 
-Lights::Lights() = default;
+Lights::Lights() {
+    frc::SmartDashboard::PutString("Lights_POV", "default");
+}
 
 // This method will be called once per scheduler run
-// false!
 void Lights::Periodic() {
+
+    if(cur_xboxPOV == 0){
+        // redColor = false;
+        // blueColor = false;
+        // cubeDesired = true;
+        // coneDesired = false;
+        // frc::SmartDashboard::PutString("Lights_POV", "purple");
+    } else if (cur_xboxPOV == 90){
+        if (allianceColorRed == true){
+            redColor = true;
+            blueColor = false;
+            cubeDesired = false;
+            coneDesired = false;
+            frc::SmartDashboard::PutString("Lights_POV", "red");
+
+        } else if (allianceColorRed == false){
+            redColor = false;
+            blueColor = true;
+            cubeDesired = false;
+            coneDesired = false;
+            frc::SmartDashboard::PutString("Lights_POV", "blue");
+        }
+    } else if (cur_xboxPOV == 180){
+        // redColor = false;
+        // blueColor = false;
+        // cubeDesired = false;
+        // coneDesired = true;
+        // frc::SmartDashboard::PutString("Lights_POV", "yellow");
+    } else if (cur_xboxPOV == 270){
+
+    }
+
     if (cubeDesired) {
         cubeoutput.Set(1);
         coneoutput.Set(0);
@@ -74,18 +107,25 @@ frc2::CommandPtr Lights::AllianceColorCmdPtr(){
             coneDesired = false;
             redColor = true;
             blueColor = false;  
+            allianceColorRed = true;
         }
         else if(AllianceColor == frc::DriverStation::Alliance::kBlue){
             cubeDesired = false; 
             coneDesired = false;
             redColor = false;
             blueColor = true;
+            allianceColorRed = false;
         }
         else{
             cubeDesired = false; 
             coneDesired = false;
             redColor = true;
             blueColor = false;
+            allianceColorRed = true;
         }
     });
+}
+
+void Lights::SetPOV(int xboxPOV){
+    cur_xboxPOV = xboxPOV;
 }

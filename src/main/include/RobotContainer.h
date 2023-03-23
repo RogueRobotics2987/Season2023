@@ -47,6 +47,7 @@
 #include "commands/BeginCompressor.h"
 #include "commands/ElevatorCmd.h"
 #include "commands/AutoBalance.h"
+#include "commands/LightsCmd.h"
 #include "subsystems/Lights.h"
 #include "commands/AutoBalance.h"
 #include "subsystems/SwerveModule.h"
@@ -145,7 +146,7 @@ class RobotContainer {
   frc2::Command* AutoCmd = new AutoBalance(m_drive);
 
   frc2::Command* PlaceHighCmd = new PlaceAutoCmd(m_elevator, 106, -30, 160); // 104 for height, was 260 for tilt before new gear ratio
-  frc2::Command* PlaceMidCmd = new PlaceAutoCmd(m_elevator, 106, -45, 160); // 104 for height
+  frc2::Command* PlaceMidCmd = new PlaceAutoCmd(m_elevator, 53, -60, 105); // 104 for height
   frc2::Command* PlaceLowCmd = new PlaceAutoCmd(m_elevator, 106, -45, 160); // 104 for height
   frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 54);// was 108 before new gear ratio
   frc2::Command* RetractCmdAuto = new PlaceAutoCmd(m_elevator, 5, 0, 0);
@@ -153,7 +154,7 @@ class RobotContainer {
   frc2::Command* RetractPickupCmdAuto2 = new PlaceAutoCmd(m_elevator, 5, -10, 90);
   frc2::Command* RetractCmd = new PlaceAutoCmd(m_elevator, 5, 0, 0);
   frc2::Command* PickupTipCmd = new PlaceAutoCmd(m_elevator, 29, -171.5, 132);  //30, -171.5, 242 //was 30 fro height
-  frc2::Command* PickupWithBumpersIntoSubstation = new PlaceAutoCmd(m_elevator, 61.5, -103, 0);//69, -110, 0
+  frc2::Command* PickupWithBumpersIntoSubstation = new PlaceAutoCmd(m_elevator, 70, -121, 0);//69, -110, 0 //was 61.5, -103, 0
   frc2::Command* PickupFlatAuto = new PlaceAutoCmd(m_elevator, 0, -81, 160);//69, -110, 0
   
 
