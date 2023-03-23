@@ -557,7 +557,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
-  SwerveAutoBuilder autoBuilder(
+  SwerveAutoBuilder autoBuilder = SwerveAutoBuilder(
       [&m_drive]() { return m_drive.GetPose(); }, // Function to supply current robot pose
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
@@ -566,14 +566,18 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-  );
+      );
 
   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
   };
 
   frc2::CommandPtr RobotContainer::Twist2(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Twist2", PathPlanner::getConstraintsFromPath("Twist2"), true);
+  units::meters_per_second_squared_t maxAccel = units::meters_per_second_squared_t(3.0);
+  units::meters_per_second_t maxVel = units::meters_per_second_t(3.6);
+  PathConstraints djoPathConstraints = PathConstraints(maxVel,maxAccel);
+
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Twist2", djoPathConstraints, true);
   std::cout<<"Twist2"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
@@ -588,6 +592,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
   );
+  //autoBuilder.resetPose(examplePath); // Generates a CommandPtr that resets the Robot pose to the initial value.
 
   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
   };
