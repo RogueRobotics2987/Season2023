@@ -5,39 +5,38 @@
 #include "subsystems/lights.h"
 
 Lights::Lights() {
-    frc::SmartDashboard::PutString("Lights_POV", "default");
+    frc::SmartDashboard::PutString("Lights_POV", "Default");
 }
 
 // This method will be called once per scheduler run
 void Lights::Periodic() {
-
     if(cur_xboxPOV == 0){
         // redColor = false;
         // blueColor = false;
         // cubeDesired = true;
         // coneDesired = false;
-        // frc::SmartDashboard::PutString("Lights_POV", "purple");
+        // frc::SmartDashboard::PutString("Lights_POV", "Purple");
     } else if (cur_xboxPOV == 90){
         if (allianceColorRed == true){
             redColor = true;
             blueColor = false;
             cubeDesired = false;
             coneDesired = false;
-            frc::SmartDashboard::PutString("Lights_POV", "red");
+            frc::SmartDashboard::PutString("Lights_POV", "Red");
 
         } else if (allianceColorRed == false){
             redColor = false;
             blueColor = true;
             cubeDesired = false;
             coneDesired = false;
-            frc::SmartDashboard::PutString("Lights_POV", "blue");
+            frc::SmartDashboard::PutString("Lights_POV", "Blue");
         }
     } else if (cur_xboxPOV == 180){
         // redColor = false;
         // blueColor = false;
         // cubeDesired = false;
         // coneDesired = true;
-        // frc::SmartDashboard::PutString("Lights_POV", "yellow");
+        // frc::SmartDashboard::PutString("Lights_POV", "Yellow");
     } else if (cur_xboxPOV == 270){
 
     }
@@ -103,7 +102,7 @@ frc2::CommandPtr Lights::AllianceColorCmdPtr(){
     return this->RunOnce(
         [this] {
         if(AllianceColor == frc::DriverStation::Alliance::kRed){
-            cubeDesired = false; 
+            cubeDesired = false;
             coneDesired = false;
             redColor = true;
             blueColor = false;  
@@ -116,16 +115,18 @@ frc2::CommandPtr Lights::AllianceColorCmdPtr(){
             blueColor = true;
             allianceColorRed = false;
         }
-        else{
-            cubeDesired = false; 
-            coneDesired = false;
-            redColor = true;
-            blueColor = false;
-            allianceColorRed = true;
-        }
     });
 }
 
 void Lights::SetPOV(int xboxPOV){
     cur_xboxPOV = xboxPOV;
+}
+
+void Lights::FindAllianceColor(){
+        if(AllianceColor == frc::DriverStation::Alliance::kRed){
+            allianceColorRed = true;
+        }
+        else if(AllianceColor == frc::DriverStation::Alliance::kBlue){
+            allianceColorRed = false;
+        }
 }
