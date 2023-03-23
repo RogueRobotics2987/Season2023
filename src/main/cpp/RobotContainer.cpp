@@ -858,13 +858,13 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 2 && AllienceSelector == "Test"){
     ResetOdometry();
-    commands.emplace_back(Forwards45Cmd.get()); 
-    commands.emplace_back(Backwards45Cmd.get()); 
+    commands.emplace_back(Twist2Cmd.get()); 
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished" << std::endl;}));  
-  }
+  }  
   else if(pathselector == 3 && AllienceSelector == "Test"){
     ResetOdometry();
-    commands.emplace_back(Twist2Cmd.get()); 
+    commands.emplace_back(Forwards45Cmd.get()); 
+    commands.emplace_back(Backwards45Cmd.get()); 
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished" << std::endl;}));  
   }
   else{

@@ -219,7 +219,8 @@ void DriveSubsystem::DriveAutonomous(units::meters_per_second_t xSpeed,
   //   states[i].speed * ModuleConstants::kFFModuleDriveController;
   // }
 
-  kDriveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
+  // kDriveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
+  kDriveKinematics.DesaturateWheelSpeeds(&states, units::velocity::meters_per_second_t(2.5));
 
   auto [fl, fr, bl, br] = states;
   
