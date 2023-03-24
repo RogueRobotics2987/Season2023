@@ -74,7 +74,8 @@ DriveSubsystem::DriveSubsystem()
 
 
       m_odometry{kDriveKinematics,
-                 m_gyro.GetRotation2d(),
+                //  m_gyro.GetRotation2d() + orientationOffset,
+                 frc::Rotation2d(m_gyro.GetRotation2d().Radians() + orientationOffset.Radians()),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
                  frc::Pose2d{}} 
@@ -101,14 +102,20 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("Odometry Y", m_odometry.GetPose().Y().value());
 
 
-
+  if(ranAuto == true){
+    orientationOffset = frc::Rotation2d(3.14159265359_rad);
+    //used to set field oriented in autonomous when we arent facing the correct way
+  }
+  else{
+    orientationOffset = frc::Rotation2d(0_rad);
+  }
 
   // Implementation of subsystem periodic method goes here.
-  m_odometry.Update(m_gyro.GetRotation2d(),
+  m_odometry.Update(frc::Rotation2d(m_gyro.GetRotation2d().Radians() + orientationOffset.Radians()),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
     // commented out to test, 2/17
-    frc::SmartDashboard::PutNumber("NavX Heading: ", (double)m_gyro.GetRotation2d().Degrees());
+    frc::SmartDashboard::PutNumber("NavX Heading + orientationOffset", (double)(m_gyro.GetRotation2d().Degrees()+ orientationOffset.Degrees()));
 
   m_field.SetRobotPose(m_odometry.GetPose());
 }
@@ -123,7 +130,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   //frc::SmartDashboard::PutNumber("ROT value: ", rot.value());
   auto states = kDriveKinematics.ToSwerveModuleStates(
       fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
-                          xSpeed, ySpeed, rot, m_gyro.GetRotation2d())
+                          xSpeed, ySpeed, rot, frc::Rotation2d(m_gyro.GetRotation2d().Radians() + orientationOffset.Radians()))
                     : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
 
   // for(int i = 0; i<4; i++){
@@ -212,7 +219,7 @@ void DriveSubsystem::DriveAutonomous(units::meters_per_second_t xSpeed,
   //frc::SmartDashboard::PutNumber("ROT value: ", rot.value());
   auto states = kDriveKinematics.ToSwerveModuleStates(
       fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
-                          xSpeed, ySpeed, rot, m_gyro.GetRotation2d())
+                          xSpeed, ySpeed, rot, frc::Rotation2d(m_gyro.GetRotation2d().Radians() + orientationOffset.Radians()))
                     : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
 
   // for(int i = 0; i<4; i++){
@@ -311,7 +318,7 @@ void DriveSubsystem::ResetEncoders() {
 }
 
 units::degree_t DriveSubsystem::GetHeading() const {
-  return m_gyro.GetRotation2d().Degrees();
+  return m_gyro.GetRotation2d().Degrees() + orientationOffset.Degrees();
 }
 
 float DriveSubsystem::GetPitch() {
@@ -330,6 +337,7 @@ float DriveSubsystem::GetRawGyroX(){
 frc2::CommandPtr DriveSubsystem::ZeroHeading() {
   return this->RunOnce(
     [this] {
+      SetRanAuto(false);
       m_gyro.Reset();
     });
 }
@@ -422,4 +430,8 @@ frc2::CommandPtr DriveSubsystem::Twitch(bool direction){
     DriveSubsystem::Drive(0_mps, 0.0_mps, 0_rad_per_s, false, false);
   }
   });
+}
+
+void DriveSubsystem::SetRanAuto(bool ranAuto){
+  this-> ranAuto = ranAuto;
 }

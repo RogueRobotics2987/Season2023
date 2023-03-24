@@ -23,6 +23,7 @@ class Robot : public frc::TimedRobot {
   void TeleopPeriodic() override;
   void TestPeriodic() override;
 
+  bool ranAuto = false;
  private:
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.

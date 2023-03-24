@@ -117,7 +117,7 @@ class RobotContainer {
 
   frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
 
-  
+  void SetRanAuto(bool ranAuto);
 
   double GetHeading();
 

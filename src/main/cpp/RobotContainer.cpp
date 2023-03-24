@@ -1164,3 +1164,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   return(x);
 }
+
+void RobotContainer::SetRanAuto(bool ranAuto){
+  m_drive.SetRanAuto(ranAuto);
+}

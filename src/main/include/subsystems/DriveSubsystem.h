@@ -136,6 +136,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
       frc::Translation2d{-kWheelBase / 2, kTrackWidth / 2},
       frc::Translation2d{-kWheelBase / 2, -kTrackWidth / 2}};
 
+  void SetRanAuto(bool ranAuto);
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -161,5 +163,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
   int numAT = 0;
   bool fieldOrientated = false;
   //int cur_pipeline = 7;
+
+  bool ranAuto = false;
+  frc::Rotation2d orientationOffset = 0_rad;
+
 };
 
