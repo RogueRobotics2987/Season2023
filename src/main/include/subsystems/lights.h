@@ -9,7 +9,7 @@
 #include <frc/XboxController.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc/DriverStation.h>
-
+#include <frc/smartdashboard/SmartDashboard.h>
 class Lights : public frc2::SubsystemBase {
  public:
   Lights();
@@ -25,17 +25,22 @@ class Lights : public frc2::SubsystemBase {
   frc2::CommandPtr AllianceColorCmdPtr();
 
   frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
+  void SetPOV(int xboxPOV);
+  void FindAllianceColor();
 
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  frc::DigitalOutput cubeoutput {2}; //3
-  frc::DigitalOutput coneoutput {4}; //1
-  frc::DigitalOutput redoutput {1}; //4
-  frc::DigitalOutput blueoutput {3}; //2
+  //first one has red and yellow correct but blue shown instead of purple
+  frc::DigitalOutput cubeoutput {3}; 
+  frc::DigitalOutput coneoutput {4}; 
+  frc::DigitalOutput redoutput {1}; 
+  frc::DigitalOutput blueoutput {2}; 
   bool cubeDesired = false;
   bool coneDesired = false;
   bool redColor = true;
   bool blueColor = false;
+  bool allianceColorRed;
+  int cur_xboxPOV = 0;
 };
