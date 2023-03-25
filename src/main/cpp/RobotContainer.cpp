@@ -982,6 +982,24 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"BlueMidCmd" << std::endl;}));  
   }
+  else if(pathselector == 8 && AllienceSelector == "Red"){
+    ResetOdometry();
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(PlaceHighRace);
+    commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(new TimerCMD(.5));
+    commands.emplace_back(RetractCmdAuto);    
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Red Place" << std::endl;}));  
+  }
+  else if(pathselector == 8 && AllienceSelector == "Blue"){
+    ResetOdometry();
+    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(PlaceHighRace);
+    commands.emplace_back(OpenClawCmd.get());
+    commands.emplace_back(new TimerCMD(.5));
+    commands.emplace_back(RetractCmdAuto);    
+    commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Blue Place" << std::endl;}));  
+  }
   else if(pathselector == 0 && AllienceSelector == "Test"){
     ResetOdometry();
     commands.emplace_back(Forward1Cmd.get()); 
@@ -1115,10 +1133,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     else if(pathselector == 6 && AllienceSelector == "Blue"){
       m_drive.ResetOdometry(frc::Pose2d{1.85_m, 5_m, 180_deg});
     }
-    else if(pathselector == 7 && AllienceSelector == "Blue"){
+    else if((pathselector == 7 || pathselector == 8) && AllienceSelector == "Blue"){
       m_drive.ResetOdometry(frc::Pose2d{1.8_m, 3.3_m, 180_deg});
     }
-    else if(pathselector == 7 && AllienceSelector == "Red"){
+    else if((pathselector == 7 || pathselector == 8)  && AllienceSelector == "Red"){
       m_drive.ResetOdometry(frc::Pose2d{14.65_m, 3.25_m, 0_deg});
     }
     else if((pathselector == 0 || pathselector == 1 || pathselector == 2) && AllienceSelector == "Test"){
