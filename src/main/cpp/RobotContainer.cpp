@@ -759,7 +759,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave1Red.get());
     m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -771,7 +771,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave1Blue.get());
     m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -783,7 +783,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave2Red.get());
     m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -795,7 +795,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(Leave2Blue.get());
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -807,7 +807,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(ConeBalanceBlueCmd.get());
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -822,7 +822,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(ConeBalanceRedCmd.get());
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     // commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -60, 160));
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
@@ -839,7 +839,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 5 && AllienceSelector == "Red"){
     ResetOdometry();
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -854,7 +854,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   else if(pathselector == 5 && AllienceSelector == "Blue"){
     ResetOdometry();
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -870,7 +870,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> s1_commands;
     s1_commands.emplace_back(RetractPickupCmdAuto);
-    s1_commands.emplace_back(new TimerCMD(.55));    
+    s1_commands.emplace_back(new TimerCMD(1.55));    
     s1_commands.emplace_back(PickupFlatAuto);
     //s1 Retracts Arm back then lowers to pickup cube
     std::vector<std::unique_ptr<Command>> p1_commands;
@@ -887,7 +887,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     // p3_commands.emplace_back(Red2Place2Cmd.get());          
 
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.2));
@@ -914,7 +914,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> s1_commands;
     s1_commands.emplace_back(RetractPickupCmdAuto);
-    s1_commands.emplace_back(new TimerCMD(.55));    
+    s1_commands.emplace_back(new TimerCMD(1.55));    
     s1_commands.emplace_back(PickupFlatAuto);
     //s1 Retracts Arm back then lowers to pickup cube
     std::vector<std::unique_ptr<Command>> p1_commands;
@@ -931,7 +931,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     // p3_commands.emplace_back(Red2Place2Cmd.get());          
 
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.2));
@@ -960,7 +960,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(RedMidCmd.get());
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -974,7 +974,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     p1_commands.emplace_back(RetractCmdAuto);
     p1_commands.emplace_back(BlueMidCmd.get());
     // m_drive.SetAngleAdjustment(180);
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -984,7 +984,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 8 && AllienceSelector == "Red"){
     ResetOdometry();
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
@@ -993,7 +993,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 8 && AllienceSelector == "Blue"){
     ResetOdometry();
-    commands.emplace_back(new PlaceAutoCmd(m_elevator, 104, -30, 160));
+    commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));

@@ -165,16 +165,20 @@ class RobotContainer {
   
 
   frc2::ParallelRaceGroup* PlaceHighRace = new ParallelRaceGroup(TimerCMD(0.5), PlaceAutoCmd(m_elevator, 104, -60, 160));
-  frc2::ParallelRaceGroup* PlaceHighRace2 = new ParallelRaceGroup(TimerCMD(3), PlaceAutoCmd(m_elevator, 104, -30, 160),
+  frc2::ParallelRaceGroup* PlaceHighRace2 = new ParallelRaceGroup(TimerCMD(1), PlaceAutoCmd(m_elevator, 104, -30, 160),
                     frc2::RunCommand([this](){m_drive.Drive(units::meters_per_second_t(0),
                       units::meters_per_second_t(0),
                       units::radians_per_second_t(0),false,false);}, {&m_drive}
                       ));
-  frc2::ParallelRaceGroup* PlaceHighRace3 = new ParallelRaceGroup(TimerCMD(3), PlaceAutoCmd(m_elevator, 104, -60, 160),
+  frc2::ParallelRaceGroup* PlaceHighRace3 = new ParallelRaceGroup(TimerCMD(1), PlaceAutoCmd(m_elevator, 104, -60, 160),
                     frc2::RunCommand([this](){m_drive.Drive(units::meters_per_second_t(0),
                       units::meters_per_second_t(0),
                       units::radians_per_second_t(0),false,false);}, {&m_drive}
                       ));
+
+  frc2::ParallelRaceGroup* initialPlaceRace = new ParallelRaceGroup(TimerCMD(3), PlaceAutoCmd(m_elevator, 104, -30, 160));
+
+
   // frc2::ParallelCommandGroup* RetractMove = new ParallelCommandGroup(RetractCmd, TimerCMD(0.5));
   // The chooser for the autonomous routines 
   frc::SendableChooser<frc2::Command*> m_chooser;
