@@ -55,7 +55,7 @@ RobotContainer::RobotContainer() {
                     units::meters_per_second_t(
                     -safeX * AutoConstants::kMaxSpeed),
                     units::radians_per_second_t(
-                    -safeRot * PI * 2.25),//was 1.5
+                    -safeRot * PI * 1.5),//was 1.5 //was 2.25 until after Friday of La Crosse
                     fieldOrientated,
                     noJoystick);
       // m_drive.Drive(units::meters_per_second_t(0),
