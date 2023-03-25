@@ -548,7 +548,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.DriveAutonomous(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -557,10 +557,10 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
   return autoBuilder.followPath(examplePath); //examplePathCmdPtr
   };
 
-  frc2::CommandPtr RobotContainer::Twist2(DriveSubsystem &m_drive){
+  frc2::CommandPtr RobotContainer::Spin1(DriveSubsystem &m_drive){
 
-  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Twist2", PathPlanner::getConstraintsFromPath("Twist2"), true);
-  std::cout<<"Twist2"<<std::endl;
+  PathPlannerTrajectory examplePath = PathPlanner::loadPath("Spin1", PathPlanner::getConstraintsFromPath("Spin1"), true);
+  std::cout<<"Spin1"<<std::endl;
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
@@ -569,7 +569,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.DriveAutonomous(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -590,7 +590,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.DriveAutonomous(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -611,7 +611,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.DriveAutonomous(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -632,7 +632,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.DriveAutonomous(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -653,7 +653,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.DriveAutonomous(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -674,7 +674,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.DriveAutonomous(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -695,7 +695,7 @@ frc2::CommandPtr RobotContainer::ConeBalanceRed(DriveSubsystem &m_drive){
       [&m_drive](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
       PIDConstants(AutoConstants::kPXYController, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
       PIDConstants(AutoConstants::kPThetaController, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.DriveAutonomous(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
+      [&m_drive](frc::ChassisSpeeds speeds) { m_drive.Drive(speeds.vx, speeds.vy, speeds.omega, false, false); }, // Output function that accepts field relative ChassisSpeeds
       eventMap, // Our event map
       { &m_drive }, // Drive requirements, usually just a single drive subsystem
       false // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -999,7 +999,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   }
   else if(pathselector == 2 && AllienceSelector == "Test"){
     ResetOdometry();
-    commands.emplace_back(Twist2Cmd.get()); 
+    commands.emplace_back(Spin1Cmd.get());
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished" << std::endl;}));  
   }  
   else if(pathselector == 3 && AllienceSelector == "Test"){
