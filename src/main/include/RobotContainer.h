@@ -55,6 +55,7 @@
 #include "subsystems/Elevator.h"
 #include "commands/PlaceAutoCmd.h"
 #include "commands/TimerCMD.h"
+#include "commands/TimedBalanceCmd.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -115,6 +116,10 @@ class RobotContainer {
 
   frc2::CommandPtr Forwards45(DriveSubsystem &m_drive);
   frc2::CommandPtr Backwards45(DriveSubsystem &m_drive);
+  
+  frc2::CommandPtr BlueOverStn(DriveSubsystem &m_drive);
+  frc2::CommandPtr RedOverStn(DriveSubsystem &m_drive);
+
 
   frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
 
@@ -150,6 +155,9 @@ class RobotContainer {
   //frc2::Command *AutoCmd;
 
   frc2::Command* AutoCmd = new AutoBalance(m_drive);
+
+  frc2::Command* TimedBalLeftCmd = new TimedBalanceCmd("Left", m_drive);
+  frc2::Command* TimedBalRightCmd = new TimedBalanceCmd("Right", m_drive);
 
   frc2::Command* PlaceHighCmd = new PlaceAutoCmd(m_elevator, 106, -30, 160); // 104 for height, was 260 for tilt before new gear ratio
   frc2::Command* PlaceMidCmd = new PlaceAutoCmd(m_elevator, 53, -63.6, 87); // 104 for height
@@ -222,7 +230,10 @@ class RobotContainer {
   frc2::CommandPtr Blue2Place2Cmd = Blue2Place2(m_drive);  
   
   frc2::CommandPtr BlueMidCmd = BlueMid(m_drive);  
-  frc2::CommandPtr RedMidCmd = RedMid(m_drive);  
+  frc2::CommandPtr RedMidCmd = RedMid(m_drive);
+
+  frc2::CommandPtr BlueOverStnCmd = BlueOverStn(m_drive);  
+  frc2::CommandPtr RedOverStnCmd = RedOverStn(m_drive);  
 
 
   frc2::CommandPtr AutoZeroHeading = m_drive.ZeroHeading();
