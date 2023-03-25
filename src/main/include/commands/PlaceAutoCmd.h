@@ -40,6 +40,8 @@ class PlaceAutoCmd
   double m_heightRevolutions;
   double m_tiltRevolutions;
   double m_tiltVelocity;
+  double tiltTolerance = 5.0;
+
   
 
 

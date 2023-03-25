@@ -152,9 +152,9 @@ class RobotContainer {
   frc2::Command* AutoCmd = new AutoBalance(m_drive);
 
   frc2::Command* PlaceHighCmd = new PlaceAutoCmd(m_elevator, 106, -30, 160); // 104 for height, was 260 for tilt before new gear ratio
-  frc2::Command* PlaceMidCmd = new PlaceAutoCmd(m_elevator, 53, -60, 105); // 104 for height
+  frc2::Command* PlaceMidCmd = new PlaceAutoCmd(m_elevator, 53, -63.6, 87); // 104 for height
   frc2::Command* PlaceLowCmd = new PlaceAutoCmd(m_elevator, 106, -45, 160); // 104 for height
-  frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 54);// was 108 before new gear ratio
+  frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 54);//70.4, -90,54
   frc2::Command* RetractCmdAuto = new PlaceAutoCmd(m_elevator, 5, 0, 0);
   frc2::Command* RetractPickupCmdAuto = new PlaceAutoCmd(m_elevator, 5, -10, 90);
   frc2::Command* RetractPickupCmdAuto2 = new PlaceAutoCmd(m_elevator, 5, -10, 90);

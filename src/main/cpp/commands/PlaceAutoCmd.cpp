@@ -36,7 +36,7 @@ void PlaceAutoCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void PlaceAutoCmd::Execute() {
   double m_actualTiltVelocity;
-  if(IsClose(m_tiltRevolutions, m_elevator->TiltEncoderValues(), 5.0)){
+  if(IsClose(m_tiltRevolutions, m_elevator->TiltEncoderValues(), tiltTolerance)){
     m_actualTiltVelocity = 0;
   }
   else if(fabs(m_tiltRevolutions - m_elevator->TiltEncoderValues()) > 15){
@@ -67,7 +67,7 @@ void PlaceAutoCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool PlaceAutoCmd::IsFinished() {
-  if(IsClose(m_elevator->TiltEncoderValues(), m_tiltRevolutions, 7.5) && 
+  if(IsClose(m_elevator->TiltEncoderValues(), m_tiltRevolutions, tiltTolerance) && 
     IsClose(m_elevator->ArmEncoderValues(), m_armAngle, 5) && 
     IsClose(m_elevator->HeightEncoderValues(), m_heightRevolutions, 10))
     {
