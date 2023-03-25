@@ -228,6 +228,9 @@ void Elevator::ElevatorTilt(double lean){
 
 
 }
+void Elevator::ElevatorSetTiltOveride(double overide){
+ tiltVal = overide;
+}
 
 void Elevator::ElevatorArm(double armXboxVal){
 

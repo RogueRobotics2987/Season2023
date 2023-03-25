@@ -52,7 +52,7 @@ void PlaceAutoCmd::Execute() {
   frc::SmartDashboard::PutNumber("Elevator auto place height Actual", m_elevator->HeightEncoderValues());
   frc::SmartDashboard::PutNumber("Elevator auto place Tilt Desired", m_tiltRevolutions);
   frc::SmartDashboard::PutNumber("Elevator auto place Tilt Actual", m_elevator->TiltEncoderValues());
-  m_elevator->m_tiltElevatorMotor.Set(m_actualTiltVelocity);
+  m_elevator->ElevatorSetTiltOveride(m_actualTiltVelocity);
   m_elevator->AutoPlace(m_armAngle, m_heightRevolutions);
   frc::SmartDashboard::PutString("PlaceCmdState", "Execute");
 
@@ -61,7 +61,7 @@ void PlaceAutoCmd::Execute() {
 // Called once the command ends or is interrupted.
 void PlaceAutoCmd::End(bool interrupted) {
   frc::SmartDashboard::PutNumber("Elevator auto place Tilt Velocity", 0);
-  m_elevator->m_tiltElevatorMotor.Set(0.0);
+  m_elevator->ElevatorSetTiltOveride(0);
   frc::SmartDashboard::PutString("PlaceCmdState", "End");
 }
 

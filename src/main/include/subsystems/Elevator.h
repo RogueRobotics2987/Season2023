@@ -42,6 +42,7 @@ class Elevator : public frc2::SubsystemBase {
    */
   void ElevatorVert(double elevatorUp, double elevatorDown);
   void ElevatorTilt(double lean);
+  void ElevatorSetTiltOveride(double overide);
   void ElevatorArm(double armXboxVal);
   void SafeArm();
   void Periodic() override;

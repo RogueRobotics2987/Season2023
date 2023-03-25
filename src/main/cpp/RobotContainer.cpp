@@ -1015,7 +1015,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(RetractCmdAuto);
-    p1_commands.emplace_back(BlueOverStnCmd.get());
+    p1_commands.emplace_back(RedOverStnCmd.get());
     commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
@@ -1029,7 +1029,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     ResetOdometry();
     std::vector<std::unique_ptr<Command>> p1_commands;
     p1_commands.emplace_back(RetractCmdAuto);
-    p1_commands.emplace_back(RedOverStnCmd.get());
+    p1_commands.emplace_back(BlueOverStnCmd.get());
     commands.emplace_back(initialPlaceRace);
     commands.emplace_back(PlaceHighRace);
     commands.emplace_back(OpenClawCmd.get());
