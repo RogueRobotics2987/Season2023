@@ -1021,7 +1021,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
     commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
-    commands.emplace_back(TimedBalRightCmd);
+    commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"RedMidCmd" << std::endl;}));
     
   }
@@ -1035,7 +1035,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.5));
     commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
-    commands.emplace_back(TimedBalRightCmd);
+    commands.emplace_back(AutoCmd);
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"RedMidCmd" << std::endl;}));
   }
   else if(pathselector == 0 && AllienceSelector == "Test"){
@@ -1064,6 +1064,17 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(Backwards45Cmd.get()); 
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished" << std::endl;}));  
   }
+  else if(pathselector == 0 && AllienceSelector == "TestRight"){
+    ResetOdometry();
+    commands.emplace_back(TimedBalRightCmd); 
+ 
+  }
+  else if(pathselector == 0 && AllienceSelector == "TestLeft"){
+    ResetOdometry();
+    commands.emplace_back(TimedBalLeftCmd); 
+
+  }
+
   else{
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Do Nothing" << std::endl;}));
   }

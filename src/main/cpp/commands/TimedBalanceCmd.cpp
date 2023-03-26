@@ -22,10 +22,10 @@ void TimedBalanceCmd::Execute() {
   
 
   if(m_direction == "Left"){
-    actSpeed = speed * -1;
+    actSpeed = speed * 1;
   }
   else if(m_direction == "Right"){
-    actSpeed = speed * 1;
+    actSpeed = speed * -1;
   }
 
   if(m_state == 0){
@@ -38,8 +38,8 @@ void TimedBalanceCmd::Execute() {
 
   }
   else if(m_state == 1){
-    if(m_timer.Get() <= 0.75_s){
-    m_drive->Drive(0_mps, actSpeed * 0.5, 0_rad_per_s, false, false);
+    if(m_timer.Get() <= 3.25_s){
+    m_drive->Drive(0_mps, actSpeed * 0.45, 0_rad_per_s, false, false);
     }
     else{
       m_state = 2;
