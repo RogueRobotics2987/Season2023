@@ -41,27 +41,27 @@ RobotContainer::RobotContainer() {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
  m_drive.SetDefaultCommand(frc2::RunCommand(
-      [this] {
+      [this] { 
         //   std::cout << "sea out in robot container" << std::endl;
-          frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetX());
-          frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetY());
-          frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetZ());
+          frc::SmartDashboard::PutNumber("Left Hand Y", m_driverController.GetLeftX());
+          frc::SmartDashboard::PutNumber("Right Hand Y", m_driverController.GetLeftY());
+          frc::SmartDashboard::PutNumber("Left Hand X", m_driverController.GetRightX());
         
         bool noJoystick = false;
         bool noJoystickX = false;
         bool noJoystickY = false;
         bool noJoystickRot = false;
-        double safeX = m_driverController.GetX();
+        double safeX = m_driverController.GetLeftX();
         if(fabs(safeX)<0.1) {
             safeX=0;
             noJoystickX = true;
             }
-        double safeY =  m_driverController.GetY();
+        double safeY =  m_driverController.GetLeftY();
         if(fabs(safeY)<0.1) { 
             safeY=0;
             noJoystickY = true;
             }
-        double safeRot = m_driverController.GetZ();
+        double safeRot = m_driverController.GetRightX();
         if(fabs(safeRot)<0.1) {
             safeRot=0;
             noJoystickRot = true;
