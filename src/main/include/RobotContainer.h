@@ -114,6 +114,8 @@ class RobotContainer {
 
   frc2::CommandPtr Spin1(DriveSubsystem &m_drive);
 
+  frc2::CommandPtr Rotate180(DriveSubsystem &m_drive);
+
   frc2::CommandPtr Forwards45(DriveSubsystem &m_drive);
   frc2::CommandPtr Backwards45(DriveSubsystem &m_drive);
   
@@ -234,6 +236,8 @@ class RobotContainer {
 
   frc2::CommandPtr BlueOverStnCmd = BlueOverStn(m_drive);  
   frc2::CommandPtr RedOverStnCmd = RedOverStn(m_drive);  
+
+  frc2::CommandPtr Rotate180Cmd = Rotate180(m_drive);
 
 
   frc2::CommandPtr AutoZeroHeading = m_drive.ZeroHeading();
