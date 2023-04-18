@@ -26,6 +26,7 @@ void ElevatorCmd::Execute() {
   m_elevator->ElevatorTilt(m_xbox->GetRawAxis(1)); //Y axis of the left joystick on the xbox controller
   m_elevator->ElevatorArm(m_xbox->GetRawAxis(5)); //Y axis of the right joystick on the xbox controller
   frc::SmartDashboard::PutNumber("Elevator arm xbox value", m_xbox->GetRawAxis(5));
+  //m_elevator->TriggerButtons(m_newXbox->GetRawAxis(2), m_elevator->GetRawAxis(3));
   
 }
 

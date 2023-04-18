@@ -344,3 +344,33 @@ void Elevator::AutoPlace(double armAngle, double vertRevolutions){
    armPos = armAngle; 
    verticalPos = vertRevolutions;
 }
+
+//this is if Ian wants an elevator button on the triggers of his xbox
+/*void Elevator::TriggerButtons(double leftTrigger, double rightTrigger){
+   if (leftTrigger > 0.15){
+      armPos = -88;
+      verticalPos = 5;
+      //m_tiltElevatorMotor.Set();
+        double m_actualTiltVelocity;
+  if(IsClose(m_tiltRevolutions, m_elevator->TiltEncoderValues(), tiltTolerance)){
+    tiltVal = 0;
+  }
+  else if(fabs(m_tiltRevolutions - m_elevator->TiltEncoderValues()) > 15){
+    tiltVal = m_tiltVelocity;
+  }
+  else{
+    tiltVal = m_tiltVelocity/2;
+  }
+
+   } else if (rightTrigger > 0.15){
+      armPos = -5;
+   }
+}
+bool Elevator::IsClose(double check1, double check2, double thresh){
+  if(fabs(check1 - check2) < thresh){
+    return true;
+  }
+  else{
+    return false;
+  }
+}*/

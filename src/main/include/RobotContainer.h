@@ -169,10 +169,10 @@ class RobotContainer {
   frc2::Command* RetractPickupCmdAuto = new PlaceAutoCmd(m_elevator, 5, -10, 90);
   frc2::Command* RetractPickupCmdAuto2 = new PlaceAutoCmd(m_elevator, 5, -10, 90);
   frc2::Command* RetractCmd = new PlaceAutoCmd(m_elevator, 5, 0, 0);
-  frc2::Command* PickupTipCmd = new PlaceAutoCmd(m_elevator, 29, -171.5, 132);  //30, -171.5, 242 //was 30 fro height
+  frc2::Command* PickupTipCmd = new PlaceAutoCmd(m_elevator, 34, -171.5, 132);  //height was 29
   frc2::Command* PickupFlatAuto = new PlaceAutoCmd(m_elevator, 0, -81, 160);//69, -110, 0
   frc2::Command* PickupWithBumpersIntoSubstation = new PlaceAutoCmd(m_elevator, 70, -121, 0);//69, -110, 0 //was 61.5, -103, 0
-  
+  frc2::Command* PickupGroundStandingCone = new PlaceAutoCmd(m_elevator, 5, -88, 160);
 
   frc2::ParallelRaceGroup* PlaceHighRace = new ParallelRaceGroup(TimerCMD(0.5), PlaceAutoCmd(m_elevator, 104, -60, 160));
   frc2::ParallelRaceGroup* PlaceHighRace2 = new ParallelRaceGroup(TimerCMD(1), PlaceAutoCmd(m_elevator, 104, -30, 160),
