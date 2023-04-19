@@ -19,7 +19,9 @@
 class InPlaceRotationCmd
     : public frc2::CommandHelper<frc2::CommandBase, InPlaceRotationCmd> {
  public:
-  InPlaceRotationCmd(double angle);
+  InPlaceRotationCmd(double angle, DriveSubsystem &drive);
+
+  double DistanceBetweenAngles(double angle1, double angle2);
 
   void Initialize() override;
 
@@ -32,7 +34,13 @@ class InPlaceRotationCmd
   double m_angle;
 
  private:
-  DriveSubsystem m_drive;
- 
+  DriveSubsystem* m_drive;
+  units::angular_velocity::radians_per_second_t max_rot_speed = 4.17_rad_per_s; //4.17
+  units::angular_velocity::radians_per_second_t mid_rot_speed = 0.785_rad_per_s; //1.57
+  double outer_band = 30;
+  double inner_band = 5;
+  double m_dist;
+  double turn_amount;
+  double rot_kp = 0.045;
 
 };

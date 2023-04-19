@@ -49,13 +49,13 @@
 #include "commands/AutoBalance.h"
 #include "commands/LightsCmd.h"
 #include "subsystems/Lights.h"
-#include "commands/AutoBalance.h"
 #include "subsystems/SwerveModule.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/Elevator.h"
 #include "commands/PlaceAutoCmd.h"
 #include "commands/TimerCMD.h"
 #include "commands/TimedBalanceCmd.h"
+#include "commands/InPlaceRotationCmd.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -101,7 +101,15 @@ class RobotContainer {
   frc2::CommandPtr Red2Place3(DriveSubsystem &m_drive);
 
   frc2::CommandPtr Blue2Place1(DriveSubsystem &m_drive);
-  frc2::CommandPtr Blue2Place2(DriveSubsystem &m_drive); 
+  frc2::CommandPtr Blue2Place2(DriveSubsystem &m_drive);
+
+  frc2::CommandPtr Blue2Place1Spin(DriveSubsystem &m_drive);
+  frc2::CommandPtr Blue2Place2Spin(DriveSubsystem &m_drive); 
+
+  frc2::CommandPtr Red2Place1Spin(DriveSubsystem &m_drive);
+  frc2::CommandPtr Red2Place2Spin(DriveSubsystem &m_drive); 
+  frc2::CommandPtr Red2Place3Spin(DriveSubsystem &m_drive);
+  frc2::CommandPtr Red2Place4Spin(DriveSubsystem &m_drive); 
 
   frc2::CommandPtr BlueMid(DriveSubsystem &m_drive);
   frc2::CommandPtr RedMid(DriveSubsystem &m_drive);  
@@ -158,6 +166,9 @@ class RobotContainer {
 
   frc2::Command* AutoCmd = new AutoBalance(m_drive);
 
+  frc2::Command* Spin180Cmd = new InPlaceRotationCmd(180, m_drive);
+  frc2::Command* Spin180Cmd2 = new InPlaceRotationCmd(180, m_drive);
+
   frc2::Command* TimedBalLeftCmd = new TimedBalanceCmd("Left", m_drive);
   frc2::Command* TimedBalRightCmd = new TimedBalanceCmd("Right", m_drive);
 
@@ -167,10 +178,10 @@ class RobotContainer {
   frc2::Command* PickupCmd = new PlaceAutoCmd(m_elevator, 70.4, -90, 54);//70.4, -90,54
   frc2::Command* RetractCmdAuto = new PlaceAutoCmd(m_elevator, 5, 0, 0);
   frc2::Command* RetractPickupCmdAuto = new PlaceAutoCmd(m_elevator, 5, -10, 90);
-  frc2::Command* RetractPickupCmdAuto2 = new PlaceAutoCmd(m_elevator, 5, -10, 90);
+  frc2::Command* RetractPickupCmdAuto2 = new PlaceAutoCmd(m_elevator, 29, -10, 90);
   frc2::Command* RetractCmd = new PlaceAutoCmd(m_elevator, 5, 0, 0);
   frc2::Command* PickupTipCmd = new PlaceAutoCmd(m_elevator, 29, -171.5, 132);  //30, -171.5, 242 //was 30 fro height
-  frc2::Command* PickupFlatAuto = new PlaceAutoCmd(m_elevator, 0, -81, 160);//69, -110, 0
+  frc2::Command* PickupFlatAuto = new PlaceAutoCmd(m_elevator, 29, -171.5, 132);//69, -110, 0
   frc2::Command* PickupWithBumpersIntoSubstation = new PlaceAutoCmd(m_elevator, 70, -121, 0);//69, -110, 0 //was 61.5, -103, 0
   
 
@@ -230,6 +241,14 @@ class RobotContainer {
 
   frc2::CommandPtr Blue2Place1Cmd = Blue2Place1(m_drive);  
   frc2::CommandPtr Blue2Place2Cmd = Blue2Place2(m_drive);  
+
+  frc2::CommandPtr Blue2Place1SpinCmd = Blue2Place1Spin(m_drive);  
+  frc2::CommandPtr Blue2Place2SpinCmd = Blue2Place2Spin(m_drive);  
+
+  frc2::CommandPtr Red2Place1SpinCmd = Red2Place1Spin(m_drive);  
+  frc2::CommandPtr Red2Place2SpinCmd = Red2Place2Spin(m_drive);
+  frc2::CommandPtr Red2Place3SpinCmd = Red2Place3Spin(m_drive);  
+  frc2::CommandPtr Red2Place4SpinCmd = Red2Place4Spin(m_drive);  
   
   frc2::CommandPtr BlueMidCmd = BlueMid(m_drive);  
   frc2::CommandPtr RedMidCmd = RedMid(m_drive);
