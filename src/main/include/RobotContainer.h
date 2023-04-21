@@ -186,7 +186,7 @@ class RobotContainer {
   
 
   frc2::ParallelRaceGroup* PlaceHighRace = new ParallelRaceGroup(TimerCMD(0.5), PlaceAutoCmd(m_elevator, 104, -60, 160));
-  frc2::ParallelRaceGroup* PlaceHighRace2 = new ParallelRaceGroup(TimerCMD(1), PlaceAutoCmd(m_elevator, 104, -30, 160),
+  frc2::ParallelRaceGroup* PlaceHighRace2 = new ParallelRaceGroup(TimerCMD(0.75), PlaceAutoCmd(m_elevator, 104, -30, 160),
                     frc2::RunCommand([this](){m_drive.Drive(units::meters_per_second_t(0),
                       units::meters_per_second_t(0),
                       units::radians_per_second_t(0),false,false);}, {&m_drive}
@@ -196,8 +196,20 @@ class RobotContainer {
                       units::meters_per_second_t(0),
                       units::radians_per_second_t(0),false,false);}, {&m_drive}
                       ));
+  frc2::ParallelRaceGroup* StandStillRace1 = new ParallelRaceGroup(TimerCMD(0.1),
+                    frc2::RunCommand([this](){m_drive.Drive(units::meters_per_second_t(0),
+                      units::meters_per_second_t(0),
+                      units::radians_per_second_t(0),false,false);}, {&m_drive}
+                      ));
+  frc2::ParallelRaceGroup* PickupRace1 = new ParallelRaceGroup(PlaceAutoCmd(m_elevator, 29, -10, 90),
+                    frc2::RunCommand([this](){m_drive.Drive(units::meters_per_second_t(0),
+                      units::meters_per_second_t(0),
+                      units::radians_per_second_t(0),false,false);}, {&m_drive}
+                      ));                    
 
-  frc2::ParallelRaceGroup* initialPlaceRace = new ParallelRaceGroup(TimerCMD(3), PlaceAutoCmd(m_elevator, 104, -30, 160));
+  frc2::ParallelRaceGroup* initialPlaceRace = new ParallelRaceGroup(TimerCMD(2), PlaceAutoCmd(m_elevator, 104, -30, 160));
+
+
 
 
   // frc2::ParallelCommandGroup* RetractMove = new ParallelCommandGroup(RetractCmd, TimerCMD(0.5));

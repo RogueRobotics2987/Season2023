@@ -50,7 +50,7 @@ void InPlaceRotationCmd::Execute() {
   //   m_drive->Drive(0_mps, 0_mps, mid_rot_speed, false, true);
   // }
 
-  m_drive->Drive(0_mps, 0_mps, units::radians_per_second_t(-1 * (m_dist * rot_kp)), false, true);
+  m_drive->Drive(0_mps, 0_mps, units::radians_per_second_t(-1 * fabs(m_dist * rot_kp)), false, true);
 }
 
 

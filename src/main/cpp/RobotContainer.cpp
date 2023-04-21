@@ -1054,14 +1054,14 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     commands.emplace_back(OpenClawCmd.get());
     commands.emplace_back(new TimerCMD(.2));
     commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p1_commands)));
-    commands.emplace_back(new TimerCMD(.2));
+    commands.emplace_back(StandStillRace1);
     commands.emplace_back(Spin180Cmd);
     commands.emplace_back(new frc2::ParallelCommandGroup(std::move(p2_commands)));
     commands.emplace_back(new frc2::InstantCommand([this] {std::cout<<"Finished Path1" << std::endl;}));
     commands.emplace_back(CloseClawCmd.get());
-    commands.emplace_back(RetractPickupCmdAuto2);
+    commands.emplace_back(PickupRace1);
     // commands.emplace_back(Red2Place3SpinCmd.get());
-    commands.emplace_back(new TimerCMD(.2));
+    // commands.emplace_back(new TimerCMD(.2));
     commands.emplace_back(Spin180Cmd2);
     commands.emplace_back(Red2Place4SpinCmd.get());
     commands.emplace_back(PlaceHighRace2);
