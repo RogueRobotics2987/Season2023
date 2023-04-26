@@ -38,9 +38,10 @@ class InPlaceRotationCmd
   units::angular_velocity::radians_per_second_t max_rot_speed = 4.17_rad_per_s; //4.17
   units::angular_velocity::radians_per_second_t mid_rot_speed = 0.785_rad_per_s; //1.57
   double outer_band = 30;
-  double inner_band = 5;
+  double inner_band = 10;
   double m_dist;
   double turn_amount;
   double rot_kp = 0.045;
+  double constant_add = 0.3;
 
 };

@@ -105,6 +105,7 @@ class RobotContainer {
 
   frc2::CommandPtr Blue2Place1Spin(DriveSubsystem &m_drive);
   frc2::CommandPtr Blue2Place2Spin(DriveSubsystem &m_drive); 
+  frc2::CommandPtr Blue2Place3Spin(DriveSubsystem &m_drive); 
 
   frc2::CommandPtr Red2Place1Spin(DriveSubsystem &m_drive);
   frc2::CommandPtr Red2Place2Spin(DriveSubsystem &m_drive); 
@@ -166,8 +167,8 @@ class RobotContainer {
 
   frc2::Command* AutoCmd = new AutoBalance(m_drive);
 
-  frc2::Command* Spin180Cmd = new InPlaceRotationCmd(180, m_drive);
-  frc2::Command* Spin180Cmd2 = new InPlaceRotationCmd(180, m_drive);
+  frc2::Command* Spin180Cmd = new InPlaceRotationCmd(179, m_drive);
+  frc2::Command* Spin180Cmd2 = new InPlaceRotationCmd(179, m_drive);
 
   frc2::Command* TimedBalLeftCmd = new TimedBalanceCmd("Left", m_drive);
   frc2::Command* TimedBalRightCmd = new TimedBalanceCmd("Right", m_drive);
@@ -256,6 +257,7 @@ class RobotContainer {
 
   frc2::CommandPtr Blue2Place1SpinCmd = Blue2Place1Spin(m_drive);  
   frc2::CommandPtr Blue2Place2SpinCmd = Blue2Place2Spin(m_drive);  
+  frc2::CommandPtr Blue2Place3SpinCmd = Blue2Place3Spin(m_drive);  
 
   frc2::CommandPtr Red2Place1SpinCmd = Red2Place1Spin(m_drive);  
   frc2::CommandPtr Red2Place2SpinCmd = Red2Place2Spin(m_drive);

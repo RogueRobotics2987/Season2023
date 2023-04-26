@@ -10,6 +10,7 @@ InPlaceRotationCmd::InPlaceRotationCmd(double angle, DriveSubsystem &drive) {
   AddRequirements({m_drive});
   turn_amount = angle;
   frc::SmartDashboard::PutNumber("Rot KP auto", rot_kp);
+  frc::SmartDashboard::PutNumber("Constant_add", constant_add);
 
 }
 
@@ -34,6 +35,7 @@ void InPlaceRotationCmd::Execute() {
   m_dist = DistanceBetweenAngles(m_angle, m_drive->GetHeading().value());
   frc::SmartDashboard::PutNumber("InPlaceRot dist between des and cur", m_dist);
   rot_kp = frc::SmartDashboard::GetNumber("Rot KP auto", rot_kp);
+  constant_add = frc::SmartDashboard::GetNumber("Constant_add", constant_add);
 
   // //full speed when far
   // if(m_dist > outer_band){
@@ -50,7 +52,7 @@ void InPlaceRotationCmd::Execute() {
   //   m_drive->Drive(0_mps, 0_mps, mid_rot_speed, false, true);
   // }
 
-  m_drive->Drive(0_mps, 0_mps, units::radians_per_second_t(-1 * fabs(m_dist * rot_kp)), false, true);
+  m_drive->Drive(0_mps, 0_mps, units::radians_per_second_t(-1 * fabs((m_dist * rot_kp) + constant_add)), false, true);
 }
 
 
