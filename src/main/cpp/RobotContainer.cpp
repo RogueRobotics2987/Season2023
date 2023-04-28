@@ -140,19 +140,14 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_xbox, 3).WhileTrue(PlaceMidCmd);
   frc2::JoystickButton(&m_newXbox, 6).WhileTrue(PickupGroundStandingCone);//right bumper on newXbox
   //frc2::JoystickButton(&m_newXbox, 5).WhileTrue(m_elevator.ArmPos()); 
-  // frc2::JoystickButton(&m_newXbox, 8).WhileTrue(PlaceLowCmd); //Small button right
 
   //frc2::JoystickButton(&m_newXbox, 7).OnTrue(m_drive.FieldOrientatedTrue());  
   //frc2::JoystickButton(&m_newXbox, 8).OnTrue(m_drive.FieldOrientatedFalse());
   frc2::JoystickButton(&m_newXbox, 5).OnTrue(m_drive.ZeroHeading());
   
-
   frc2::JoystickButton(&m_xbox, 7).OnTrue(m_lights.CubeDesired()); 
  // frc2::JoystickButton(&m_xbox, 3).OnTrue(m_lights.AllianceColorCmdPtr()); //yellow
   frc2::JoystickButton(&m_xbox, 8).OnTrue(m_lights.ConeDesired()); //red
-  // frc::DriverStation::Alliance::kRed
-
-
 }
 
 
