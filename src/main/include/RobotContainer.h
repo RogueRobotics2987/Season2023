@@ -56,6 +56,7 @@
 #include "commands/PlaceAutoCmd.h"
 #include "commands/TimerCMD.h"
 #include "commands/TimedBalanceCmd.h"
+#include "subsystems/Lidar.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -151,6 +152,7 @@ class RobotContainer {
   Elevator m_elevator;
   CompressorObject m_compressor;
   Lights m_lights;
+  Lidar m_lidar;
 
   //frc2::Command *AutoCmd;
 
