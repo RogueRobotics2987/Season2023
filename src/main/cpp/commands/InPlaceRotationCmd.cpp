@@ -32,7 +32,7 @@ void InPlaceRotationCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void InPlaceRotationCmd::Execute() {
 
-  m_dist = DistanceBetweenAngles(m_angle, m_drive->GetHeading().value());
+  m_dist = DistanceBetweenAngles(m_angle, m_drive->GetHeading().value()) * -1.0;
   frc::SmartDashboard::PutNumber("InPlaceRot dist between des and cur", m_dist);
   rot_kp = frc::SmartDashboard::GetNumber("Rot KP auto", rot_kp);
   constant_add = frc::SmartDashboard::GetNumber("Constant_add", constant_add);
@@ -52,7 +52,7 @@ void InPlaceRotationCmd::Execute() {
   //   m_drive->Drive(0_mps, 0_mps, mid_rot_speed, false, true);
   // }
 
-  m_drive->Drive(0_mps, 0_mps, units::radians_per_second_t(-1 * fabs((m_dist * rot_kp) + constant_add)), false, true);
+  m_drive->Drive(0_mps, 0_mps, units::radians_per_second_t(((m_dist * rot_kp) + copysign(constant_add, m_dist))), false, true);
 }
 
 
