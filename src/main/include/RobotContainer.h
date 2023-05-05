@@ -105,7 +105,15 @@ class RobotContainer {
 
   frc2::CommandPtr Blue2Place1Spin(DriveSubsystem &m_drive);
   frc2::CommandPtr Blue2Place2Spin(DriveSubsystem &m_drive); 
-  frc2::CommandPtr Blue2Place3Spin(DriveSubsystem &m_drive); 
+  frc2::CommandPtr Blue2Place3Spin(DriveSubsystem &m_drive);
+
+  frc2::CommandPtr BlueBump1(DriveSubsystem &m_drive);
+  frc2::CommandPtr BlueBump2(DriveSubsystem &m_drive); 
+  frc2::CommandPtr BlueBump3(DriveSubsystem &m_drive);  
+
+  frc2::CommandPtr RedBump1(DriveSubsystem &m_drive);
+  frc2::CommandPtr RedBump2(DriveSubsystem &m_drive); 
+  frc2::CommandPtr RedBump3(DriveSubsystem &m_drive); 
 
   frc2::CommandPtr Red2Place1Spin(DriveSubsystem &m_drive);
   frc2::CommandPtr Red2Place2Spin(DriveSubsystem &m_drive); 
@@ -258,6 +266,14 @@ class RobotContainer {
   frc2::CommandPtr Blue2Place1SpinCmd = Blue2Place1Spin(m_drive);  
   frc2::CommandPtr Blue2Place2SpinCmd = Blue2Place2Spin(m_drive);  
   frc2::CommandPtr Blue2Place3SpinCmd = Blue2Place3Spin(m_drive);  
+
+  frc2::CommandPtr BlueBump1Cmd = BlueBump1(m_drive);  
+  frc2::CommandPtr BlueBump2Cmd = BlueBump2(m_drive);  
+  frc2::CommandPtr BlueBump3Cmd = BlueBump3(m_drive);  
+
+  frc2::CommandPtr RedBump1Cmd = RedBump1(m_drive);  
+  frc2::CommandPtr RedBump2Cmd = RedBump2(m_drive);  
+  frc2::CommandPtr RedBump3Cmd = RedBump3(m_drive);      
 
   frc2::CommandPtr Red2Place1SpinCmd = Red2Place1Spin(m_drive);  
   frc2::CommandPtr Red2Place2SpinCmd = Red2Place2Spin(m_drive);
